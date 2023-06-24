@@ -1,0 +1,49 @@
+pool:
+  name: Azure Pipelines
+steps:
+- task: NodeTool@0
+  displayName: 'Use Node 18.x'
+  inputs:
+    versionSpec: 18.x
+
+- task: Npm@0
+  displayName: 'npm install angular/cli'
+  inputs:
+    cwd: gautam958website
+    arguments: '-g @angular/cli@latest'
+
+- task: Npm@1
+  displayName: 'install the project'
+  inputs:
+    workingDir: gautam958website
+    verbose: false
+
+- task: Npm@0
+  displayName: 'Buil angular application'
+  inputs:
+    cwd: gautam958website
+    command: run
+    arguments: 'build -prod'
+
+- task: CmdLine@1
+  displayName: 'Build angular app'
+  inputs:
+    filename: ng
+    arguments: 'build —prod'
+    workingFolder: gautam958website
+  enabled: false
+
+- task: Npm@0
+  displayName: 'npm install the dist/ folder for express'
+  inputs:
+    cwd: gautam958website/dist
+
+- task: AzureRmWebAppDeployment@4
+  displayName: 'Azure App Service Deploy: MyProfile Website'
+  inputs:
+    azureSubscription: 'AzureMonthlySubscriptions (95595b8e-3f7e-4ab0-bf18-159b625bcea7)'
+    appType: webAppLinux
+    WebAppName: gautam958web
+    packageForLinux: gautam958website/dist/
+    RuntimeStack: 'NODE|14-lts'
+    StartupCommand: 'npx serve -s'
