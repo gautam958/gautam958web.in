@@ -105,9 +105,10 @@
 
     .profile-image {
       width: 160px;
-      height: 160px;
-      border-radius: 50%;
+      height: 200px;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
       object-fit: cover;
+      object-position: center 30%;
       border: 4px solid var(--accent);
       margin-bottom: 1.5rem;
       box-shadow: 0 0 40px rgba(74, 158, 255, 0.3);
@@ -580,7 +581,8 @@
 
       .profile-image {
         width: 120px;
-        height: 120px;
+        height: 150px;
+        object-position: center 30%;
       }
 
       .hero h1 {
