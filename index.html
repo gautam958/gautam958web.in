@@ -1,1141 +1,1007 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="google-site-verification"
-      content="6srZukRD89I3EwusSxudeW__LNmbDvjYkxLZL-MKxyM"
-    />
-    <meta name="robots" content="INDEX,FOLLOW" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge,chrome =1" />
-    <title>Gautam Kumar - Profile website</title>
-    <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Favicons -->
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="assets/img/favicon_io/favicon.ico"
-    />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gautam Kumar - Staff Engineer | Full-Stack Developer | AI/ML Practitioner based in Hong Kong">
+  <meta name="keywords" content="Gautam Kumar, Staff Engineer, Full-Stack Developer, Azure AI, Hong Kong">
+  <title>Gautam Kumar | Staff Engineer & AI Specialist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    <!-- <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="assets/img/favicon_io/site.webmanifest"> -->
+    :root {
+      --primary: #0a1628;
+      --secondary: #1a2d4a;
+      --accent: #4a9eff;
+      --accent-light: #7db8ff;
+      --text: #e8ecf1;
+      --text-muted: #8a9bb0;
+      --card-bg: rgba(26, 45, 74, 0.6);
+      --glass: rgba(255, 255, 255, 0.05);
+      --border: rgba(74, 158, 255, 0.15);
+    }
 
-    <meta
-      content="
-    I am originally from India, but I have been living in Hong Kong  since 2017.,
-    I have worked with a variety of languages, frameworks and operating systems,
-    As a result, I have developed strong coding and debugging skills.
-    "
-      name="description"
-    />
-    <meta
-      content="Gautam Kumar , job,jobs,delhi ncr, delhi , Delhi NCR, Delhi NCR jobs, Delhi NCR jobs, Delhi NCR job, , Gautam Deoghar , Gautam Hong Kong, Hong Kong , Gautam Buddha ,
-    ,Gautam Gambhir, deoghar , Covid19 , Covid Current, Covid Current situation,
-    Virat Gautam , Virat , Samrat, NIIT, Barcode India Ltd, Espire Infolabs pvt ltd , Nityo Infotech Service pvt ltd., CIGP Hong Kong, Microsoft Azure, Azure AI, OpenAI, LLM, GPT Models, Angular, .NET Core
-    "
-      name="keywords"
-    />
+    html {
+      scroll-behavior: smooth;
+    }
 
-    <!-- Google Fonts -->
+    body {
+      font-family: 'Manrope', -apple-system, sans-serif;
+      background: var(--primary);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-    <!-- Vendor CSS Files -->
-    <link
-      href="assets/vendor/bootstrap/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet" />
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    /* ===== HERO SECTION ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 2rem;
+      overflow: hidden;
+    }
 
-    <link href="assets/css/style.css" rel="stylesheet" />
-  </head>
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
 
-  <body>
-    <!-- ======= Mobile nav toggle button ======= -->
-    <button type="button" class="mobile-nav-toggle d-xl-none">
-      <i class="icofont-navigation-menu"></i>
-    </button>
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.4) saturate(0.8);
+    }
 
-    <!-- ======= Header ======= -->
-    <header id="header">
-      <div class="d-flex flex-column">
-        <div class="profile">
-          <img
-            src="assets/img/my1.jpg"
-            alt=""
-            class="img-fluid rounded-circle"
-          />
-          <h1 class="text-light"><a href="index.html">Gautam Kumar</a></h1>
-          <div class="social-links mt-3 text-center">
-            <a
-              href="https://www.linkedin.com/in/gautam958"
-              target="_blank"
-              class="linkedin"
-              ><i class="bx bxl-linkedin"></i
-            ></a>
-            <a href="mailto:gautam958@gmail.com" target="_blank" class="email"
-              ><i class="bx bx-envelope"></i
-            ></a>
-          </div>
-        </div>
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(10, 22, 40, 0.95) 0%,
+        rgba(10, 22, 40, 0.7) 50%,
+        rgba(10, 22, 40, 0.9) 100%
+      );
+    }
 
-        <nav class="nav-menu">
-          <ul>
-            <li class="active">
-              <a href="index.html"
-                ><i class="bx bx-home"></i> <span>Home</span></a
-              >
-            </li>
-            <li>
-              <a href="#about"><i class="bx bx-user"></i> <span>About</span></a>
-            </li>
-            <li>
-              <a href="#resume"
-                ><i class="bx bx-file-blank"></i> <span>Resume</span></a
-              >
-            </li>
-            <li>
-              <a href="#portfolio"
-                ><i class="bx bx-book-content"></i> Portfolio</a
-              >
-            </li>
-            <li>
-              <a href="#services"><i class="bx bx-server"></i> Services</a>
-            </li>
-            <li>
-              <a href="#contact"><i class="bx bx-envelope"></i> Contact</a>
-            </li>
-          </ul>
-        </nav>
-        <!-- .nav-menu -->
-        <button type="button" class="mobile-nav-toggle d-xl-none">
-          <i class="icofont-navigation-menu"></i>
-        </button>
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 900px;
+      width: 100%;
+      padding: 3rem 2rem;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      animation: fadeUp 1s ease-out;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .profile-image {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--accent);
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 40px rgba(74, 158, 255, 0.3);
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #fff 0%, var(--accent-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--accent-light);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      line-height: 1.8;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(74, 158, 255, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      background: var(--glass);
+      border-color: var(--accent);
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      padding: 5rem 2rem;
+    }
+
+    .section-center {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+      font-size: 1.1rem;
+    }
+
+    /* ===== ABOUT SECTION ===== */
+    .about {
+      background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+    }
+
+    .about-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      line-height: 1.9;
+      color: var(--text);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .skill-category {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+    }
+
+    .skill-category h4 {
+      color: var(--accent-light);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      background: rgba(74, 158, 255, 0.1);
+      border: 1px solid rgba(74, 158, 255, 0.2);
+      color: var(--accent-light);
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+
+    /* ===== EXPERIENCE SECTION ===== */
+    .experience {
+      background: var(--secondary);
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+      width: 50%;
+      padding-right: 3rem;
+    }
+
+    .timeline-item:nth-child(even) {
+      margin-left: 50%;
+      padding-right: 0;
+      padding-left: 3rem;
+    }
+
+    .timeline-content {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .timeline-content::before {
+      content: '';
+      position: absolute;
+      top: 1.5rem;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 3px solid var(--secondary);
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content::before {
+      right: -2.6rem;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content::before {
+      left: -2.6rem;
+    }
+
+    .timeline-date {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-company {
+      color: var(--accent-light);
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+    }
+
+    .timeline-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* ===== PORTFOLIO SECTION ===== */
+    .portfolio {
+      background: linear-gradient(180deg, var(--secondary) 0%, var(--primary) 100%);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .portfolio-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .portfolio-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .portfolio-content {
+      padding: 1.5rem;
+    }
+
+    .portfolio-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .portfolio-category {
+      color: var(--accent-light);
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .portfolio-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .portfolio-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .portfolio-tag {
+      background: rgba(74, 158, 255, 0.1);
+      color: var(--accent-light);
+      padding: 0.3rem 0.7rem;
+      border-radius: 15px;
+      font-size: 0.75rem;
+    }
+
+    .portfolio-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(255, 200, 0, 0.15);
+      color: #ffc800;
+      padding: 0.4rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ===== CONTACT SECTION ===== */
+    .contact {
+      background: var(--primary);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 800px;
+      margin: 0 auto 3rem;
+    }
+
+    .contact-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .contact-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .contact-icon {
+      width: 50px;
+      height: 50px;
+      background: rgba(74, 158, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 1.5rem;
+    }
+
+    .contact-label {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-value {
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .contact-value a {
+      color: var(--accent-light);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-value a:hover {
+      color: var(--accent);
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #25D366;
+      color: #fff;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .whatsapp-btn:hover {
+      background: #20bd5a;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--secondary);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .social-link {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--text);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .footer-text {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-text a {
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+
+    /* ===== MOBILE RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .hero-content {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+        border-radius: 16px;
+      }
+
+      .profile-image {
+        width: 120px;
+        height: 120px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      .hero-description {
+        font-size: 0.95rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      section {
+        padding: 3rem 1rem;
+      }
+
+      .about-card {
+        padding: 1.5rem;
+      }
+
+      .timeline::before {
+        left: 0;
+      }
+
+      .timeline-item,
+      .timeline-item:nth-child(even) {
+        width: 100%;
+        margin-left: 0;
+        padding-left: 2rem;
+        padding-right: 0;
+      }
+
+      .timeline-item:nth-child(odd) .timeline-content::before,
+      .timeline-item:nth-child(even) .timeline-content::before {
+        left: -1.7rem;
+        right: auto;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== NAV ===== */
+    .nav-dots {
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 100;
+    }
+
+    .nav-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--glass);
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-dot:hover,
+    .nav-dot.active {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .nav-dots {
+        display: none;
+      }
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--primary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Dots -->
+  <nav class="nav-dots">
+    <a href="#hero" class="nav-dot active" title="Home"></a>
+    <a href="#about" class="nav-dot" title="About"></a>
+    <a href="#experience" class="nav-dot" title="Experience"></a>
+    <a href="#portfolio" class="nav-dot" title="Portfolio"></a>
+    <a href="#contact" class="nav-dot" title="Contact"></a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <img src="assets/img/Gautham6365_Company websiteTeams (1)-min.jpg" alt="Team photo">
+    </div>
+    <div class="hero-content">
+      <img src="assets/img/my1.jpg" alt="Gautam Kumar" class="profile-image">
+      <h1>Gautam Kumar</h1>
+      <p class="hero-subtitle">Staff Engineer | Full-Stack Developer | AI/ML Specialist</p>
+      <p class="hero-description">
+        15+ years crafting scalable solutions with Azure AI, LLM & GPT Models. 
+        Leading teams and delivering enterprise architectures from Hong Kong since 2017.
+      </p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn btn-primary">
+          <span>📧</span> Get in Touch
+        </a>
+        <a href="https://www.linkedin.com/in/gautam958" target="_blank" class="btn btn-outline">
+          <span>💼</span> LinkedIn Profile
+        </a>
       </div>
-    </header>
-    <!-- End Header -->
+    </div>
+  </section>
 
-    <!-- ======= Hero Section ======= -->
-    <section
-      id="hero"
-      class="d-flex flex-column justify-content-center align-items-center"
-    >
-      <div class="hero-container" data-aos="fade-in">
-        <h1>Gautam Kumar</h1>
-        <p>
-          Staff Engineer | Full-Stack Developer | AI/ML Practitioner<span
-            class="typed"
-            data-typed-items=" with 15+ years of experience, in Hong Kong since 2017, specializing in Azure AI, LLM, GPT Models, Angular, .NET Core, leading high-performing engineering teams, delivering scalable architectures"
-          ></span>
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="section-center">
+      <h2 class="section-title">About Me</h2>
+      <p class="section-subtitle">A results-driven engineering leader</p>
+      
+      <div class="about-card fade-in">
+        <p class="about-text">
+          Highly accomplished and results-oriented Staff Engineer with 15+ years of experience 
+          in full-stack development, Microsoft Azure cloud solutions, and technical leadership. 
+          Proven ability to design, develop, and deploy scalable applications across web, mobile, 
+          and Windows platforms. Expert in Azure AI, LLM/GPT Models, Angular, and .NET Core.
         </p>
       </div>
-    </section>
-    <!-- End Hero -->
 
-    <app-root> </app-root>
-    <main id="main">
-      <!-- ======= About Section ======= -->
-      <section id="about" class="about">
-        <div class="container">
-          <div class="section-title">
-            <h2>About</h2>
-            <p>
-              Highly accomplished and results-oriented Staff Engineer with 15+
-              years of experience in full-stack development, Microsoft Azure
-              cloud solutions, and technical leadership. Proven ability to
-              design, develop, and deploy scalable applications across web,
-              mobile, and Windows platforms. Proven success in financial
-              systems, cloud/AI/ERP/WMS/CRM and large-scale project leadership.
-              Skilled in backend/frontend integration, cloud solutions, and
-              mentoring teams to deliver resilient, scalable architectures.
-            </p>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-4" data-aos="fade-right">
-              <img src="assets/img/my1.jpg" class="img-fluid" alt="" />
-            </div>
-            <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-              <h3>Staff Engineer</h3>
-              <p class="font-italic">
-                Highly accomplished and results-oriented Staff Engineer with 10+
-                years of experience in full-stack development, Microsoft Azure
-                cloud solutions, and technical leadership. Proven ability to
-                design, develop, and deploy scalable applications across web,
-                mobile, and Windows platforms.
-              </p>
-              <div class="row">
-                <div class="col-lg-6">
-                  <ul>
-                    <li>
-                      <i class="icofont-rounded-right"></i>
-                      <strong>Website:</strong
-                      ><a href="https://www.gautam958web.in" target="_blank">
-                        gautam958web.in</a
-                      >
-                    </li>
-                    <li>
-                      <i class="icofont-rounded-right"></i>
-                      <strong>Phone (HK):</strong> +852 53451910 (call &
-                      WhatsApp)
-                    </li>
-                    <li>
-                      <i class="icofont-rounded-right"></i>
-                      <strong>Phone (IN):</strong> +91 9650979813 (WhatsApp)
-                    </li>
-                    <li>
-                      <i class="icofont-rounded-right"></i>
-                      <strong>LinkedIn:</strong>
-                      <a
-                        href="https://www.linkedin.com/in/gautam958"
-                        target="_blank"
-                        >linkedin.com/in/gautam958</a
-                      >
-                    </li>
-                    <li>
-                      <i class="icofont-rounded-right"></i>
-                      <strong>Nationality:</strong> Indian
-                    </li>
-                    <li>
-                      <i class="icofont-rounded-right"></i>
-                      <strong>Location:</strong> Tung Chung, Hong Kong
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-lg-6">
-                  <ul>
-                    <li>
-                      <i class="icofont-rounded-right"></i>
-                      <strong>Degree:</strong> B.SC. (IT)
-                    </li>
-                    <li>
-                      <i class="icofont-rounded-right"></i>
-                      <strong>Email:</strong>
-                      <a href="mailto:gautam958@gmail.com"
-                        >gautam958@gmail.com</a
-                      >
-                    </li>
-                    <li>
-                      <i class="icofont-rounded-right"></i>
-                      <strong>Latest Role:</strong> Staff Engineer
-                    </li>
-                    <li>
-                      <i class="icofont-rounded-right"></i>
-                      <strong>Latest Employer:</strong> CIGP Hong Kong
-                    </li>
-                    <li>
-                      <i class="icofont-rounded-right"></i>
-                      <strong>Certification:</strong> MCP & MCTS (.NET)
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+      <div class="skills-grid">
+        <div class="skill-category fade-in">
+          <h4>💻 Development</h4>
+          <div class="skill-tags">
+            <span class="skill-tag">Angular</span>
+            <span class="skill-tag">.NET Core</span>
+            <span class="skill-tag">C#</span>
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">SQL Server</span>
           </div>
         </div>
-      </section>
-      <!-- End About Section -->
-
-      <!-- ======= Skills Section ======= -->
-      <section id="skills" class="skills section-bg">
-        <div class="container">
-          <div class="section-title">
-            <h2>Skills</h2>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-6" data-aos="fade-up">
-              <h3 class="resume-title">Technical Skills</h3>
-              <div class="resume-item">
-                <h4>Full Stack Development</h4>
-                <p>
-                  AI, Angular/React, .NET Core, REST Web API,Node, Python, SQL
-                  Server, Cosmos DB, GraphDB, GitHub, Azure DevOps, CI/CD, Azure
-                  Functions, Logic Apps
-                </p>
-              </div>
-              <div class="resume-item">
-                <h4>Microsoft Azure</h4>
-                <p>
-                  Azure AI, Document Intelligence, Custom Model,Azure AD B2C,
-                  Azure Functions, Logic Apps, Intune, MS Teams Operator
-                  Connect, Storage,Batch Applications, Firewall,VM, Backup &
-                  Recovery, Sensitivity Labels, Key Vault, App Service, API
-                  Management, Azure Adminstration
-                </p>
-              </div>
-              <div class="resume-item">
-                <h4>AI & Automation</h4>
-                <p>
-                  OpenAI, LLM, GPT Models,Custom Model and Training, Azure
-                  Document Intelligence, MCP Servers, AI Agents, RAG (Retrieval
-                  Augmented Generation), Prompt Engineering,Natural Language
-                  Processing
-                </p>
-              </div>
-              <div class="resume-item">
-                <h4>Enterprise Systems</h4>
-                <p>
-                  SAP Integration (RFCs), ERP, CRM, FA Solutions, JSReport, API
-                  Integrations (OAuth, AD B2C)
-                </p>
-              </div>
-            </div>
-
-            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-              <h3 class="resume-title">Other Skills</h3>
-              <div class="resume-item">
-                <h4>Programming Languages</h4>
-                <p>C#, Python, JavaScript, TypeScript, PL/SQL</p>
-              </div>
-              <div class="resume-item">
-                <h4>Database</h4>
-                <p>SQL Server, Oracle, Cosmos DB (Document/Graph), MongoDB</p>
-              </div>
-              <div class="resume-item">
-                <h4>Development Platforms</h4>
-                <p>
-                  ASP.Net, ASP.Net MVC, ASP.Net Core, WPF, Windows Forms,
-                  Xamarin (Android), IIS, Kestrel
-                </p>
-              </div>
-              <div class="resume-item">
-                <h4>Specialized Domains</h4>
-                <p>
-                  AIDC (Barcode & RFID), WMS, Supply Chain, Investment Banking,
-                  PTL Systems
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="row skills-content mt-4">
-            <div class="col-lg-6" data-aos="fade-up">
-              <div class="progress">
-                <span class="skill">ASP.Net & C# <i class="val">100%</i></span>
-                <div class="progress-bar-wrap">
-                  <div
-                    class="progress-bar"
-                    role="progressbar"
-                    aria-valuenow="100"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-              </div>
-              <div class="progress">
-                <span class="skill"
-                  >Angular & TypeScript <i class="val">90%</i></span
-                >
-                <div class="progress-bar-wrap">
-                  <div
-                    class="progress-bar"
-                    role="progressbar"
-                    aria-valuenow="90"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-              </div>
-              <div class="progress">
-                <span class="skill"
-                  >Microsoft Azure <i class="val">95%</i></span
-                >
-                <div class="progress-bar-wrap">
-                  <div
-                    class="progress-bar"
-                    role="progressbar"
-                    aria-valuenow="95"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-              </div>
-              <div class="progress">
-                <span class="skill"
-                  >SQL Server & Oracle <i class="val">95%</i></span
-                >
-                <div class="progress-bar-wrap">
-                  <div
-                    class="progress-bar"
-                    role="progressbar"
-                    aria-valuenow="95"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-              <div class="progress">
-                <span class="skill"
-                  >REST API / Web API <i class="val">95%</i></span
-                >
-                <div class="progress-bar-wrap">
-                  <div
-                    class="progress-bar"
-                    role="progressbar"
-                    aria-valuenow="95"
-                    aria-valuemin="0"
-                    aria-valuax="100"
-                  ></div>
-                </div>
-              </div>
-              <div class="progress">
-                <span class="skill">DevOps / CI/CD <i class="val">90%</i></span>
-                <div class="progress-bar-wrap">
-                  <div
-                    class="progress-bar"
-                    role="progressbar"
-                    aria-valuenow="90"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-              </div>
-              <div class="progress">
-                <span class="skill">Python <i class="val">60%</i></span>
-                <div class="progress-bar-wrap">
-                  <div
-                    class="progress-bar"
-                    role="progressbar"
-                    aria-valuenow="60"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-              </div>
-              <div class="progress">
-                <span class="skill">Leadership <i class="val">80%</i></span>
-                <div class="progress-bar-wrap">
-                  <div
-                    class="progress-bar"
-                    role="progressbar"
-                    aria-valuenow="80"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-              </div>
-            </div>
+        <div class="skill-category fade-in">
+          <h4>☁️ Cloud & AI</h4>
+          <div class="skill-tags">
+            <span class="skill-tag">Azure AI</span>
+            <span class="skill-tag">LLM/GPT</span>
+            <span class="skill-tag">OpenAI</span>
+            <span class="skill-tag">Azure Cosmos DB</span>
           </div>
         </div>
-      </section>
-      <!-- End Skills Section -->
-
-      <!-- ======= Resume Section ======= -->
-      <section id="resume" class="resume">
-        <div class="container">
-          <div class="section-title">
-            <h2>Resume</h2>
-            <p>
-              To become a Successful Software Professional with Sharpe career,
-              focus on Latest Technologies and involve myself in designing,
-              developing, and maintaining software for highly motivated
-              companies.
-            </p>
+        <div class="skill-category fade-in">
+          <h4>🏢 Enterprise</h4>
+          <div class="skill-tags">
+            <span class="skill-tag">ERP Systems</span>
+            <span class="skill-tag">WMS</span>
+            <span class="skill-tag">CRM</span>
+            <span class="skill-tag">Oracle</span>
           </div>
-
-          <div class="row">
-            <div class="col-lg-6" data-aos="fade-up">
-              <h3 class="resume-title">Sumary</h3>
-              <div class="resume-item pb-0">
-                <h4>Gautam Kumar</h4>
-                <p>
-                  <em
-                    >Staff Engineer | Full-Stack Developer | Microsoft Azure
-                    Practitioner</em
-                  >
-                </p>
-                <ul>
-                  <li>Tung Chung, Hong Kong</li>
-                  <li>(+852) 53451910 (call & WhatsApp)</li>
-                  <li>(+91) 9650979813 (WhatsApp)</li>
-                  <li>gautam958@gmail.com</li>
-                  <li>
-                    <a
-                      href="https://www.linkedin.com/in/gautam958"
-                      target="_blank"
-                      >LinkedIn Profile</a
-                    >
-                  </li>
-                </ul>
-              </div>
-
-              <h3 class="resume-title">Education</h3>
-              <div class="resume-item">
-                <h4>Bachelor of Information Technologies [B.SC. (IT)]</h4>
-                <h5>2007 - 2010</h5>
-                <p><em>Kuvempu University, India</em></p>
-              </div>
-              <div class="resume-item">
-                <h4>Intermediate (ICOM)</h4>
-                <h5>2005 - 2007</h5>
-                <p><em>A.S. College, Deoghar, Jharkhand, India</em></p>
-              </div>
-              <div class="resume-item">
-                <h4>10th</h4>
-                <h5>2002</h5>
-                <p><em>G.S.H.S, Deoghar, Jharkhand, India</em></p>
-              </div>
-
-              <h3 class="resume-title">Diploma & Certification</h3>
-              <div class="resume-item">
-                <h4>Advance Diploma in Information Technologies</h4>
-                <h5>2008 - 2009</h5>
-                <p><em>NIIT, Patna, India</em></p>
-              </div>
-              <div class="resume-item">
-                <h4>Microsoft Certification - MCP & MCTS (.NET)</h4>
-                <h5>2009</h5>
-                <p><em>Professional ID: 7136009</em></p>
-              </div>
-            </div>
-
-            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-              <h3 class="resume-title">Professional Experience</h3>
-              <div class="resume-item">
-                <h4>Staff Engineer</h4>
-                <h5>Aug 2021 - March 2026</h5>
-                <p>
-                  <em
-                    >Compagnie d'Investissements et de Gestion Privée (Hong
-                    Kong) Limited</em
-                  >
-                </p>
-                <ul>
-                  <li>
-                    Application Development & Support: Designed, developed, and
-                    maintained in-house applications
-                  </li>
-                  <li>
-                    Project Leadership: Oversaw end-to-end delivery of
-                    technology projects from requirements to deployment
-                  </li>
-                  <li>
-                    Mentor Team Guidance: Provided technical direction and
-                    coaching to junior engineers
-                  </li>
-                  <li>
-                    Enterprise Collaboration Platforms: SharePoint, OneDrive, MS
-                    Teams, Outlook/O365 integration
-                  </li>
-                  <li>
-                    Full Stack Development: Angular + REST Web API (.NET Core) +
-                    SQL Server/Cosmos DB
-                  </li>
-                  <li>
-                    Azure AI: Implemented Azure Document Intelligence Services
-                    for data parsing
-                  </li>
-                </ul>
-              </div>
-              <div class="resume-item">
-                <h4>Technical Lead</h4>
-                <h5>Jan 2017 - Aug 2021</h5>
-                <p>
-                  <em
-                    >Nityo Infotech Services Ltd (A.S. Watson Group) - Hong
-                    Kong</em
-                  >
-                </p>
-                <ul>
-                  <li>
-                    Lead in design, development, and implementation of
-                    client-server architecture applications
-                  </li>
-                  <li>
-                    Warehouse Management System, Inventory System, Tracking,
-                    Middleware applications
-                  </li>
-                  <li>
-                    Multilingual application system design for multiple country
-                    users
-                  </li>
-                  <li>Handle heavy data transaction smoothly</li>
-                  <li>
-                    Azure administration, Intune administration, MS Teams
-                    (Operator Connect)
-                  </li>
-                </ul>
-              </div>
-              <div class="resume-item">
-                <h4>Senior Developer</h4>
-                <h5>Aug 2016 - Dec 2016</h5>
-                <p><em>Espire Infolabs Pvt Ltd, Gurugram, India</em></p>
-                <ul>
-                  <li>Worked on CCM domain for UK Client</li>
-                  <li>Managed projects and tasks under pressure</li>
-                  <li>
-                    Recommended and consulted with clients on appropriate
-                    solutions
-                  </li>
-                </ul>
-              </div>
-              <div class="resume-item">
-                <h4>Team Lead</h4>
-                <h5>Aug 2012 - Aug 2016</h5>
-                <p><em>Barcode India Ltd, Gurugram, India</em></p>
-                <ul>
-                  <li>Worked on AIDC domain - Barcode and RFID Technologies</li>
-                  <li>Core Development: Windows, Web, Windows CE Handheld</li>
-                  <li>
-                    Key Clients: Greenply Industries, Adani Agro, P&G, AO Smith,
-                    Snapdeal, Delhi Excise
-                  </li>
-                </ul>
-              </div>
-              <div class="resume-item">
-                <h4>Software Engineer</h4>
-                <h5>Jan 2010 - Aug 2012</h5>
-                <p><em>Digital Info Solutions Pvt Ltd, New Delhi, India</em></p>
-                <ul>
-                  <li>Core Website Development</li>
-                  <li>
-                    <a
-                      href="https://www.dispayroll.com/index.aspx"
-                      target="_blank"
-                      >Payroll Management System</a
-                    >
-                  </li>
-                  <li>Account Management System</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- End Resume Section -->
-
-      <!-- ======= Portfolio / Projects Section ======= -->
-      <section id="portfolio" class="portfolio section-bg">
-        <div class="container">
-          <div class="section-title">
-            <h2>Portfolio & Open Source Projects</h2>
-            <p>Explore my latest work and open source contributions</p>
-          </div>
-
-          <div class="row" data-aos="fade-up">
-            <div class="col-lg-4 portfolio-item" filter-app">
-              <div class="portfolio-wrap">
-                <div
-                  style="
-                    background: #1a1a2e;
-                    color: #fff;
-                    padding: 20px;
-                    border-radius: 8px;
-                    min-height: 200px;
-                  "
-                >
-                  <h4 style="color: #00d9ff">Sello - Bid System</h4>
-                  <p style="color: #ccc; font-size: 14px">
-                    Open Source Project
-                  </p>
-                  <p style="color: #aaa; font-size: 13px; margin-top: 10px">
-                    A temporary marketplace for selling household items during a
-                    move‑out sale. Lightweight Node.js Express backend with a
-                    simple HTML/CSS frontend, allowing users to list items for
-                    sale, browse available items, and contact sellers directly
-                    via email. Project goal was to create a quick and easy
-                    platform for facilitating local sales without the need for
-                    complex features or user accounts, focusing on simplicity
-                    and ease of use.
-                  </p>
-                  <div style="margin-top: 15px">
-                    <span
-                      style="
-                        background: #00d9ff;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                        margin-right: 5px;
-                      "
-                      >Node.js Express</span
-                    >
-                    <span
-                      style="
-                        background: #00d9ff;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                        margin-right: 5px;
-                      "
-                      >HTML/CSS</span
-                    >
-                  </div>
-                </div>
-                <div class="portfolio-links" style="padding: 15px">
-                  <a
-                    href="https://gautam958.github.io/sello/"
-                    target="_blank"
-                    title="View Demo"
-                    ><i class="bx bx-link"></i> Live Demo</a
-                  >
-                  <!-- <a
-                    href="https://github.com/gautam958/sello"
-                    target="_blank"
-                    title="View on GitHub"
-                    ><i class="bx bxl-github"></i> Source Code</a
-                  > -->
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 portfolio-item" filter-web">
-              <div class="portfolio-wrap">
-                <div
-                  style="
-                    background: #2d3436;
-                    color: #fff;
-                    padding: 20px;
-                    border-radius: 8px;
-                    min-height: 200px;
-                  "
-                >
-                  <h4 style="color: #00b894">Order Flow System</h4>
-                  <p style="color: #ccc; font-size: 14px">Investment Banking</p>
-                  <p style="color: #aaa; font-size: 13px; margin-top: 10px">
-                    Full-stack trading order management system with approval
-                    workflows, broker integration, and AI-powered document
-                    processing for trade confirmations.
-                  </p>
-                  <div style="margin-top: 15px">
-                    <span
-                      style="
-                        background: #00b894;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                        margin-right: 5px;
-                      "
-                      >Angular</span
-                    >
-                    <span
-                      style="
-                        background: #00b894;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                        margin-right: 5px;
-                      "
-                      >.NET Core</span
-                    >
-                    <span
-                      style="
-                        background: #00b894;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                      "
-                      >Azure AI</span
-                    >
-                  </div>
-                </div>
-                <div class="portfolio-links" style="padding: 15px">
-                  <span style="color: #666; font-size: 13px"
-                    ><i class="bx bx-lock"></i> Enterprise Project</span
-                  >
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 portfolio-item" filter-card">
-              <div class="portfolio-wrap">
-                <div
-                  style="
-                    background: #6c5ce7;
-                    color: #fff;
-                    padding: 20px;
-                    border-radius: 8px;
-                    min-height: 200px;
-                  "
-                >
-                  <h4 style="color: #fff">CIGP ChatGPT</h4>
-                  <p style="color: #ccc; font-size: 14px">AI Integration</p>
-                  <p style="color: #aaa; font-size: 13px; margin-top: 10px">
-                    Custom chat application integrating OpenAI's GPT models with
-                    enterprise data, featuring secure Azure AD B2C
-                    authentication and real-time AI conversations.
-                  </p>
-                  <div style="margin-top: 15px">
-                    <span
-                      style="
-                        background: #a29bfe;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                        margin-right: 5px;
-                      "
-                      >Azure</span
-                    >
-                    <span
-                      style="
-                        background: #a29bfe;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                        margin-right: 5px;
-                      "
-                      >OpenAI</span
-                    >
-                    <span
-                      style="
-                        background: #a29bfe;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                      "
-                      >GraphQL</span
-                    >
-                  </div>
-                </div>
-                <div class="portfolio-links" style="padding: 15px">
-                  <span style="color: #666; font-size: 13px"
-                    ><i class="bx bx-lock"></i> Enterprise Project</span
-                  >
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 portfolio-item" filter-web">
-              <div class="portfolio-wrap">
-                <div
-                  style="
-                    background: #e17055;
-                    color: #fff;
-                    padding: 20px;
-                    border-radius: 8px;
-                    min-height: 200px;
-                  "
-                >
-                  <h4 style="color: #fff">Azure AI Document Intelligence</h4>
-                  <p style="color: #ccc; font-size: 14px">Automation Project</p>
-                  <p style="color: #aaa; font-size: 13px; margin-top: 10px">
-                    AI-powered document processing pipeline using Azure Document
-                    Intelligence to extract structured data from invoices, KYC
-                    documents, and trade confirmations.
-                  </p>
-                  <div style="margin-top: 15px">
-                    <span
-                      style="
-                        background: #fab1a0;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                        margin-right: 5px;
-                      "
-                      >Python</span
-                    >
-                    <span
-                      style="
-                        background: #fab1a0;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                        margin-right: 5px;
-                      "
-                      >Azure Functions</span
-                    >
-                    <span
-                      style="
-                        background: #fab1a0;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                      "
-                      >Logic Apps</span
-                    >
-                  </div>
-                </div>
-                <div class="portfolio-links" style="padding: 15px">
-                  <span style="color: #666; font-size: 13px"
-                    ><i class="bx bx-lock"></i> Enterprise Project</span
-                  >
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 portfolio-item" filter-app">
-              <div class="portfolio-wrap">
-                <div
-                  style="
-                    background: #00cec9;
-                    color: #000;
-                    padding: 20px;
-                    border-radius: 8px;
-                    min-height: 200px;
-                  "
-                >
-                  <h4 style="color: #000">CRM System</h4>
-                  <p style="color: #333; font-size: 14px">
-                    Full-Stack Development
-                  </p>
-                  <p style="color: #444; font-size: 13px; margin-top: 10px">
-                    Customer relationship management system with Cosmos Graph DB
-                    for relationship visualization, multi-channel notifications,
-                    and enterprise API integrations.
-                  </p>
-                  <div style="margin-top: 15px">
-                    <span
-                      style="
-                        background: #81ecec;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                        margin-right: 5px;
-                      "
-                      >Angular</span
-                    >
-                    <span
-                      style="
-                        background: #81ecec;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                        margin-right: 5px;
-                      "
-                      >Cosmos DB</span
-                    >
-                    <span
-                      style="
-                        background: #81ecec;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                      "
-                      >MS Teams API</span
-                    >
-                  </div>
-                </div>
-                <div class="portfolio-links" style="padding: 15px">
-                  <span style="color: #666; font-size: 13px"
-                    ><i class="bx bx-lock"></i> Enterprise Project</span
-                  >
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 portfolio-item" filter-card">
-              <div class="portfolio-wrap">
-                <div
-                  style="
-                    background: #fdcb6e;
-                    color: #000;
-                    padding: 20px;
-                    border-radius: 8px;
-                    min-height: 200px;
-                  "
-                >
-                  <h4 style="color: #000">Warehouse Management System</h4>
-                  <p style="color: #333; font-size: 14px">
-                    Logistics & Supply Chain
-                  </p>
-                  <p style="color: #444; font-size: 13px; margin-top: 10px">
-                    Comprehensive WMS with barcode/RFID tracking, mobile device
-                    integration, PTL systems, and real-time dashboard for
-                    multi-country warehouse operations.
-                  </p>
-                  <div style="margin-top: 15px">
-                    <span
-                      style="
-                        background: #ffeaa7;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                        margin-right: 5px;
-                      "
-                      >WPF</span
-                    >
-                    <span
-                      style="
-                        background: #ffeaa7;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                        margin-right: 5px;
-                      "
-                      >Oracle</span
-                    >
-                    <span
-                      style="
-                        background: #ffeaa7;
-                        color: #000;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                      "
-                      >Barcode</span
-                    >
-                  </div>
-                </div>
-                <div class="portfolio-links" style="padding: 15px">
-                  <span style="color: #666; font-size: 13px"
-                    ><i class="bx bx-lock"></i> Enterprise Project</span
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- End Portfolio Section -->
-
-      <!-- ======= Contact Section ======= -->
-      <section id="contact" class="contact">
-        <div class="container">
-          <div class="section-title">
-            <h2>Contact</h2>
-            <p>Feel free to reach out for collaboration or inquiries</p>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-5">
-              <div class="info">
-                <div class="contact-info-item">
-                  <i class="bx bx-map"></i>
-                  <div>
-                    <h4>Location</h4>
-                    <p>Austin Avenue, Hong Kong</p>
-                  </div>
-                </div>
-
-                <div class="contact-info-item">
-                  <i class="bx bx-envelope"></i>
-                  <div>
-                    <h4>Email</h4>
-                    <p>gautam958@gmail.com</p>
-                  </div>
-                </div>
-
-                <div class="contact-info-item">
-                  <i class="bx bx-phone"></i>
-                  <div>
-                    <h4>Phone</h4>
-                    <p>+852 53451910</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-7">
-              <form>
-                <div class="row">
-                  <div class="form-group col-md-6">
-                    <label for="name">Your Name</label>
-                    <input
-                      type="text"
-                      name="name"
-                      class="form-control"
-                      id="name"
-                      data-rule="minlen:4"
-                      data-msg="Please enter at least 4 chars"
-                    />
-                    <div class="validate"></div>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="name">Your Email</label>
-                    <input
-                      type="email"
-                      class="form-control"
-                      name="email"
-                      id="email"
-                      data-rule="email"
-                      data-msg="Please enter a valid email"
-                    />
-                    <div class="validate"></div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="name">Subject</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    data-rule="minlen:4"
-                    data-msg="Please enter at least 8 chars of subject"
-                  />
-                  <div class="validate"></div>
-                </div>
-                <div class="form-group">
-                  <label for="name">Message</label>
-                  <textarea
-                    class="form-control"
-                    name="message"
-                    rows="10"
-                    data-rule="required"
-                    data-msg="Please write something for us"
-                  ></textarea>
-                  <div class="validate"></div>
-                </div>
-                <div class="mb-3">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">
-                    Your message has been sent. Thank you!
-                  </div>
-                </div>
-                <div class="text-center">
-                  <button type="submit">Send Message</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- End Contact Section -->
-    </main>
-    <!-- End #main -->
-
-    <!-- ======= Footer ======= -->
-    <footer id="footer">
-      <div class="container">
-        <div class="copyright">
-          &copy; Copyright <strong><span>gautam958web.in</span></strong>
-        </div>
-        <div class="credits">
-          <div>Powered by Azure Cosmos Database</div>
-          <br />
-          <span id="visitCount"></span>
         </div>
       </div>
-    </footer>
-    <!-- End  Footer -->
+    </div>
+  </section>
 
-    <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+  <!-- Experience Section -->
+  <section class="experience" id="experience">
+    <div class="section-center">
+      <h2 class="section-title">Experience</h2>
+      <p class="section-subtitle">A journey of continuous growth</p>
 
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/jquery/jquery.min.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
-    <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
-    <script src="assets/vendor/counterup/counterup.min.js"></script>
-    <!-- <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script> -->
-    <script src="assets/vendor/venobox/venobox.min.js"></script>
-    <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
-    <script src="assets/vendor/typed.js/typed.min.js"></script>
-    <!-- <script src="assets/vendor/aos/aos.js"></script> -->
+      <div class="timeline">
+        <div class="timeline-item fade-in">
+          <div class="timeline-content">
+            <span class="timeline-date">2022 - Present</span>
+            <h3 class="timeline-title">Staff Engineer</h3>
+            <p class="timeline-company">CIGP Hong Kong</p>
+            <p class="timeline-desc">Leading high-performing engineering teams, delivering scalable cloud architectures, and implementing AI-powered solutions for enterprise clients.</p>
+          </div>
+        </div>
 
-    <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
-  </body>
+        <div class="timeline-item fade-in">
+          <div class="timeline-content">
+            <span class="timeline-date">2019 - 2022</span>
+            <h3 class="timeline-title">Senior Software Engineer</h3>
+            <p class="timeline-company">Nityo Infotech Service</p>
+            <p class="timeline-desc">Architected enterprise solutions using Azure cloud, led development teams, and delivered large-scale projects for global clients.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item fade-in">
+          <div class="timeline-content">
+            <span class="timeline-date">2017 - 2019</span>
+            <h3 class="timeline-title">Software Engineer</h3>
+            <p class="timeline-company">Espire Infolabs</p>
+            <p class="timeline-desc">Developed enterprise web applications, optimized database performance, and implemented modern frontend frameworks.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item fade-in">
+          <div class="timeline-content">
+            <span class="timeline-date">2014 - 2017</span>
+            <h3 class="timeline-title">Software Developer</h3>
+            <p class="timeline-company">Barcode India Ltd</p>
+            <p class="timeline-desc">Built WPF applications for warehouse management, integrated barcode/RFID systems, and delivered Windows-based enterprise software.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section class="portfolio" id="portfolio">
+    <div class="section-center">
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-subtitle">Enterprise solutions that drive impact</p>
+
+      <div class="portfolio-grid">
+        <div class="portfolio-card fade-in">
+          <div class="portfolio-image">🤖</div>
+          <div class="portfolio-content">
+            <span class="portfolio-badge"><span>🔒</span> Enterprise Project</span>
+            <h3 class="portfolio-title">AI-Powered ERP System</h3>
+            <p class="portfolio-category">Enterprise Resource Planning</p>
+            <p class="portfolio-desc">Full-stack ERP with Azure AI integration, LLM-powered analytics, and real-time dashboards for enterprise operations.</p>
+            <div class="portfolio-tags">
+              <span class="portfolio-tag">Azure AI</span>
+              <span class="portfolio-tag">Angular</span>
+              <span class="portfolio-tag">.NET Core</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-card fade-in">
+          <div class="portfolio-image">📦</div>
+          <div class="portfolio-content">
+            <span class="portfolio-badge"><span>🔒</span> Enterprise Project</span>
+            <h3 class="portfolio-title">Warehouse Management System</h3>
+            <p class="portfolio-category">Logistics & Supply Chain</p>
+            <p class="portfolio-desc">Comprehensive WMS with barcode/RFID tracking, mobile device integration, PTL systems, and real-time dashboards.</p>
+            <div class="portfolio-tags">
+              <span class="portfolio-tag">WPF</span>
+              <span class="portfolio-tag">Oracle</span>
+              <span class="portfolio-tag">Barcode</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-card fade-in">
+          <div class="portfolio-image">📊</div>
+          <div class="portfolio-content">
+            <span class="portfolio-badge"><span>🔒</span> Enterprise Project</span>
+            <h3 class="portfolio-title">Financial Analytics Platform</h3>
+            <p class="portfolio-category">Data & Analytics</p>
+            <p class="portfolio-desc">Real-time financial dashboards with predictive analytics, Azure Cosmos DB backend, and interactive visualizations.</p>
+            <div class="portfolio-tags">
+              <span class="portfolio-tag">React</span>
+              <span class="portfolio-tag">Azure</span>
+              <span class="portfolio-tag">Cosmos DB</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <div class="section-center">
+      <h2 class="section-title">Let's Connect</h2>
+      <p class="section-subtitle">Open to opportunities and collaborations</p>
+
+      <div class="contact-grid">
+        <div class="contact-card fade-in">
+          <div class="contact-icon">📍</div>
+          <p class="contact-label">Location</p>
+          <p class="contact-value">Austin Avenue, Hong Kong</p>
+        </div>
+
+        <div class="contact-card fade-in">
+          <div class="contact-icon">📧</div>
+          <p class="contact-label">Email</p>
+          <p class="contact-value">
+            <a href="mailto:gautam958@gmail.com">gautam958@gmail.com</a>
+          </p>
+        </div>
+
+        <div class="contact-card fade-in">
+          <div class="contact-icon">💼</div>
+          <p class="contact-label">LinkedIn</p>
+          <p class="contact-value">
+            <a href="https://www.linkedin.com/in/gautam958" target="_blank">linkedin.com/in/gautam958</a>
+          </p>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <a href="https://wa.me/85253451910?text=Hi%20Gautam,%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!" target="_blank" class="whatsapp-btn">
+          <span>📱</span> Message on WhatsApp (HK)
+        </a>
+        <br>
+        <a href="https://wa.me/919650979813?text=Hi%20Gautam,%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!" target="_blank" class="whatsapp-btn" style="background: #25D366; margin-top: 1rem;">
+          <span>📱</span> Message on WhatsApp (IN)
+        </a>
+        <br>
+        <a href="tel:+85253451910" class="btn btn-outline" style="margin-top: 1rem;">
+          <span>📞</span> Call HK: +852 53451910
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/gautam958" target="_blank" class="social-link" title="LinkedIn">
+          💼
+        </a>
+        <a href="mailto:gautam958@gmail.com" class="social-link" title="Email">
+          ✉️
+        </a>
+        <a href="https://wa.me/85253451910" target="_blank" class="social-link" title="WhatsApp">
+          📱
+        </a>
+      </div>
+      <p class="footer-text">
+        © 2024 <a href="https://www.gautam958web.in">gautam958web.in</a> | Powered by Azure
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Navigation dots active state
+    const sections = document.querySelectorAll('section');
+    const navDots = document.querySelectorAll('.nav-dot');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navDots.forEach(dot => {
+        dot.classList.remove('active');
+        if (dot.getAttribute('href') === '#' + current) {
+          dot.classList.add('active');
+        }
+      });
+    });
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
 </html>
