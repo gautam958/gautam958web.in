@@ -57,7 +57,7 @@
 
     .theme-btn.dark-blue { background: linear-gradient(135deg, #0a1628, #1a2d4a); }
     .theme-btn.light { background: linear-gradient(135deg, #ffffff, #f0f4f8); }
-    .theme-btn.purple { background: linear-gradient(135deg, #1a0a2e, #2d1b4e); }
+    .theme-btn.red { background: linear-gradient(135deg, #1a0505, #4a1515); }
 
     /* Theme: Dark Blue (Default) */
     :root, [data-theme="dark-blue"] {
@@ -128,41 +128,41 @@
       background: var(--accent);
     }
 
-    /* Theme: Purple Dark */
-    [data-theme="purple"] {
-      --primary: #0f0a1a;
-      --secondary: #1a0f2e;
-      --accent: #a855f7;
-      --accent-light: #c084fc;
-      --text: #f3e8ff;
-      --text-muted: #a78bfa;
-      --card-bg: rgba(26, 15, 46, 0.6);
+    /* Theme: Red Dark */
+    [data-theme="red"] {
+      --primary: #1a0505;
+      --secondary: #2d1515;
+      --accent: #ef4444;
+      --accent-light: #f87171;
+      --text: #fecaca;
+      --text-muted: #fca5a5;
+      --card-bg: rgba(45, 21, 21, 0.6);
       --glass: rgba(255, 255, 255, 0.05);
-      --border: rgba(168, 85, 247, 0.2);
+      --border: rgba(239, 68, 68, 0.2);
     }
 
-    [data-theme="purple"] .hero-bg::after {
+    [data-theme="red"] .hero-bg::after {
       background: linear-gradient(
         135deg,
-        rgba(15, 10, 26, 0.95) 0%,
-        rgba(26, 15, 46, 0.7) 50%,
-        rgba(15, 10, 26, 0.9) 100%
+        rgba(26, 5, 5, 0.95) 0%,
+        rgba(45, 21, 21, 0.7) 50%,
+        rgba(26, 5, 5, 0.9) 100%
       );
     }
 
-    [data-theme="purple"] .profile-image {
+    [data-theme="red"] .profile-image {
       border-color: var(--accent);
-      box-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
+      box-shadow: 0 0 40px rgba(239, 68, 68, 0.3);
     }
 
-    [data-theme="purple"] .hero h1 {
+    [data-theme="red"] .hero h1 {
       background: linear-gradient(135deg, #fff 0%, var(--accent-light) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    [data-theme="purple"] ::-webkit-scrollbar-thumb {
+    [data-theme="red"] ::-webkit-scrollbar-thumb {
       background: var(--accent);
     }
 
@@ -844,9 +844,9 @@
 <body>
   <!-- Theme Switcher -->
   <div class="theme-switcher">
-    <button class="theme-btn dark-blue active" data-theme="dark-blue" title="Dark Blue Theme">🌙</button>
-    <button class="theme-btn light" data-theme="light" title="Light Theme">☀️</button>
-    <button class="theme-btn purple" data-theme="purple" title="Purple Theme">✨</button>
+    <button class="theme-btn dark-blue active" data-theme="dark-blue" title="Dark Blue">◐</button>
+    <button class="theme-btn light" data-theme="light" title="Light">☀</button>
+    <button class="theme-btn red" data-theme="red" title="Red">◆</button>
   </div>
 
   <!-- Navigation Dots -->
