@@ -17,7 +17,50 @@
       padding: 0;
     }
 
-    :root {
+    /* ===== THEME SWITCHER ===== */
+    .theme-switcher {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      z-index: 1000;
+      display: flex;
+      gap: 0.5rem;
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 0.5rem;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+    }
+
+    .theme-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .theme-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .theme-btn.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 15px rgba(74, 158, 255, 0.4);
+    }
+
+    .theme-btn.dark-blue { background: linear-gradient(135deg, #0a1628, #1a2d4a); }
+    .theme-btn.light { background: linear-gradient(135deg, #ffffff, #f0f4f8); }
+    .theme-btn.purple { background: linear-gradient(135deg, #1a0a2e, #2d1b4e); }
+
+    /* Theme: Dark Blue (Default) */
+    :root, [data-theme="dark-blue"] {
       --primary: #0a1628;
       --secondary: #1a2d4a;
       --accent: #4a9eff;
@@ -27,6 +70,100 @@
       --card-bg: rgba(26, 45, 74, 0.6);
       --glass: rgba(255, 255, 255, 0.05);
       --border: rgba(74, 158, 255, 0.15);
+    }
+
+    /* Theme: Light */
+    [data-theme="light"] {
+      --primary: #f8fafc;
+      --secondary: #ffffff;
+      --accent: #2563eb;
+      --accent-light: #3b82f6;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --glass: rgba(0, 0, 0, 0.05);
+      --border: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="light"] .hero-bg::after {
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(248, 250, 252, 0.8) 50%,
+        rgba(255, 255, 255, 0.9) 100%
+      );
+    }
+
+    [data-theme="light"] .profile-image {
+      box-shadow: 0 0 40px rgba(37, 99, 235, 0.2);
+    }
+
+    [data-theme="light"] .section-title {
+      color: #1e293b;
+    }
+
+    [data-theme="light"] .hero h1 {
+      background: linear-gradient(135deg, #1e293b 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    [data-theme="light"] .contact-value a,
+    [data-theme="light"] .portfolio-category,
+    [data-theme="light"] .skill-category h4,
+    [data-theme="light"] .hero-subtitle {
+      color: var(--accent);
+    }
+
+    [data-theme="light"] .btn-primary {
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+    }
+
+    [data-theme="light"] ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    [data-theme="light"] ::-webkit-scrollbar-thumb {
+      background: var(--accent);
+    }
+
+    /* Theme: Purple Dark */
+    [data-theme="purple"] {
+      --primary: #0f0a1a;
+      --secondary: #1a0f2e;
+      --accent: #a855f7;
+      --accent-light: #c084fc;
+      --text: #f3e8ff;
+      --text-muted: #a78bfa;
+      --card-bg: rgba(26, 15, 46, 0.6);
+      --glass: rgba(255, 255, 255, 0.05);
+      --border: rgba(168, 85, 247, 0.2);
+    }
+
+    [data-theme="purple"] .hero-bg::after {
+      background: linear-gradient(
+        135deg,
+        rgba(15, 10, 26, 0.95) 0%,
+        rgba(26, 15, 46, 0.7) 50%,
+        rgba(15, 10, 26, 0.9) 100%
+      );
+    }
+
+    [data-theme="purple"] .profile-image {
+      border-color: var(--accent);
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
+    }
+
+    [data-theme="purple"] .hero h1 {
+      background: linear-gradient(135deg, #fff 0%, var(--accent-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    [data-theme="purple"] ::-webkit-scrollbar-thumb {
+      background: var(--accent);
     }
 
     html {
@@ -39,6 +176,7 @@
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     /* ===== HERO SECTION ===== */
@@ -704,6 +842,13 @@
   </style>
 </head>
 <body>
+  <!-- Theme Switcher -->
+  <div class="theme-switcher">
+    <button class="theme-btn dark-blue active" data-theme="dark-blue" title="Dark Blue Theme">🌙</button>
+    <button class="theme-btn light" data-theme="light" title="Light Theme">☀️</button>
+    <button class="theme-btn purple" data-theme="purple" title="Purple Theme">✨</button>
+  </div>
+
   <!-- Navigation Dots -->
   <nav class="nav-dots">
     <a href="#hero" class="nav-dot active" title="Home"></a>
@@ -1003,6 +1148,29 @@
             block: 'start'
           });
         }
+      });
+    });
+
+    // Theme Switcher
+    const themeBtns = document.querySelectorAll('.theme-btn');
+    const html = document.documentElement;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'dark-blue';
+    html.setAttribute('data-theme', savedTheme);
+    themeBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.theme === savedTheme);
+    });
+
+    // Theme switch functionality
+    themeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const theme = btn.dataset.theme;
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        
+        themeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
       });
     });
   </script>
