@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Gautam Kumar - Staff Engineer | Full-Stack Developer | AI/ML Practitioner based in Hong Kong"
+      content="Gautam Kumar - Staff Engineer | Full-Stack Developer | AI Practitioner | 15+ Years Enterprise Experience | Hong Kong"
     />
     <meta
       name="keywords"
-      content="Gautam Kumar, Staff Engineer, Full-Stack Developer, Azure AI, Hong Kong"
+      content="Gautam Kumar, Staff Engineer, Full-Stack Developer, Azure AI, .NET Core, Angular, Hong Kong, CIGP"
     />
     <title>Gautam Kumar | Staff Engineer & AI Practitioner</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -133,7 +133,7 @@
 
       [data-theme="light"] .contact-value a,
       [data-theme="light"] .portfolio-category,
-      [data-theme="light"] .skill-category h4,
+      [data-theme="light"] .skill-group h4,
       [data-theme="light"] .hero-subtitle {
         color: var(--accent);
       }
@@ -193,17 +193,12 @@
       }
 
       body {
-        font-family:
-          "Manrope",
-          -apple-system,
-          sans-serif;
+        font-family: "Manrope", -apple-system, sans-serif;
         background: var(--primary);
         color: var(--text);
         line-height: 1.6;
         overflow-x: hidden;
-        transition:
-          background 0.3s ease,
-          color 0.3s ease;
+        transition: background 0.3s ease, color 0.3s ease;
       }
 
       /* ===== HERO SECTION ===== */
@@ -305,6 +300,30 @@
         line-height: 1.8;
       }
 
+      .hero-badges {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: var(--glass);
+        border: 1px solid var(--border);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      .hero-badge span {
+        color: var(--accent-light);
+      }
+
       .hero-buttons {
         display: flex;
         gap: 1rem;
@@ -354,7 +373,7 @@
       }
 
       .section-center {
-        max-width: 1000px;
+        max-width: 1100px;
         margin: 0 auto;
       }
 
@@ -397,24 +416,66 @@
         color: var(--text);
       }
 
-      .skills-grid {
+      /* ===== SKILLS SECTION (NEW) ===== */
+      .skills {
+        background: var(--secondary);
+        overflow: hidden;
+      }
+
+      .skills-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-        margin-top: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        max-width: 1100px;
+        margin: 0 auto;
       }
 
-      .skill-category {
-        background: var(--glass);
+      .skill-group {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
         border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 1.5rem;
+        border-radius: 20px;
+        padding: 2rem;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
       }
 
-      .skill-category h4 {
+      .skill-group.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .skill-group:nth-child(1) { transition-delay: 0s; }
+      .skill-group:nth-child(2) { transition-delay: 0.1s; }
+      .skill-group:nth-child(3) { transition-delay: 0.2s; }
+      .skill-group:nth-child(4) { transition-delay: 0.3s; }
+      .skill-group:nth-child(5) { transition-delay: 0.4s; }
+      .skill-group:nth-child(6) { transition-delay: 0.5s; }
+
+      .skill-group:hover {
+        border-color: var(--accent);
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .skill-group-icon {
+        width: 50px;
+        height: 50px;
+        background: rgba(74, 158, 255, 0.1);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .skill-group h4 {
         color: var(--accent-light);
         margin-bottom: 1rem;
-        font-size: 1rem;
+        font-size: 1.05rem;
+        font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 1px;
       }
@@ -426,22 +487,77 @@
       }
 
       .skill-tag {
-        background: rgba(74, 158, 255, 0.1);
-        border: 1px solid rgba(74, 158, 255, 0.2);
+        background: rgba(74, 158, 255, 0.08);
+        border: 1px solid rgba(74, 158, 255, 0.15);
         color: var(--accent-light);
         padding: 0.4rem 0.9rem;
         border-radius: 20px;
-        font-size: 0.85rem;
+        font-size: 0.82rem;
+        transition: all 0.3s ease;
+        cursor: default;
+      }
+
+      .skill-tag:hover {
+        background: rgba(74, 158, 255, 0.2);
+        border-color: var(--accent);
+        transform: scale(1.05);
+      }
+
+      /* Stats row */
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-top: 3rem;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .stat-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.5rem;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .stat-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .stat-card:nth-child(1) { transition-delay: 0s; }
+      .stat-card:nth-child(2) { transition-delay: 0.15s; }
+      .stat-card:nth-child(3) { transition-delay: 0.3s; }
+      .stat-card:nth-child(4) { transition-delay: 0.45s; }
+
+      .stat-number {
+        font-family: "Playfair Display", serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--accent-light);
+        line-height: 1;
+      }
+
+      .stat-label {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-top: 0.5rem;
       }
 
       /* ===== EXPERIENCE SECTION ===== */
       .experience {
-        background: var(--secondary);
+        background: var(--primary);
       }
 
       .timeline {
         position: relative;
-        max-width: 800px;
+        max-width: 900px;
         margin: 0 auto;
       }
 
@@ -475,6 +591,13 @@
         border-radius: 16px;
         padding: 1.5rem;
         position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .timeline-content:hover {
+        border-color: var(--accent);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       }
 
       .timeline-content::before {
@@ -485,7 +608,7 @@
         height: 12px;
         background: var(--accent);
         border-radius: 50%;
-        border: 3px solid var(--secondary);
+        border: 3px solid var(--primary);
       }
 
       .timeline-item:nth-child(odd) .timeline-content::before {
@@ -498,26 +621,33 @@
 
       .timeline-date {
         color: var(--accent);
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         font-weight: 600;
         margin-bottom: 0.5rem;
       }
 
       .timeline-title {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
         font-weight: 700;
         margin-bottom: 0.25rem;
       }
 
       .timeline-company {
         color: var(--accent-light);
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.25rem;
         font-size: 0.95rem;
+      }
+
+      .timeline-domain {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        font-style: italic;
+        margin-bottom: 0.5rem;
       }
 
       .timeline-desc {
         color: var(--text-muted);
-        font-size: 0.9rem;
+        font-size: 0.88rem;
         line-height: 1.6;
       }
 
@@ -525,16 +655,44 @@
       .portfolio {
         background: linear-gradient(
           180deg,
-          var(--secondary) 0%,
-          var(--primary) 100%
+          var(--primary) 0%,
+          var(--secondary) 100%
         );
+      }
+
+      .portfolio-filter {
+        display: flex;
+        justify-content: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-bottom: 2.5rem;
+      }
+
+      .filter-btn {
+        padding: 0.5rem 1.25rem;
+        border-radius: 50px;
+        border: 1px solid var(--border);
+        background: var(--glass);
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: inherit;
+      }
+
+      .filter-btn:hover,
+      .filter-btn.active {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
       }
 
       .portfolio-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        max-width: 1000px;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 1.5rem;
+        max-width: 1100px;
         margin: 0 auto;
       }
 
@@ -544,19 +702,29 @@
         border: 1px solid var(--border);
         border-radius: 20px;
         overflow: hidden;
-        transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      .portfolio-card.visible {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .portfolio-card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-8px);
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        border-color: var(--accent);
+      }
+
+      .portfolio-card.hidden {
+        display: none;
       }
 
       .portfolio-image {
         width: 100%;
-        height: 180px;
+        height: 160px;
         object-fit: cover;
         background: linear-gradient(
           135deg,
@@ -574,20 +742,28 @@
       }
 
       .portfolio-title {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 700;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.4rem;
       }
 
       .portfolio-category {
         color: var(--accent-light);
-        font-size: 0.85rem;
-        margin-bottom: 0.75rem;
+        font-size: 0.82rem;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+
+      .portfolio-role {
+        color: var(--text-muted);
+        font-size: 0.78rem;
+        font-style: italic;
+        margin-bottom: 0.5rem;
       }
 
       .portfolio-desc {
         color: var(--text-muted);
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         line-height: 1.6;
         margin-bottom: 1rem;
       }
@@ -595,15 +771,15 @@
       .portfolio-tags {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.4rem;
+        gap: 0.35rem;
       }
 
       .portfolio-tag {
-        background: rgba(74, 158, 255, 0.1);
+        background: rgba(74, 158, 255, 0.08);
         color: var(--accent-light);
-        padding: 0.3rem 0.7rem;
+        padding: 0.25rem 0.65rem;
         border-radius: 15px;
-        font-size: 0.75rem;
+        font-size: 0.72rem;
       }
 
       .portfolio-badge {
@@ -612,10 +788,106 @@
         gap: 0.3rem;
         background: rgba(255, 200, 0, 0.15);
         color: #ffc800;
-        padding: 0.4rem 0.8rem;
+        padding: 0.35rem 0.75rem;
         border-radius: 15px;
-        font-size: 0.8rem;
-        margin-bottom: 0.75rem;
+        font-size: 0.78rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .portfolio-team {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: rgba(74, 158, 255, 0.1);
+        color: var(--accent-light);
+        padding: 0.35rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.78rem;
+        margin-bottom: 0.6rem;
+        margin-left: 0.4rem;
+      }
+
+      /* ===== EDUCATION SECTION ===== */
+      .education {
+        background: var(--secondary);
+      }
+
+      .education-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .education-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.75rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      .education-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .education-card:hover {
+        border-color: var(--accent);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .education-icon {
+        width: 60px;
+        height: 60px;
+        background: rgba(74, 158, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.8rem;
+      }
+
+      .education-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+      }
+
+      .education-school {
+        color: var(--accent-light);
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .education-year {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
+
+      .cert-list {
+        margin-top: 2rem;
+        text-align: center;
+      }
+
+      .cert-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: rgba(74, 158, 255, 0.08);
+        border: 1px solid rgba(74, 158, 255, 0.15);
+        color: var(--accent-light);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        margin: 0.3rem;
       }
 
       /* ===== CONTACT SECTION ===== */
@@ -625,9 +897,9 @@
 
       .contact-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 1.5rem;
-        max-width: 800px;
+        max-width: 900px;
         margin: 0 auto 3rem;
       }
 
@@ -666,7 +938,7 @@
 
       .contact-value {
         color: #fff;
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: 600;
       }
 
@@ -683,12 +955,13 @@
       .whatsapp-btn {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.6rem;
         background: #25d366;
         color: #fff;
-        padding: 1rem 2rem;
+        padding: 0.9rem 1.8rem;
         border-radius: 50px;
         font-weight: 600;
+        font-size: 0.95rem;
         text-decoration: none;
         transition: all 0.3s ease;
         margin-top: 1rem;
@@ -698,6 +971,20 @@
         background: #20bd5a;
         transform: translateY(-2px);
         box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+      }
+
+      .whatsapp-btn img {
+        width: 22px;
+        height: 22px;
+        border-radius: 4px;
+      }
+
+      .contact-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 1rem;
       }
 
       /* ===== FOOTER ===== */
@@ -819,21 +1106,38 @@
         .contact-grid {
           grid-template-columns: 1fr;
         }
+
+        .skills-container {
+          grid-template-columns: 1fr;
+        }
+
+        .stats-row {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .portfolio-filter {
+          gap: 0.5rem;
+        }
+
+        .filter-btn {
+          padding: 0.4rem 1rem;
+          font-size: 0.8rem;
+        }
       }
 
       /* ===== ANIMATIONS ===== */
       .fade-in {
         opacity: 0;
         transform: translateY(20px);
-        transition:
-          opacity 0.6s ease,
-          transform 0.6s ease;
+        transition: opacity 0.6s ease, transform 0.6s ease;
       }
 
       .fade-in.visible {
         opacity: 1;
         transform: translateY(0);
       }
+
+
 
       /* ===== NAV ===== */
       .nav-dots {
@@ -904,8 +1208,10 @@
     <nav class="nav-dots">
       <a href="#hero" class="nav-dot active" title="Home"></a>
       <a href="#about" class="nav-dot" title="About"></a>
+      <a href="#skills" class="nav-dot" title="Skills"></a>
       <a href="#experience" class="nav-dot" title="Experience"></a>
       <a href="#portfolio" class="nav-dot" title="Portfolio"></a>
+      <a href="#education" class="nav-dot" title="Education"></a>
       <a href="#contact" class="nav-dot" title="Contact"></a>
     </nav>
 
@@ -927,10 +1233,16 @@
         <p class="hero-subtitle">
           Staff Engineer | Full-Stack Developer | AI Practitioner
         </p>
+        <div class="hero-badges">
+          <span class="hero-badge"><span>📍</span> Tung Chung, Hong Kong</span>
+          <span class="hero-badge"><span>🏢</span> CIGP (Investment Banking)</span>
+          <span class="hero-badge"><span>🛡️</span> HK Permanent Resident</span>
+        </div>
         <p class="hero-description">
-          15+ years crafting scalable solutions with Azure AI, LLM & GPT Models.
-          Leading teams and delivering enterprise architectures from Hong Kong
-          since 2017.
+          15+ years crafting enterprise-grade solutions spanning full-stack development,
+          Microsoft Azure cloud, AI/ML, and technical leadership. From warehouse management
+          systems to AI-powered trading platforms — delivering scalable architectures
+          from Hong Kong since 2017.
         </p>
         <div class="hero-buttons">
           <a href="#contact" class="btn btn-primary">
@@ -942,6 +1254,9 @@
             class="btn btn-outline"
           >
             <span>💼</span> LinkedIn Profile
+          </a>
+          <a href="#portfolio" class="btn btn-outline">
+            <span>🚀</span> View Projects
           </a>
         </div>
       </div>
@@ -962,43 +1277,140 @@
             years of experience in full-stack development, Microsoft Azure cloud
             solutions, and technical leadership. Proven ability to design,
             develop, and deploy scalable applications across web, mobile, and
-            Windows platforms. Expert in Full Stack development, Azure cloud
-            solutions, Azure AI, LLM/GPT Models, Typescript, Python, and .NET
-            Core with a strong focus on enterprise solutions. multiple databases
-            including SQL Server, Azure Cosmos DB, and Oracle.
+            Windows platforms. Adept at leading projects from conception to
+            completion, mentoring junior engineers, and driving technological
+            innovation. Expert in Azure AI, LLM/GPT Models, .NET Core,
+            Angular, and enterprise systems with a strong focus on financial
+            services, ERP, WMS, and CRM solutions.
           </p>
         </div>
+      </div>
+    </section>
 
-        <div class="skills-grid">
-          <div class="skill-category fade-in">
-            <h4>💻 Development</h4>
+    <!-- Skills Section (NEW) -->
+    <section class="skills" id="skills">
+      <div class="section-center">
+        <h2 class="section-title">Technical Expertise</h2>
+        <p class="section-subtitle">
+          A comprehensive toolkit built over 15+ years of enterprise development
+        </p>
+
+        <div class="skills-container">
+          <!-- Full Stack Development -->
+          <div class="skill-group fade-in">
+            <div class="skill-group-icon">💻</div>
+            <h4>Full Stack Development</h4>
             <div class="skill-tags">
-              <span class="skill-tag">AI Development</span>
-              <span class="skill-tag">Typescript</span>
+              <span class="skill-tag">Angular</span>
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">JavaScript</span>
               <span class="skill-tag">.NET Core</span>
+              <span class="skill-tag">ASP.NET MVC</span>
+              <span class="skill-tag">ASP.NET</span>
               <span class="skill-tag">C#</span>
-              <span class="skill-tag">Python</span>
-              <span class="skill-tag">Databases</span>
+              <span class="skill-tag">HTML5</span>
+              <span class="skill-tag">CSS</span>
+              <span class="skill-tag">Bootstrap</span>
             </div>
           </div>
-          <div class="skill-category fade-in">
-            <h4>☁️ Cloud & AI</h4>
+
+          <!-- Cloud & Azure -->
+          <div class="skill-group fade-in">
+            <div class="skill-group-icon">☁️</div>
+            <h4>Cloud & Azure</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">Microsoft Azure</span>
+              <span class="skill-tag">Azure Functions</span>
+              <span class="skill-tag">Logic Apps</span>
+              <span class="skill-tag">Azure AD / Entra ID</span>
+              <span class="skill-tag">Azure Static Web Apps</span>
+              <span class="skill-tag">Storage Accounts</span>
+              <span class="skill-tag">Intune MDM</span>
+              <span class="skill-tag">MS Teams Admin</span>
+            </div>
+          </div>
+
+          <!-- AI & Machine Learning -->
+          <div class="skill-group fade-in">
+            <div class="skill-group-icon">🤖</div>
+            <h4>AI & Machine Learning</h4>
             <div class="skill-tags">
               <span class="skill-tag">Azure AI</span>
-              <span class="skill-tag">LLM/GPT</span>
-              <span class="skill-tag">OpenAI</span>
-              <span class="skill-tag">Azure Cosmos Graph DB, Vector DB</span>
               <span class="skill-tag">Azure Document Intelligence</span>
+              <span class="skill-tag">OpenAI / GPT Models</span>
+              <span class="skill-tag">LLM Integration</span>
+              <span class="skill-tag">MCP Servers</span>
+              <span class="skill-tag">Python</span>
             </div>
           </div>
-          <div class="skill-category fade-in">
-            <h4>🏢 Enterprise</h4>
+
+          <!-- Database & Data -->
+          <div class="skill-group fade-in">
+            <div class="skill-group-icon">🗄️</div>
+            <h4>Database & Data</h4>
             <div class="skill-tags">
-              <span class="skill-tag">SAP/ERP Systems</span>
-              <span class="skill-tag">WMS</span>
-              <span class="skill-tag">CRM</span>
-              <span class="skill-tag">Oracle</span>
+              <span class="skill-tag">SQL Server</span>
+              <span class="skill-tag">Oracle (PL/SQL)</span>
+              <span class="skill-tag">Azure Cosmos DB</span>
+              <span class="skill-tag">Cosmos Graph DB</span>
+              <span class="skill-tag">MongoDB</span>
+              <span class="skill-tag">Entity Framework</span>
+              <span class="skill-tag">ADO.NET</span>
+              <span class="skill-tag">DBA Administration</span>
             </div>
+          </div>
+
+          <!-- Enterprise & Integration -->
+          <div class="skill-group fade-in">
+            <div class="skill-group-icon">🏢</div>
+            <h4>Enterprise & Integration</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">SAP Integration</span>
+              <span class="skill-tag">RESTful Web APIs</span>
+              <span class="skill-tag">Web Services</span>
+              <span class="skill-tag">OAuth / AB2C</span>
+              <span class="skill-tag">CRM Systems</span>
+              <span class="skill-tag">ERP Systems</span>
+              <span class="skill-tag">FA Solutions</span>
+              <span class="skill-tag">JSReport</span>
+            </div>
+          </div>
+
+          <!-- AIDC & IoT -->
+          <div class="skill-group fade-in">
+            <div class="skill-group-icon">📡</div>
+            <h4>AIDC, Mobile & DevOps</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">Barcode / RFID</span>
+              <span class="skill-tag">WPF</span>
+              <span class="skill-tag">Xamarin (Android)</span>
+              <span class="skill-tag">GitHub Actions</span>
+              <span class="skill-tag">Azure DevOps</span>
+              <span class="skill-tag">JIRA</span>
+              <span class="skill-tag">UiPath (RPA)</span>
+              <span class="skill-tag">Oracle Apex</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+          <div class="stat-card fade-in">
+            <div class="stat-number">15+</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+          <div class="stat-card fade-in">
+            <div class="stat-number">20+</div>
+            <div class="stat-label">Live Projects Delivered</div>
+          </div>
+          <div class="stat-card fade-in">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Countries Deployed</div>
+          </div>
+          <div class="stat-card fade-in">
+            <div class="stat-number">4+</div>
+            <div class="stat-label">Years as Team Lead</div>
           </div>
         </div>
       </div>
@@ -1008,69 +1420,65 @@
     <section class="experience" id="experience">
       <div class="section-center">
         <h2 class="section-title">Experience</h2>
-        <p class="section-subtitle">A journey of continuous growth</p>
+        <p class="section-subtitle">A journey of continuous growth and leadership</p>
 
         <div class="timeline">
           <div class="timeline-item fade-in">
             <div class="timeline-content">
-              <span class="timeline-date">Aug 2021 - March 2026</span>
+              <span class="timeline-date">Aug 2021 – Mar 2026</span>
               <h3 class="timeline-title">Staff Engineer</h3>
-              <p class="timeline-company">CIGP Hong Kong</p>
+              <p class="timeline-company">CIGP — Compagnie d'Investissements et de Gestion Privée</p>
+              <p class="timeline-domain">🏦 Investment Banking | Hong Kong</p>
               <p class="timeline-desc">
-                Leading high-performing engineering teams, delivering scalable
-                cloud architectures, and implementing AI-powered solutions for
-                enterprise clients.
+                Drive cross-departmental technology initiatives combining hands-on engineering with leadership. Lead high-performing teams delivering scalable cloud architectures and AI-powered solutions for enterprise clients. Key responsibilities include application development, project leadership, team mentoring, infrastructure management, and enterprise collaboration platform delivery.
               </p>
             </div>
           </div>
 
           <div class="timeline-item fade-in">
             <div class="timeline-content">
-              <span class="timeline-date">Jan 2017 - Jul 2021</span>
-              <h3 class="timeline-title">Technical Lead</h3>
-              <p class="timeline-company">Nityo Infotech Service</p>
+              <span class="timeline-date">Jan 2017 – Aug 2021</span>
+              <h3 class="timeline-title">Sr. Developer / Technical Lead</h3>
+              <p class="timeline-company">Nityo Infotech Services Ltd. (A.S. Watson Group)</p>
+              <p class="timeline-domain">🛒 Retail / Logistics / Supply Chain | Hong Kong</p>
               <p class="timeline-desc">
-                Architected enterprise solutions using Azure cloud, led
-                development teams, and delivered large-scale projects for global
-                clients.
+                Architected enterprise solutions using Azure cloud for one of Asia's largest retail conglomerates. Led development teams across WMS, PTL systems, dashboards, label management, UI automation, and MS Teams Operator Connect infrastructure projects spanning Hong Kong, China, Thailand, and Philippines.
               </p>
             </div>
           </div>
 
           <div class="timeline-item fade-in">
             <div class="timeline-content">
-              <span class="timeline-date">Aug 2016 - Dec 2016</span>
+              <span class="timeline-date">Aug 2016 – Dec 2016</span>
+              <h3 class="timeline-title">Sr. Developer</h3>
+              <p class="timeline-company">Espire Infolabs Pvt Ltd.</p>
+              <p class="timeline-domain">🛡️ Insurance | India</p>
+              <p class="timeline-desc">
+                Developed enterprise web applications for the insurance sector, optimized database performance, and implemented modern frontend frameworks for client-facing portals.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in">
+            <div class="timeline-content">
+              <span class="timeline-date">Aug 2012 – Aug 2016</span>
+              <h3 class="timeline-title">Sr. Software Engineer / Team Lead</h3>
+              <p class="timeline-company">Barcode India Ltd.</p>
+              <p class="timeline-domain">📦 AIDC / Logistics / Supply Chain | India</p>
+              <p class="timeline-desc">
+                Led teams of 3-6 engineers delivering 10+ live projects across WMS, WIP, TMS, inventory, and file management systems. Built solutions for Snapdeal, P&G, Adani, Greenply, AO Smith, and Delhi Excise using WPF, ASP.NET, Socket Server, and SAP integrations.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in">
+            <div class="timeline-content">
+              <span class="timeline-date">Jan 2010 – Aug 2012</span>
               <h3 class="timeline-title">Software Engineer</h3>
-              <p class="timeline-company">Espire Infolabs</p>
+              <p class="timeline-company">Digital Info Solutions Pvt Ltd.</p>
+              <p class="timeline-domain">💻 IT Services | India</p>
               <p class="timeline-desc">
-                Developed enterprise web applications, optimized database
-                performance, and implemented modern frontend frameworks.
-              </p>
-            </div>
-          </div>
-
-          <div class="timeline-item fade-in">
-            <div class="timeline-content">
-              <span class="timeline-date">Aug 2012 - Aug 2016</span>
-              <h3 class="timeline-title">Team Lead</h3>
-              <p class="timeline-company">Barcode India Ltd</p>
-              <p class="timeline-desc">
-                Built WPF applications for warehouse management, integrated
-                barcode/RFID systems, and delivered Windows-based enterprise
-                software.
-              </p>
-            </div>
-          </div>
-
-          <div class="timeline-item fade-in">
-            <div class="timeline-content">
-              <span class="timeline-date">Jan 2010 - Aug 2012</span>
-              <h3 class="timeline-title">Software Engineer</h3>
-              <p class="timeline-company">Digital Info Solutions Pvt. Ltd.</p>
-              <p class="timeline-desc">
-                Developed many subscription based payroll, accounting software
-                for SME clients, implemented new features, and optimized
-                performance for web applications.
+                Developed subscription-based payroll, billing, and accounting software for SME clients. Built inventory management and compliance systems similar to Tally with enhanced features.
               </p>
             </div>
           </div>
@@ -1082,68 +1490,613 @@
     <section class="portfolio" id="portfolio">
       <div class="section-center">
         <h2 class="section-title">Featured Projects</h2>
-        <p class="section-subtitle">Enterprise solutions that drive impact</p>
+        <p class="section-subtitle">Enterprise solutions that drive impact across industries</p>
+
+        <div class="portfolio-filter">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="azure-ai">Azure AI</button>
+          <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+          <button class="filter-btn" data-filter="wms">WMS & Logistics</button>
+          <button class="filter-btn" data-filter="enterprise">Enterprise</button>
+        </div>
 
         <div class="portfolio-grid">
-          <div class="portfolio-card fade-in">
+          <!-- Order Flow -->
+          <div class="portfolio-card fade-in" data-category="fullstack">
+            <div class="portfolio-image">📈</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🏦</span> CIGP</span>
+              <span class="portfolio-team"><span>👥</span> Team of 3</span>
+              <h3 class="portfolio-title">Order Flow — Trading Platform</h3>
+              <p class="portfolio-category">Trading / Front Office</p>
+              <p class="portfolio-role">Role: Full Stack Developer / Project Lead</p>
+              <p class="portfolio-desc">
+                Hong Kong Front Office trading application for preparing trade orders,
+                multi-level approval workflows, broker communication, and reconciliation.
+                Includes pre-trade security checks and fee calculation.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">.NET Core REST API</span>
+                <span class="portfolio-tag">Angular</span>
+                <span class="portfolio-tag">Azure</span>
+                <span class="portfolio-tag">Python</span>
+                <span class="portfolio-tag">SQL Server</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Azure AI Document Intelligence -->
+          <div class="portfolio-card fade-in" data-category="azure-ai">
             <div class="portfolio-image">🤖</div>
             <div class="portfolio-content">
-              <span class="portfolio-badge"
-                ><span>🔒</span> Enterprise Project</span
-              >
-              <h3 class="portfolio-title">AI-Powered ERP System</h3>
-              <p class="portfolio-category">Enterprise Resource Planning</p>
+              <span class="portfolio-badge"><span>🏦</span> CIGP</span>
+              <span class="portfolio-team"><span>👥</span> Solo</span>
+              <h3 class="portfolio-title">Azure AI Document Intelligence</h3>
+              <p class="portfolio-category">AI Automation / Cloud</p>
+              <p class="portfolio-role">Role: Full Stack Developer / Project Lead</p>
               <p class="portfolio-desc">
-                Full-stack ERP with Azure AI integration, LLM-powered analytics,
-                and real-time dashboards for enterprise operations.
+                End-to-end document automation pipeline using Azure Document Intelligence.
+                Built and trained custom models to extract structured data from trade confirmations,
+                invoices, and KYC documents with seamless API integration.
               </p>
               <div class="portfolio-tags">
                 <span class="portfolio-tag">Azure AI</span>
-                <span class="portfolio-tag">Angular</span>
-                <span class="portfolio-tag">.NET Core</span>
+                <span class="portfolio-tag">REST API</span>
+                <span class="portfolio-tag">Python</span>
+                <span class="portfolio-tag">Azure Functions</span>
+                <span class="portfolio-tag">Logic Apps</span>
               </div>
             </div>
           </div>
 
-          <div class="portfolio-card fade-in">
+          <!-- CRM System -->
+          <div class="portfolio-card fade-in" data-category="enterprise">
+            <div class="portfolio-image">👥</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🏦</span> CIGP</span>
+              <span class="portfolio-team"><span>👥</span> Team of 6</span>
+              <h3 class="portfolio-title">CRM — Customer Relationship Management</h3>
+              <p class="portfolio-category">Enterprise CRM</p>
+              <p class="portfolio-role">Role: Full Stack Developer / Project Lead</p>
+              <p class="portfolio-desc">
+                High-availability banking CRM with client onboarding via DocuSign,
+                Cosmos Graph DB for relationship visualization, multi-channel notifications,
+                fee calculation, and granular field-level permissions.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">.NET Core API</span>
+                <span class="portfolio-tag">Angular</span>
+                <span class="portfolio-tag">Cosmos DB</span>
+                <span class="portfolio-tag">Cosmos Graph DB</span>
+                <span class="portfolio-tag">Python</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CIGP ChatGPT -->
+          <div class="portfolio-card fade-in" data-category="azure-ai">
+            <div class="portfolio-image">💬</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🏦</span> CIGP</span>
+              <span class="portfolio-team"><span>👥</span> Solo</span>
+              <h3 class="portfolio-title">CIGP ChatGPT</h3>
+              <p class="portfolio-category">AI / Chat Application</p>
+              <p class="portfolio-role">Role: Project Lead</p>
+              <p class="portfolio-desc">
+                Custom enterprise chat application integrating OpenAI GPT models via secure API.
+                Built with Angular frontend hosted on Azure Storage, .NET Core backend with
+                Microsoft Entra ID authentication.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">Azure</span>
+                <span class="portfolio-tag">OpenAI</span>
+                <span class="portfolio-tag">Angular</span>
+                <span class="portfolio-tag">.NET Core</span>
+                <span class="portfolio-tag">Entra ID</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- E-Platform -->
+          <div class="portfolio-card fade-in" data-category="fullstack">
+            <div class="portfolio-image">📊</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🏦</span> CIGP</span>
+              <span class="portfolio-team"><span>👥</span> Team of 3</span>
+              <h3 class="portfolio-title">E-Platform — Client Portal</h3>
+              <p class="portfolio-category">Client Services</p>
+              <p class="portfolio-role">Role: Full Stack Developer</p>
+              <p class="portfolio-desc">
+                Secure client portal for on-demand and scheduled statement delivery
+                with encrypted storage across Azure tenants. Features custom dashboards,
+                monthly notifications, and browser-cached encrypted data.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">.NET Core API</span>
+                <span class="portfolio-tag">Angular</span>
+                <span class="portfolio-tag">Azure AD B2C</span>
+                <span class="portfolio-tag">SQL Server</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Banks Data Feed -->
+          <div class="portfolio-card fade-in" data-category="enterprise">
+            <div class="portfolio-image">🔄</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🏦</span> CIGP</span>
+              <span class="portfolio-team"><span>👥</span> Team of 2</span>
+              <h3 class="portfolio-title">Banks Data Feed</h3>
+              <p class="portfolio-category">Data Integration</p>
+              <p class="portfolio-role">Role: Full Stack Developer / Project Lead</p>
+              <p class="portfolio-desc">
+                Automated pipeline for daily bank file processing — picks data from SFTP,
+                parses to CIGP format, and posts to FA and Order Flow systems via APIs.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">Azure Functions</span>
+                <span class="portfolio-tag">SharePoint</span>
+                <span class="portfolio-tag">Logic Apps</span>
+                <span class="portfolio-tag">Python</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- MS Teams Operator Connect -->
+          <div class="portfolio-card fade-in" data-category="enterprise">
+            <div class="portfolio-image">📞</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🏦</span> CIGP</span>
+              <span class="portfolio-team"><span>👥</span> Solo</span>
+              <h3 class="portfolio-title">MS Teams Operator Connect</h3>
+              <p class="portfolio-category">Infrastructure</p>
+              <p class="portfolio-role">Role: Lead / Project Management</p>
+              <p class="portfolio-desc">
+                Enterprise voice infrastructure project — implemented MS Teams calling
+                with call recording in Hong Kong through Operator Connect, replacing
+                legacy HKBN phone lines and DeltaPath recording.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">MS Teams</span>
+                <span class="portfolio-tag">Azure</span>
+                <span class="portfolio-tag">Operator Connect</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Label Management -->
+          <div class="portfolio-card fade-in" data-category="wms">
+            <div class="portfolio-image">🏷️</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🛒</span> A.S. Watson</span>
+              <span class="portfolio-team"><span>👥</span> Team of 3</span>
+              <h3 class="portfolio-title">Label Management System</h3>
+              <p class="portfolio-category">Workforce Management</p>
+              <p class="portfolio-role">Role: Full Stack Developer Lead</p>
+              <p class="portfolio-desc">
+                Workforce management system for shift worker tracking — captures work hours,
+                breaks, and allocations with detailed productivity analysis reports.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">.NET Core REST API</span>
+                <span class="portfolio-tag">MongoDB</span>
+                <span class="portfolio-tag">Oracle</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Warehouse Dashboard -->
+          <div class="portfolio-card fade-in" data-category="wms">
+            <div class="portfolio-image">📊</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🛒</span> A.S. Watson</span>
+              <span class="portfolio-team"><span>👥</span> Team of 3</span>
+              <h3 class="portfolio-title">Warehouse Dashboard</h3>
+              <p class="portfolio-category">Real-time Analytics</p>
+              <p class="portfolio-role">Role: Full Stack Developer</p>
+              <p class="portfolio-desc">
+                Real-time dashboards for warehouse operations — receiving, putaway, picking,
+                dispatch, orders, and critical items with millions of records handled smoothly.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">REST API</span>
+                <span class="portfolio-tag">Xamarin</span>
+                <span class="portfolio-tag">Angular</span>
+                <span class="portfolio-tag">Oracle</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- WINS++ Warehouse Receiving -->
+          <div class="portfolio-card fade-in" data-category="wms">
             <div class="portfolio-image">📦</div>
             <div class="portfolio-content">
-              <span class="portfolio-badge"
-                ><span>🔒</span> Enterprise Project</span
-              >
-              <h3 class="portfolio-title">Warehouse Management System</h3>
-              <p class="portfolio-category">Logistics & Supply Chain</p>
+              <span class="portfolio-badge"><span>🛒</span> A.S. Watson</span>
+              <span class="portfolio-team"><span>👥</span> Team of 3</span>
+              <h3 class="portfolio-title">WINS++ Warehouse Receiving</h3>
+              <p class="portfolio-category">Warehouse Operations</p>
+              <p class="portfolio-role">Role: Sr. Developer</p>
               <p class="portfolio-desc">
-                Comprehensive WMS with barcode/RFID tracking, mobile device
-                integration, PTL systems, and real-time dashboards.
+                Comprehensive warehouse management covering GRN receipts, QC, barcode labeling,
+                stocktake, loading, dispatch, inventory adjustments, and GPS tracking.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">Web API</span>
+                <span class="portfolio-tag">Xamarin</span>
+                <span class="portfolio-tag">ASP.NET MVC</span>
+                <span class="portfolio-tag">Google Location API</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- WMS A.S. Watson -->
+          <div class="portfolio-card fade-in" data-category="wms">
+            <div class="portfolio-image">🏭</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🛒</span> A.S. Watson</span>
+              <span class="portfolio-team"><span>👥</span> Team of 3</span>
+              <h3 class="portfolio-title">WMS — Multi-Country</h3>
+              <p class="portfolio-category">Logistics / Supply Chain</p>
+              <p class="portfolio-role">Role: Sr. Developer</p>
+              <p class="portfolio-desc">
+                Warehouse management system deployed across Hong Kong, China, Thailand,
+                and Philippines. Covers receiving, stocktake, dispatch, barcode scanning,
+                geolocation verification, and return workflows.
               </p>
               <div class="portfolio-tags">
                 <span class="portfolio-tag">WPF</span>
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">ADO.NET</span>
+                <span class="portfolio-tag">Socket Server</span>
                 <span class="portfolio-tag">Oracle</span>
-                <span class="portfolio-tag">Barcode</span>
               </div>
             </div>
           </div>
 
-          <div class="portfolio-card fade-in">
-            <div class="portfolio-image">📊</div>
+          <!-- PTL System -->
+          <div class="portfolio-card fade-in" data-category="wms">
+            <div class="portfolio-image">💡</div>
             <div class="portfolio-content">
-              <span class="portfolio-badge"
-                ><span>🔒</span> Enterprise Project</span
-              >
-              <h3 class="portfolio-title">Financial Analytics Platform</h3>
-              <p class="portfolio-category">Data & Analytics</p>
+              <span class="portfolio-badge"><span>🛒</span> A.S. Watson</span>
+              <span class="portfolio-team"><span>👥</span> Team of 2</span>
+              <h3 class="portfolio-title">PTL — Put/Pick to Light</h3>
+              <p class="portfolio-category">Warehouse Automation</p>
+              <p class="portfolio-role">Role: Sr. Developer</p>
               <p class="portfolio-desc">
-                Real-time financial dashboards with predictive analytics, Azure
-                Cosmos DB backend, and interactive visualizations.
+                PTL hardware integration for automated warehouse pick/put instructions.
+                Real-time data interchange across Web APIs and file systems.
               </p>
               <div class="portfolio-tags">
-                <span class="portfolio-tag">React</span>
-                <span class="portfolio-tag">Azure</span>
-                <span class="portfolio-tag">Cosmos DB</span>
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">ADO.NET</span>
+                <span class="portfolio-tag">Web Services</span>
+                <span class="portfolio-tag">Web API</span>
+                <span class="portfolio-tag">Oracle</span>
               </div>
             </div>
           </div>
+
+          <!-- UI Automation -->
+          <div class="portfolio-card fade-in" data-category="enterprise">
+            <div class="portfolio-image">⚙️</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🛒</span> A.S. Watson</span>
+              <span class="portfolio-team"><span>👥</span> Solo</span>
+              <h3 class="portfolio-title">UI Automation</h3>
+              <p class="portfolio-category">Process Automation</p>
+              <p class="portfolio-role">Role: Sr. Developer</p>
+              <p class="portfolio-desc">
+                Dynamic form automation system reducing user input time by 60%.
+                Fetches data from Excel, Oracle, SQL Server, and XML, then
+                auto-fills and submits forms using UI robotics.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">ADO.NET</span>
+                <span class="portfolio-tag">Web API</span>
+                <span class="portfolio-tag">OLEDB</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stock Take - Snapdeal -->
+          <div class="portfolio-card fade-in" data-category="enterprise">
+            <div class="portfolio-image">📋</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>📦</span> Snapdeal</span>
+              <span class="portfolio-team"><span>👥</span> Team of 3</span>
+              <h3 class="portfolio-title">Stock Take System</h3>
+              <p class="portfolio-category">Inventory Management</p>
+              <p class="portfolio-role">Role: Team Lead / Designer / Developer</p>
+              <p class="portfolio-desc">
+                Physical stock tracking system for Snapdeal warehouses.
+                Socket server handling 100+ client requests/sec with live dashboards
+                and database replication.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">WPF</span>
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">ADO.NET</span>
+                <span class="portfolio-tag">Socket Server</span>
+                <span class="portfolio-tag">SQL Server</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Supply Chain - Delhi Excise -->
+          <div class="portfolio-card fade-in" data-category="enterprise">
+            <div class="portfolio-image">🏛️</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🏛️</span> Delhi Excise</span>
+              <span class="portfolio-team"><span>👥</span> Team of 6</span>
+              <h3 class="portfolio-title">Supply Chain — Distillery</h3>
+              <p class="portfolio-category">Government / Supply Chain</p>
+              <p class="portfolio-role">Role: Team Lead / Designer / Developer</p>
+              <p class="portfolio-desc">
+                Supply chain management portal for Delhi Excise covering liquor production,
+                vendor management, barcode tracking, and FTP integration for third-party data.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">ASP.NET</span>
+                <span class="portfolio-tag">WPF</span>
+                <span class="portfolio-tag">JavaScript</span>
+                <span class="portfolio-tag">jQuery</span>
+                <span class="portfolio-tag">SQL Server</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grain Management -->
+          <div class="portfolio-card fade-in" data-category="enterprise">
+            <div class="portfolio-image">🌾</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🏭</span> Adani Agro</span>
+              <span class="portfolio-team"><span>👥</span> Team of 4</span>
+              <h3 class="portfolio-title">Grain Management System</h3>
+              <p class="portfolio-category">Agriculture / Logistics</p>
+              <p class="portfolio-role">Role: Team Lead / Designer / Developer</p>
+              <p class="portfolio-desc">
+                Automated wheat intake, RFID tagging, weighbridge integration, silo
+                inventory tracking, and real-time dashboards with geolocation for
+                Adani Agro Logistics.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">ASP.NET</span>
+                <span class="portfolio-tag">JavaScript</span>
+                <span class="portfolio-tag">jQuery</span>
+                <span class="portfolio-tag">Google Location API</span>
+                <span class="portfolio-tag">SQL Server</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- File Management -->
+          <div class="portfolio-card fade-in" data-category="enterprise">
+            <div class="portfolio-image">📁</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>📄</span> Jaypee Group</span>
+              <span class="portfolio-team"><span>👥</span> Team of 3</span>
+              <h3 class="portfolio-title">File Management System</h3>
+              <p class="portfolio-category">Document Management</p>
+              <p class="portfolio-role">Role: Team Lead / Designer / Developer</p>
+              <p class="portfolio-desc">
+                Barcode-based file tracking system with mobile putaway/binning,
+                request slip generation, due-date reminders, and CE device scanning
+                for picking and returns.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">ASP.NET MVC</span>
+                <span class="portfolio-tag">JavaScript</span>
+                <span class="portfolio-tag">jQuery</span>
+                <span class="portfolio-tag">Oracle</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- WMS-WIP AO Smith -->
+          <div class="portfolio-card fade-in" data-category="wms">
+            <div class="portfolio-image">🔧</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🏭</span> AO Smith</span>
+              <span class="portfolio-team"><span>👥</span> Team of 3</span>
+              <h3 class="portfolio-title">WMS-WIP — Manufacturing</h3>
+              <p class="portfolio-category">Manufacturing / Warehouse</p>
+              <p class="portfolio-role">Role: Team Lead / Designer / Developer</p>
+              <p class="portfolio-desc">
+                Combined WMS and WIP system for AO Smith water heater manufacturing plant.
+                Covers GRN receipts, barcode labeling, putaway, QC, work orders, and FG tracking.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">WPF</span>
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">ADO.NET</span>
+                <span class="portfolio-tag">SQL Server</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TMS P&G -->
+          <div class="portfolio-card fade-in" data-category="enterprise">
+            <div class="portfolio-image">🚛</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🧴</span> Procter & Gamble</span>
+              <span class="portfolio-team"><span>👥</span> Team of 3</span>
+              <h3 class="portfolio-title">TMS — Transport Management</h3>
+              <p class="portfolio-category">Transport / Tracking</p>
+              <p class="portfolio-role">Role: Team Lead / Designer / Developer</p>
+              <p class="portfolio-desc">
+                Vehicle tracking system for P&G monitoring raw material movement,
+                gate reporting, unloading phases, and geolocation with automated
+                suggestions for free unloading areas.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">ASP.NET</span>
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">ADO.NET</span>
+                <span class="portfolio-tag">Google Location API</span>
+                <span class="portfolio-tag">SQL Server</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- WIP Greenply -->
+          <div class="portfolio-card fade-in" data-category="enterprise">
+            <div class="portfolio-image">🪵</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🏭</span> Greenply Industries</span>
+              <span class="portfolio-team"><span>👥</span> Team of 5</span>
+              <h3 class="portfolio-title">WIP — Laminate Manufacturing</h3>
+              <p class="portfolio-category">Manufacturing / SAP Integration</p>
+              <p class="portfolio-role">Role: Team Lead / Designer / Developer</p>
+              <p class="portfolio-desc">
+                Manufacturing workflow integrated with SAP for work order generation.
+                Socket server supporting 40+ devices with online/offline data storage
+                for real-time production tracking.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">Windows Forms</span>
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">ADO.NET</span>
+                <span class="portfolio-tag">SAP .Net Connector</span>
+                <span class="portfolio-tag">SQL Server</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payroll System -->
+          <div class="portfolio-card fade-in" data-category="fullstack">
+            <div class="portfolio-image">💰</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>💼</span> Digital Info Solutions</span>
+              <span class="portfolio-team"><span>👥</span> Team of 2</span>
+              <h3 class="portfolio-title">Payroll Management System</h3>
+              <p class="portfolio-category">HR / Payroll</p>
+              <p class="portfolio-role">Role: Designer / Developer</p>
+              <p class="portfolio-desc">
+                Employee payroll, attendance, tax, and HR management system for medium-level
+                companies. Features biometric/manual attendance integration and self-service portal.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">ADO.NET</span>
+                <span class="portfolio-tag">JavaScript</span>
+                <span class="portfolio-tag">jQuery</span>
+                <span class="portfolio-tag">SQL Server</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- WIP — Annex Glass -->
+          <div class="portfolio-card fade-in" data-category="enterprise">
+            <div class="portfolio-image">🪟</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🏭</span> Annex Glass</span>
+              <span class="portfolio-team"><span>👥</span> Team of 2</span>
+              <h3 class="portfolio-title">WIP — Glass Cutting</h3>
+              <p class="portfolio-category">Manufacturing / WIP</p>
+              <p class="portfolio-role">Role: Team Lead / Designer / Developer</p>
+              <p class="portfolio-desc">
+                Glass cutting workflow integrated with GRN receipts, manual PO-based work orders,
+                barcode labeling, and third-party cutting software via text file exchange.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">WPF</span>
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">ADO.NET</span>
+                <span class="portfolio-tag">SQL Server</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inventory Management — Flowmore -->
+          <div class="portfolio-card fade-in" data-category="enterprise">
+            <div class="portfolio-image">⚙️</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>🏭</span> Flowmore Pvt Ltd</span>
+              <span class="portfolio-team"><span>👥</span> Team of 3</span>
+              <h3 class="portfolio-title">Inventory Management System</h3>
+              <p class="portfolio-category">Inventory / Manufacturing</p>
+              <p class="portfolio-role">Role: Designer / Developer</p>
+              <p class="portfolio-desc">
+                Inventory management for heavy pump manufacturer serving government sector.
+                Covers GRN receipts, barcode label printing, putaway, QC, dispatch, and
+                purchase order fulfillment.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">Windows Forms</span>
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">ADO.NET</span>
+                <span class="portfolio-tag">SQL Server</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dis Account -->
+          <div class="portfolio-card fade-in" data-category="fullstack">
+            <div class="portfolio-image">🧾</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"><span>💼</span> Digital Info Solutions</span>
+              <span class="portfolio-team"><span>👥</span> Team of 2</span>
+              <h3 class="portfolio-title">Dis Account — Billing & Inventory</h3>
+              <p class="portfolio-category">Billing / Inventory</p>
+              <p class="portfolio-role">Role: Designer / Developer</p>
+              <p class="portfolio-desc">
+                Billing, inventory, and compliance system similar to Tally with enhanced
+                ease of use. Features unlimited company creation, vendor management,
+                and automated bank reconciliation.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">C#</span>
+                <span class="portfolio-tag">ADO.NET</span>
+                <span class="portfolio-tag">JavaScript</span>
+                <span class="portfolio-tag">jQuery</span>
+                <span class="portfolio-tag">SQL Server</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section (NEW) -->
+    <section class="education" id="education">
+      <div class="section-center">
+        <h2 class="section-title">Education & Certifications</h2>
+        <p class="section-subtitle">Academic foundation and professional credentials</p>
+
+        <div class="education-grid">
+          <div class="education-card fade-in">
+            <div class="education-icon">🎓</div>
+            <h3 class="education-title">B.Sc. (IT)</h3>
+            <p class="education-school">Kuvempu University</p>
+            <p class="education-year">2010</p>
+          </div>
+
+          <div class="education-card fade-in">
+            <div class="education-icon">📚</div>
+            <h3 class="education-title">Advanced Diploma in IT</h3>
+            <p class="education-school">Information Technology</p>
+            <p class="education-year">Post-Secondary</p>
+          </div>
+
+          <div class="education-card fade-in">
+            <div class="education-icon">🏅</div>
+            <h3 class="education-title">Intermediate (12th)</h3>
+            <p class="education-school">J.A.C Board</p>
+            <p class="education-year">2005</p>
+          </div>
+        </div>
+
+        <div class="cert-list fade-in">
+          <h4 style="color: var(--accent-light); margin-bottom: 1rem; font-size: 1.1rem;">Certifications</h4>
+          <span class="cert-tag">🏅 Microsoft MCP</span>
+          <span class="cert-tag">🏅 Microsoft MCTS (.NET)</span>
         </div>
       </div>
     </section>
@@ -1158,7 +2111,7 @@
           <div class="contact-card fade-in">
             <div class="contact-icon">📍</div>
             <p class="contact-label">Location</p>
-            <p class="contact-value">Austin Avenue, Hong Kong</p>
+            <p class="contact-value">Tung Chung, Hong Kong</p>
           </div>
 
           <div class="contact-card fade-in">
@@ -1178,30 +2131,41 @@
               >
             </p>
           </div>
+
+          <div class="contact-card fade-in">
+            <div class="contact-icon">🌐</div>
+            <p class="contact-label">Website</p>
+            <p class="contact-value">
+              <a href="https://www.gautam958web.in" target="_blank"
+                >gautam958web.in</a
+              >
+            </p>
+          </div>
         </div>
 
-        <div style="text-align: center">
+        <div class="contact-buttons">
           <a
             href="https://wa.me/85253451910?text=Hi%20Gautam,%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!"
             target="_blank"
             class="whatsapp-btn"
           >
-            <span>📱</span> Message on WhatsApp (HK)
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+            Message on WhatsApp (HK)
           </a>
-          <br />
           <a
             href="https://wa.me/919650979813?text=Hi%20Gautam,%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!"
             target="_blank"
             class="whatsapp-btn"
-            style="background: #25d366; margin-top: 1rem"
           >
-            <span>📱</span> Message on WhatsApp (IN)
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+            Message on WhatsApp (IN)
           </a>
-          <br />
+        </div>
+
+        <div class="contact-buttons">
           <a
             href="tel:+85253451910"
             class="btn btn-outline"
-            style="margin-top: 1rem"
           >
             <span>📞</span> Call HK: +852 53451910
           </a>
@@ -1236,16 +2200,24 @@
           >
             📱
           </a>
+          <a
+            href="https://www.gautam958web.in"
+            target="_blank"
+            class="social-link"
+            title="Website"
+          >
+            🌐
+          </a>
         </div>
         <p class="footer-text">
-          © 2024 <a href="https://www.gautam958web.in">gautam958web.in</a> |
+          © 2025 <a href="https://www.gautam958web.in">gautam958web.in</a> |
           Powered by Azure
         </p>
       </div>
     </footer>
 
     <script>
-      // Scroll animations
+      // ===== Scroll animations =====
       const observerOptions = {
         threshold: 0.1,
         rootMargin: "0px 0px -50px 0px",
@@ -1263,7 +2235,7 @@
         observer.observe(el);
       });
 
-      // Navigation dots active state
+      // ===== Navigation dots active state =====
       const sections = document.querySelectorAll("section");
       const navDots = document.querySelectorAll(".nav-dot");
 
@@ -1284,7 +2256,7 @@
         });
       });
 
-      // Smooth scroll for navigation
+      // ===== Smooth scroll for navigation =====
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
           e.preventDefault();
@@ -1298,18 +2270,16 @@
         });
       });
 
-      // Theme Switcher
+      // ===== Theme Switcher =====
       const themeBtns = document.querySelectorAll(".theme-btn");
       const html = document.documentElement;
 
-      // Load saved theme
       const savedTheme = localStorage.getItem("theme") || "dark-blue";
       html.setAttribute("data-theme", savedTheme);
       themeBtns.forEach((btn) => {
         btn.classList.toggle("active", btn.dataset.theme === savedTheme);
       });
 
-      // Theme switch functionality
       themeBtns.forEach((btn) => {
         btn.addEventListener("click", () => {
           const theme = btn.dataset.theme;
@@ -1320,6 +2290,109 @@
           btn.classList.add("active");
         });
       });
+
+      // ===== Portfolio Filter =====
+      const filterBtns = document.querySelectorAll(".filter-btn");
+      const portfolioCards = document.querySelectorAll(".portfolio-card");
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          filterBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          const filter = btn.dataset.filter;
+
+          portfolioCards.forEach((card) => {
+            if (filter === "all" || card.dataset.category === filter) {
+              card.classList.remove("hidden");
+              card.classList.add("visible");
+            } else {
+              card.classList.add("hidden");
+            }
+          });
+        });
+      });
+
+      // ===== Animated counters for stats =====
+      function animateCounters() {
+        const statNumbers = document.querySelectorAll(".stat-number");
+        statNumbers.forEach((stat) => {
+          const text = stat.textContent;
+          const match = text.match(/(\d+)/);
+          if (match) {
+            const target = parseInt(match[1]);
+            const suffix = text.replace(/\d+/, "");
+            let current = 0;
+            const increment = target / 40;
+            const timer = setInterval(() => {
+              current += increment;
+              if (current >= target) {
+                current = target;
+                clearInterval(timer);
+              }
+              stat.textContent = Math.floor(current) + suffix;
+            }, 30);
+          }
+        });
+      }
+
+      const statsObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateCounters();
+              statsObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+
+      const statsRow = document.querySelector(".stats-row");
+      if (statsRow) {
+        statsObserver.observe(statsRow);
+      }
+
+      // ===== Typing effect for hero subtitle =====
+      const heroSubtitle = document.querySelector(".hero-subtitle");
+      if (heroSubtitle) {
+        const roles = [
+          "Staff Engineer | Full-Stack Developer | AI Practitioner",
+          "Azure Cloud Expert | .NET Core Specialist",
+          "15+ Years Enterprise Experience",
+          "AI/ML & LLM Integration Specialist"
+        ];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeRole() {
+          const currentRole = roles[roleIndex];
+
+          if (isDeleting) {
+            heroSubtitle.textContent = currentRole.substring(0, charIndex - 1);
+            charIndex--;
+          } else {
+            heroSubtitle.textContent = currentRole.substring(0, charIndex + 1);
+            charIndex++;
+          }
+
+          let typeSpeed = isDeleting ? 30 : 60;
+
+          if (!isDeleting && charIndex === currentRole.length) {
+            typeSpeed = 2000;
+            isDeleting = true;
+          } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            typeSpeed = 500;
+          }
+
+          setTimeout(typeRole, typeSpeed);
+        }
+
+        setTimeout(typeRole, 2000);
+      }
     </script>
   </body>
 </html>
