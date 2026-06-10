@@ -126,6 +126,10 @@
   background: linear-gradient(135deg, #050505, #0f172a);
 }
 
+.theme-option.indigo .theme-swatch {
+  background: linear-gradient(135deg, #312e81, #6366f1);
+}
+
 .theme-label {
   pointer-events: none;
 }
@@ -374,6 +378,115 @@
 
 [data-theme="light"] ::-webkit-scrollbar-thumb {
   background: var(--accent);
+}
+
+/* ============================================================
+   THEME: INDIGO (Sello-Inspired)
+   ============================================================ */
+[data-theme="indigo"] {
+  --primary: #0f0d2e;
+  --secondary: #1a1640;
+  --accent: #6366f1;
+  --accent-light: #818cf8;
+  --text: #e8e6f0;
+  --text-muted: #a5a3b5;
+  --card-bg: rgba(26, 22, 64, 0.6);
+  --glass: rgba(255, 255, 255, 0.05);
+  --border: rgba(99, 102, 241, 0.18);
+}
+
+[data-theme="indigo"] body {
+  background: #0f0d2e;
+}
+
+[data-theme="indigo"] .hero-bg::after {
+  background: linear-gradient(
+    135deg,
+    rgba(15, 13, 46, 0.96) 0%,
+    rgba(26, 22, 64, 0.7) 50%,
+    rgba(15, 13, 46, 0.94) 100%
+  );
+}
+
+[data-theme="indigo"] .hero h1 {
+  background: linear-gradient(135deg, #ffffff 0%, #818cf8 50%, #a78bfa 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+[data-theme="indigo"] .profile-image {
+  border-color: var(--accent);
+  box-shadow:
+    0 0 40px rgba(99, 102, 241, 0.3),
+    0 0 80px rgba(99, 102, 241, 0.1);
+}
+
+[data-theme="indigo"] .skill-group:hover,
+[data-theme="indigo"] .portfolio-card:hover,
+[data-theme="indigo"] .education-card:hover,
+[data-theme="indigo"] .contact-card:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(99, 102, 241, 0.05);
+}
+
+[data-theme="indigo"] .section-title {
+  color: #f1f0ff;
+}
+
+[data-theme="indigo"] .skill-group h4 {
+  color: #6366f1;
+}
+
+[data-theme="indigo"] .contact-value {
+  color: #f1f0ff;
+}
+
+[data-theme="indigo"] .contact-value a {
+  color: #818cf8;
+}
+
+[data-theme="indigo"] .btn-primary {
+  background: linear-gradient(135deg, #6366f1, #a78bfa);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+}
+
+[data-theme="indigo"] .btn-primary:hover {
+  background: linear-gradient(135deg, #818cf8, #c4b5fd);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
+}
+
+[data-theme="indigo"] .filter-btn.active,
+[data-theme="indigo"] .nav-dot:hover,
+[data-theme="indigo"] .nav-dot.active {
+  background: #6366f1;
+  border-color: #6366f1;
+}
+
+[data-theme="indigo"] .timeline-content::before {
+  background: #6366f1;
+}
+
+[data-theme="indigo"] .back-to-top {
+  background: linear-gradient(135deg, #6366f1, #a78bfa);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+[data-theme="indigo"] .back-to-top:hover {
+  background: linear-gradient(135deg, #818cf8, #c4b5fd);
+}
+
+[data-theme="indigo"] ::-webkit-scrollbar-track {
+  background: #0a0820;
+}
+
+[data-theme="indigo"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6366f1, #a78bfa);
+  border-radius: 4px;
 }
 
 /* ============================================================
@@ -1258,12 +1371,50 @@ section {
   background: var(--primary);
 }
 
+/* Let's Connect Badges */
+.connect-badges {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.connect-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.connect-badge-open {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  color: #22c55e;
+}
+
+.connect-badge-immediate {
+  background: rgba(234, 179, 8, 0.12);
+  border: 1px solid rgba(234, 179, 8, 0.35);
+  color: #eab308;
+}
+
+.connect-badge .blinking-dot {
+  width: 7px;
+  height: 7px;
+}
+
 /* Locations Grid — two-column India / Hong Kong */
 .locations-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  max-width: 900px;
+  gap: 1.25rem;
+  max-width: 700px;
   margin: 0 auto;
 }
 
@@ -1271,8 +1422,8 @@ section {
   background: var(--card-bg);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 2rem;
+  border-radius: 16px;
+  padding: 1.5rem;
   text-align: center;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
@@ -1372,22 +1523,24 @@ section {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  background: #25d366;
+  background: #3a9b6f;
   color: #fff;
-  padding: 0.75rem 1.5rem;
+  padding: 0.7rem 1.3rem;
   border-radius: 50px;
   font-weight: 600;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   text-decoration: none;
   transition: all 0.3s ease;
   width: 100%;
   justify-content: center;
+  opacity: 0.88;
 }
 
 .whatsapp-btn:hover {
-  background: #20bd5a;
+  background: #33916a;
+  opacity: 1;
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+  box-shadow: 0 10px 30px rgba(58, 155, 111, 0.3);
 }
 
 .whatsapp-btn img {
