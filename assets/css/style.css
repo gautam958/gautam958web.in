@@ -902,6 +902,7 @@ section {
   background: linear-gradient(135deg, var(--card-bg) 0%, rgba(74, 158, 255, 0.08) 100%);
 }
 
+
 .portfolio-card-featured:hover {
   border-color: var(--accent-light);
   box-shadow: 0 20px 50px rgba(74, 158, 255, 0.15);

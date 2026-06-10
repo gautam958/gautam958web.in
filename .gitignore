@@ -1,0 +1,94 @@
+# ===== OS FILES =====
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.directory
+
+# ===== EDITOR / IDE FILES =====
+# VS Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# JetBrains (WebStorm, IntelliJ, etc.)
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+\#*\#
+.#*
+
+# ===== DEPENDENCIES =====
+node_modules/
+jspm_packages/
+bower_components/
+
+# ===== BUILD / DISTRIBUTION =====
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+
+# ===== ENVIRONMENT / SECRETS =====
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+*.cert
+
+# ===== LOGS =====
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===== CACHE =====
+.cache/
+.parcel-cache/
+*.tsbuildinfo
+.eslintcache
+.stylelintcache
+
+# ===== TEMPORARY FILES =====
+tmp/
+temp/
+*.tmp
+*.bak
+
+# ===== WEB PROJECT SPECIFIC =====
+# Source maps
+*.map

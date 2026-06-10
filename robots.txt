@@ -1,0 +1,8 @@
+# Robots.txt for gautam958web.in
+# https://www.gautam958web.in
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.gautam958web.in/sitemap.xml
