@@ -107,7 +107,7 @@
     <!-- Favicon -->
     <link
       rel="icon"
-      href="assets/img/favicon_io/favicon.ico"
+      href="assets/img/Gautham6365_Company-websiteTeams_min.ico"
       type="image/x-icon"
       sizes="any"
     />
@@ -138,25 +138,36 @@
     </div>
 
     <!-- Theme Switcher -->
-    <div class="theme-switcher">
-      <button
-        class="theme-btn dark-blue active"
-        data-theme="dark-blue"
-        title="Dark Blue"
-      >
-        ◐
+    <div class="theme-switcher" id="themeSwitcher">
+      <button class="theme-toggle-btn" id="themeToggle" title="Change Theme">
+        🎨
       </button>
-      <button class="theme-btn light" data-theme="light" title="Light">
-        ☀
-      </button>
-      <button class="theme-btn red" data-theme="red" title="Red">◆</button>
-      <button
-        class="theme-btn midnight"
-        data-theme="midnight"
-        title="Midnight Aurora"
-      >
-        ✦
-      </button>
+      <div class="theme-dropdown" id="themeDropdown">
+        <button
+          class="theme-option dark-blue active"
+          data-theme="dark-blue"
+          title="Dark Blue"
+        >
+          <span class="theme-swatch"></span>
+          <span class="theme-label">Dark Blue</span>
+        </button>
+        <button class="theme-option light" data-theme="light" title="Light">
+          <span class="theme-swatch"></span>
+          <span class="theme-label">Light</span>
+        </button>
+        <button class="theme-option red" data-theme="red" title="Red Dark">
+          <span class="theme-swatch"></span>
+          <span class="theme-label">Red Dark</span>
+        </button>
+        <button
+          class="theme-option midnight"
+          data-theme="midnight"
+          title="Midnight Aurora"
+        >
+          <span class="theme-swatch"></span>
+          <span class="theme-label">Midnight</span>
+        </button>
+      </div>
     </div>
 
     <!-- Navigation Dots -->
@@ -193,6 +204,14 @@
         />
       </div>
       <div class="hero-content">
+        <div class="hero-status-badges">
+          <span class="status-badge status-badge-open"
+            ><span class="blinking-dot"></span> Open to Work</span
+          >
+          <span class="status-badge status-badge-immediate"
+            >⚡ Join Immediately</span
+          >
+        </div>
         <img
           src="assets/img/Gautham6450_LinkedInWhatsApp (1)-min.jpg"
           alt="Gautam Kumar"
@@ -1206,65 +1225,96 @@
         <h2 class="section-title">Let's Connect</h2>
         <p class="section-subtitle">Open to opportunities and collaborations</p>
 
-        <div class="contact-grid">
-          <div class="contact-card fade-in">
-            <div class="contact-icon">📍</div>
-            <p class="contact-label">Location</p>
-            <p class="contact-value">Tung Chung, Hong Kong</p>
+        <div class="locations-grid">
+          <!-- India Section -->
+          <div class="location-section fade-in">
+            <div class="location-header">
+              <span class="location-flag">🇮🇳</span>
+              <h3 class="location-title">India</h3>
+            </div>
+            <div class="location-cards">
+              <div class="contact-card">
+                <div class="contact-icon">📍</div>
+                <p class="contact-label">Location</p>
+                <p class="contact-value">Deoghar, Jharkhand</p>
+              </div>
+
+              <div class="contact-card">
+                <div class="contact-icon">📧</div>
+                <p class="contact-label">Email</p>
+                <p class="contact-value">
+                  <a href="mailto:gautam958@gmail.com">gautam958@gmail.com</a>
+                </p>
+              </div>
+
+              <div class="contact-card">
+                <div class="contact-icon">💼</div>
+                <p class="contact-label">LinkedIn</p>
+                <p class="contact-value">
+                  <a
+                    href="https://www.linkedin.com/in/gautam958"
+                    target="_blank"
+                    >linkedin.com/in/gautam958</a
+                  >
+                </p>
+              </div>
+            </div>
+            <a
+              href="https://wa.me/919650979813?text=Hi%20Gautam,%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!"
+              target="_blank"
+              class="whatsapp-btn"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                alt="WhatsApp"
+              />
+              Message on WhatsApp (IN)
+            </a>
           </div>
 
-          <div class="contact-card fade-in">
-            <div class="contact-icon">📧</div>
-            <p class="contact-label">Email</p>
-            <p class="contact-value">
-              <a href="mailto:gautam958@gmail.com">gautam958@gmail.com</a>
-            </p>
-          </div>
+          <!-- Hong Kong Section -->
+          <div class="location-section fade-in">
+            <div class="location-header">
+              <span class="location-flag">🇭🇰</span>
+              <h3 class="location-title">Hong Kong</h3>
+            </div>
+            <div class="location-cards">
+              <div class="contact-card">
+                <div class="contact-icon">📍</div>
+                <p class="contact-label">Location</p>
+                <p class="contact-value">Tung Chung, Hong Kong</p>
+              </div>
 
-          <div class="contact-card fade-in">
-            <div class="contact-icon">💼</div>
-            <p class="contact-label">LinkedIn</p>
-            <p class="contact-value">
-              <a href="https://www.linkedin.com/in/gautam958" target="_blank"
-                >linkedin.com/in/gautam958</a
-              >
-            </p>
-          </div>
+              <div class="contact-card">
+                <div class="contact-icon">📧</div>
+                <p class="contact-label">Email</p>
+                <p class="contact-value">
+                  <a href="mailto:gautam958@gmail.com">gautam958@gmail.com</a>
+                </p>
+              </div>
 
-          <div class="contact-card fade-in">
-            <div class="contact-icon">🌐</div>
-            <p class="contact-label">Website</p>
-            <p class="contact-value">
-              <a href="https://www.gautam958web.in" target="_blank"
-                >gautam958web.in</a
-              >
-            </p>
+              <div class="contact-card">
+                <div class="contact-icon">🌐</div>
+                <p class="contact-label">Website</p>
+                <p class="contact-value">
+                  <a href="https://www.gautam958web.in" target="_blank"
+                    >gautam958web.in</a
+                  >
+                </p>
+              </div>
+            </div>
+            <a
+              href="https://wa.me/85253451910?text=Hi%20Gautam,%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!"
+              target="_blank"
+              class="whatsapp-btn"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                alt="WhatsApp"
+              />
+              Message on WhatsApp (HK)
+            </a>
           </div>
-        </div>
-
-        <div class="contact-buttons">
-          <a
-            href="https://wa.me/85253451910?text=Hi%20Gautam,%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!"
-            target="_blank"
-            class="whatsapp-btn"
-          >
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-              alt="WhatsApp"
-            />
-            Message on WhatsApp (HK)
-          </a>
-          <a
-            href="https://wa.me/919650979813?text=Hi%20Gautam,%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!"
-            target="_blank"
-            class="whatsapp-btn"
-          >
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-              alt="WhatsApp"
-            />
-            Message on WhatsApp (IN)
-          </a>
         </div>
       </div>
     </section>
@@ -1292,7 +1342,7 @@
             ✉️
           </a>
           <a
-            href="https://wa.me/85253451910"
+            href="https://wa.me/919650979813"
             target="_blank"
             class="social-link"
             title="WhatsApp"
@@ -1309,7 +1359,7 @@
           </a>
         </div>
         <p class="footer-text">
-          © 2025 <a href="https://www.gautam958web.in">gautam958web.in</a> |
+          © 2026 <a href="https://www.gautam958web.in">gautam958web.in</a> |
           Made with ❤️ by Gautam Kumar
         </p>
       </div>
@@ -1370,24 +1420,40 @@
       });
 
       // ===== Theme Switcher =====
-      const themeBtns = document.querySelectorAll(".theme-btn");
+      const themeToggle = document.getElementById("themeToggle");
+      const themeDropdown = document.getElementById("themeDropdown");
+      const themeOptions = document.querySelectorAll(".theme-option");
       const html = document.documentElement;
 
       const savedTheme = localStorage.getItem("theme") || "dark-blue";
       html.setAttribute("data-theme", savedTheme);
-      themeBtns.forEach((btn) => {
-        btn.classList.toggle("active", btn.dataset.theme === savedTheme);
+      themeOptions.forEach((opt) => {
+        opt.classList.toggle("active", opt.dataset.theme === savedTheme);
       });
 
-      themeBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const theme = btn.dataset.theme;
+      themeToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        themeDropdown.classList.toggle("open");
+        themeToggle.classList.toggle("open");
+      });
+
+      themeOptions.forEach((opt) => {
+        opt.addEventListener("click", () => {
+          const theme = opt.dataset.theme;
           html.setAttribute("data-theme", theme);
           localStorage.setItem("theme", theme);
 
-          themeBtns.forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
+          themeOptions.forEach((b) => b.classList.remove("active"));
+          opt.classList.add("active");
+
+          themeDropdown.classList.remove("open");
+          themeToggle.classList.remove("open");
         });
+      });
+
+      document.addEventListener("click", () => {
+        themeDropdown.classList.remove("open");
+        themeToggle.classList.remove("open");
       });
 
       // ===== Portfolio Filter =====

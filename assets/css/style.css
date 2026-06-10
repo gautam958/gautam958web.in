@@ -19,51 +19,115 @@
   right: 1.5rem;
   z-index: 1000;
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   gap: 0.5rem;
-  background: var(--glass);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 0.5rem;
-  border-radius: 50px;
-  border: 1px solid var(--border);
 }
 
-.theme-btn {
-  width: 36px;
-  height: 36px;
+.theme-toggle-btn {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 2px solid transparent;
+  border: 2px solid var(--border);
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.theme-btn:hover {
+.theme-toggle-btn:hover {
   transform: scale(1.1);
-}
-
-.theme-btn.active {
   border-color: var(--accent);
-  box-shadow: 0 0 15px rgba(74, 158, 255, 0.4);
+  box-shadow: 0 4px 20px rgba(74, 158, 255, 0.4);
 }
 
-.theme-btn.dark-blue {
+.theme-toggle-btn.open {
+  border-color: var(--accent);
+}
+
+.theme-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.95);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.theme-dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.theme-option:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+.theme-option.active {
+  border-color: var(--accent);
+  background: rgba(74, 158, 255, 0.12);
+  color: var(--accent-light);
+}
+
+.theme-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.theme-option.dark-blue .theme-swatch {
   background: linear-gradient(135deg, #0a1628, #1a2d4a);
 }
 
-.theme-btn.light {
+.theme-option.light .theme-swatch {
   background: linear-gradient(135deg, #ffffff, #f0f4f8);
 }
 
-.theme-btn.red {
+.theme-option.red .theme-swatch {
   background: linear-gradient(135deg, #1a0505, #4a1515);
 }
 
-.theme-btn.midnight {
+.theme-option.midnight .theme-swatch {
   background: linear-gradient(135deg, #050505, #0f172a);
+}
+
+.theme-label {
+  pointer-events: none;
 }
 
 /* ============================================================
@@ -463,6 +527,11 @@ body {
   color: var(--accent-light);
   margin-bottom: 1.5rem;
   font-weight: 500;
+  min-height: 3.2em;
+  line-height: 1.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-description {
@@ -502,6 +571,87 @@ body {
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+/* ===== HERO STATUS BADGES ===== */
+.hero-status-badges {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  animation: badge-slide-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+@keyframes badge-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.status-badge-open {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #22c55e;
+  animation: pulse-glow-green 2s ease-in-out infinite alternate;
+}
+
+.status-badge-immediate {
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid rgba(234, 179, 8, 0.4);
+  color: #eab308;
+  animation: pulse-glow-yellow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow-green {
+  0% { box-shadow: 0 0 8px rgba(34, 197, 94, 0.15); }
+  100% { box-shadow: 0 0 16px rgba(34, 197, 94, 0.25); }
+}
+
+@keyframes pulse-glow-yellow {
+  0% { box-shadow: 0 0 8px rgba(234, 179, 8, 0.15); }
+  100% { box-shadow: 0 0 16px rgba(234, 179, 8, 0.25); }
+}
+
+.blinking-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  display: inline-block;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.blinking-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.4);
+  animation: blink-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes blink-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.8); opacity: 0; }
 }
 
 /* ===== BUTTONS ===== */
@@ -1108,51 +1258,103 @@ section {
   background: var(--primary);
 }
 
-.contact-grid {
+/* Locations Grid — two-column India / Hong Kong */
+.locations-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  max-width: 800px;
-  margin: 0 auto 2rem;
-  justify-items: center;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-.contact-card {
+.location-section {
   background: var(--card-bg);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 1.5rem;
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.location-section:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.location-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.location-flag {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.location-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent-light);
+}
+
+.location-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.location-section .whatsapp-btn {
+  margin-top: auto;
+}
+
+.contact-card {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
   text-align: center;
   transition: all 0.3s ease;
 }
 
 .contact-card:hover {
   border-color: var(--accent);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .contact-icon {
-  width: 50px;
-  height: 50px;
+  width: 42px;
+  height: 42px;
   background: rgba(74, 158, 255, 0.1);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 1rem;
-  font-size: 1.5rem;
+  margin: 0 auto 0.6rem;
+  font-size: 1.25rem;
 }
 
 .contact-label {
   color: var(--text-muted);
-  font-size: 0.85rem;
-  margin-bottom: 0.25rem;
+  font-size: 0.78rem;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
 }
 
 .contact-value {
   color: #fff;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
 }
 
@@ -1172,13 +1374,14 @@ section {
   gap: 0.6rem;
   background: #25d366;
   color: #fff;
-  padding: 0.9rem 1.8rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 50px;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   text-decoration: none;
   transition: all 0.3s ease;
-  margin-top: 1rem;
+  width: 100%;
+  justify-content: center;
 }
 
 .whatsapp-btn:hover {
@@ -1188,17 +1391,9 @@ section {
 }
 
 .whatsapp-btn img {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border-radius: 4px;
-}
-
-.contact-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 1rem;
 }
 
 /* ===== FOOTER ===== */
@@ -1443,7 +1638,7 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  .contact-grid {
+  .locations-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1473,6 +1668,18 @@ footer {
     right: 1.5rem;
     width: 42px;
     height: 42px;
+    font-size: 1.1rem;
+  }
+
+  .theme-switcher {
+    top: auto;
+    bottom: 5.5rem;
+    right: 1rem;
+  }
+
+  .theme-toggle-btn {
+    width: 40px;
+    height: 40px;
     font-size: 1.1rem;
   }
 
