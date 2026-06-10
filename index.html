@@ -1,1178 +1,1325 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Gautam Kumar - Staff Engineer | Full-Stack Developer | AI/ML Practitioner based in Hong Kong">
-  <meta name="keywords" content="Gautam Kumar, Staff Engineer, Full-Stack Developer, Azure AI, Hong Kong">
-  <title>Gautam Kumar | Staff Engineer & AI Specialist</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="icon" href="assets/img/Gautham6450_LinkedInWhatsApp_min.ico" type="image/x-icon">
-  <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* ===== THEME SWITCHER ===== */
-    .theme-switcher {
-      position: fixed;
-      top: 1.5rem;
-      right: 1.5rem;
-      z-index: 1000;
-      display: flex;
-      gap: 0.5rem;
-      background: var(--glass);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 0.5rem;
-      border-radius: 50px;
-      border: 1px solid var(--border);
-    }
-
-    .theme-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-    }
-
-    .theme-btn:hover {
-      transform: scale(1.1);
-    }
-
-    .theme-btn.active {
-      border-color: var(--accent);
-      box-shadow: 0 0 15px rgba(74, 158, 255, 0.4);
-    }
-
-    .theme-btn.dark-blue { background: linear-gradient(135deg, #0a1628, #1a2d4a); }
-    .theme-btn.light { background: linear-gradient(135deg, #ffffff, #f0f4f8); }
-    .theme-btn.red { background: linear-gradient(135deg, #1a0505, #4a1515); }
-
-    /* Theme: Dark Blue (Default) */
-    :root, [data-theme="dark-blue"] {
-      --primary: #0a1628;
-      --secondary: #1a2d4a;
-      --accent: #4a9eff;
-      --accent-light: #7db8ff;
-      --text: #e8ecf1;
-      --text-muted: #8a9bb0;
-      --card-bg: rgba(26, 45, 74, 0.6);
-      --glass: rgba(255, 255, 255, 0.05);
-      --border: rgba(74, 158, 255, 0.15);
-    }
-
-    /* Theme: Light */
-    [data-theme="light"] {
-      --primary: #f8fafc;
-      --secondary: #ffffff;
-      --accent: #2563eb;
-      --accent-light: #3b82f6;
-      --text: #1e293b;
-      --text-muted: #64748b;
-      --card-bg: rgba(255, 255, 255, 0.9);
-      --glass: rgba(0, 0, 0, 0.05);
-      --border: rgba(0, 0, 0, 0.1);
-    }
-
-    [data-theme="light"] .hero-bg::after {
-      background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.9) 0%,
-        rgba(248, 250, 252, 0.8) 50%,
-        rgba(255, 255, 255, 0.9) 100%
-      );
-    }
-
-    [data-theme="light"] .profile-image {
-      box-shadow: 0 0 40px rgba(37, 99, 235, 0.2);
-    }
-
-    [data-theme="light"] .section-title {
-      color: #1e293b;
-    }
-
-    [data-theme="light"] .hero h1 {
-      background: linear-gradient(135deg, #1e293b 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    [data-theme="light"] .contact-value a,
-    [data-theme="light"] .portfolio-category,
-    [data-theme="light"] .skill-category h4,
-    [data-theme="light"] .hero-subtitle {
-      color: var(--accent);
-    }
-
-    [data-theme="light"] .btn-primary {
-      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
-    }
-
-    [data-theme="light"] ::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-
-    [data-theme="light"] ::-webkit-scrollbar-thumb {
-      background: var(--accent);
-    }
-
-    /* Theme: Red Dark */
-    [data-theme="red"] {
-      --primary: #1a0505;
-      --secondary: #2d1515;
-      --accent: #ef4444;
-      --accent-light: #f87171;
-      --text: #fecaca;
-      --text-muted: #fca5a5;
-      --card-bg: rgba(45, 21, 21, 0.6);
-      --glass: rgba(255, 255, 255, 0.05);
-      --border: rgba(239, 68, 68, 0.2);
-    }
-
-    [data-theme="red"] .hero-bg::after {
-      background: linear-gradient(
-        135deg,
-        rgba(26, 5, 5, 0.95) 0%,
-        rgba(45, 21, 21, 0.7) 50%,
-        rgba(26, 5, 5, 0.9) 100%
-      );
-    }
-
-    [data-theme="red"] .profile-image {
-      border-color: var(--accent);
-      box-shadow: 0 0 40px rgba(239, 68, 68, 0.3);
-    }
-
-    [data-theme="red"] .hero h1 {
-      background: linear-gradient(135deg, #fff 0%, var(--accent-light) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    [data-theme="red"] ::-webkit-scrollbar-thumb {
-      background: var(--accent);
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Manrope', -apple-system, sans-serif;
-      background: var(--primary);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-
-    /* ===== HERO SECTION ===== */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 2rem;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-
-    .hero-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.4) saturate(0.8);
-    }
-
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        135deg,
-        rgba(10, 22, 40, 0.95) 0%,
-        rgba(10, 22, 40, 0.7) 50%,
-        rgba(10, 22, 40, 0.9) 100%
-      );
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 10;
-      text-align: center;
-      max-width: 900px;
-      width: 100%;
-      padding: 3rem 2rem;
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      animation: fadeUp 1s ease-out;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .profile-image {
-      width: 160px;
-      height: 200px;
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      object-fit: cover;
-      object-position: center 30%;
-      border: 4px solid var(--accent);
-      margin-bottom: 1.5rem;
-      box-shadow: 0 0 40px rgba(74, 158, 255, 0.3);
-    }
-
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, #fff 0%, var(--accent-light) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-subtitle {
-      font-size: 1.25rem;
-      color: var(--accent-light);
-      margin-bottom: 1.5rem;
-      font-weight: 500;
-    }
-
-    .hero-description {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      max-width: 700px;
-      margin: 0 auto 2rem;
-      line-height: 1.8;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.875rem 1.75rem;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      border: none;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      background: var(--accent-light);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(74, 158, 255, 0.3);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--text);
-      border: 2px solid var(--border);
-    }
-
-    .btn-outline:hover {
-      background: var(--glass);
-      border-color: var(--accent);
-    }
-
-    /* ===== SECTIONS ===== */
-    section {
-      padding: 5rem 2rem;
-    }
-
-    .section-center {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 2.75rem);
-      text-align: center;
-      margin-bottom: 1rem;
-      color: #fff;
-    }
-
-    .section-subtitle {
-      text-align: center;
-      color: var(--text-muted);
-      margin-bottom: 3rem;
-      font-size: 1.1rem;
-    }
-
-    /* ===== ABOUT SECTION ===== */
-    .about {
-      background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
-    }
-
-    .about-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 3rem;
-      margin-bottom: 2rem;
-    }
-
-    .about-text {
-      font-size: 1.1rem;
-      line-height: 1.9;
-      color: var(--text);
-    }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .skill-category {
-      background: var(--glass);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.5rem;
-    }
-
-    .skill-category h4 {
-      color: var(--accent-light);
-      margin-bottom: 1rem;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .skill-tag {
-      background: rgba(74, 158, 255, 0.1);
-      border: 1px solid rgba(74, 158, 255, 0.2);
-      color: var(--accent-light);
-      padding: 0.4rem 0.9rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-    }
-
-    /* ===== EXPERIENCE SECTION ===== */
-    .experience {
-      background: var(--secondary);
-    }
-
-    .timeline {
-      position: relative;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 2px;
-      height: 100%;
-      background: var(--border);
-    }
-
-    .timeline-item {
-      position: relative;
-      margin-bottom: 3rem;
-      width: 50%;
-      padding-right: 3rem;
-    }
-
-    .timeline-item:nth-child(even) {
-      margin-left: 50%;
-      padding-right: 0;
-      padding-left: 3rem;
-    }
-
-    .timeline-content {
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.5rem;
-      position: relative;
-    }
-
-    .timeline-content::before {
-      content: '';
-      position: absolute;
-      top: 1.5rem;
-      width: 12px;
-      height: 12px;
-      background: var(--accent);
-      border-radius: 50%;
-      border: 3px solid var(--secondary);
-    }
-
-    .timeline-item:nth-child(odd) .timeline-content::before {
-      right: -2.6rem;
-    }
-
-    .timeline-item:nth-child(even) .timeline-content::before {
-      left: -2.6rem;
-    }
-
-    .timeline-date {
-      color: var(--accent);
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .timeline-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-    }
-
-    .timeline-company {
-      color: var(--accent-light);
-      margin-bottom: 0.75rem;
-      font-size: 0.95rem;
-    }
-
-    .timeline-desc {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      line-height: 1.6;
-    }
-
-    /* ===== PORTFOLIO SECTION ===== */
-    .portfolio {
-      background: linear-gradient(180deg, var(--secondary) 0%, var(--primary) 100%);
-    }
-
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .portfolio-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .portfolio-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    .portfolio-image {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-    }
-
-    .portfolio-content {
-      padding: 1.5rem;
-    }
-
-    .portfolio-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .portfolio-category {
-      color: var(--accent-light);
-      font-size: 0.85rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .portfolio-desc {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-
-    .portfolio-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .portfolio-tag {
-      background: rgba(74, 158, 255, 0.1);
-      color: var(--accent-light);
-      padding: 0.3rem 0.7rem;
-      border-radius: 15px;
-      font-size: 0.75rem;
-    }
-
-    .portfolio-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      background: rgba(255, 200, 0, 0.15);
-      color: #ffc800;
-      padding: 0.4rem 0.8rem;
-      border-radius: 15px;
-      font-size: 0.8rem;
-      margin-bottom: 0.75rem;
-    }
-
-    /* ===== CONTACT SECTION ===== */
-    .contact {
-      background: var(--primary);
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      max-width: 800px;
-      margin: 0 auto 3rem;
-    }
-
-    .contact-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.5rem;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .contact-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-    }
-
-    .contact-icon {
-      width: 50px;
-      height: 50px;
-      background: rgba(74, 158, 255, 0.1);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1rem;
-      font-size: 1.5rem;
-    }
-
-    .contact-label {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .contact-value {
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 600;
-    }
-
-    .contact-value a {
-      color: var(--accent-light);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .contact-value a:hover {
-      color: var(--accent);
-    }
-
-    .whatsapp-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: #25D366;
-      color: #fff;
-      padding: 1rem 2rem;
-      border-radius: 50px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      margin-top: 1rem;
-    }
-
-    .whatsapp-btn:hover {
-      background: #20bd5a;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
-    }
-
-    /* ===== FOOTER ===== */
-    footer {
-      background: var(--secondary);
-      padding: 2rem;
-      text-align: center;
-    }
-
-    .footer-content {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .social-link {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      background: var(--glass);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      color: var(--text);
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .social-link:hover {
-      background: var(--accent);
-      border-color: var(--accent);
-      transform: translateY(-3px);
-    }
-
-    .footer-text {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .footer-text a {
-      color: var(--accent-light);
-      text-decoration: none;
-    }
-
-    /* ===== MOBILE RESPONSIVE ===== */
-    @media (max-width: 768px) {
-      .hero-content {
-        padding: 2rem 1.5rem;
-        margin: 1rem;
-        border-radius: 16px;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Gautam Kumar - Staff Engineer | Full-Stack Developer | AI/ML Practitioner based in Hong Kong"
+    />
+    <meta
+      name="keywords"
+      content="Gautam Kumar, Staff Engineer, Full-Stack Developer, Azure AI, Hong Kong"
+    />
+    <title>Gautam Kumar | Staff Engineer & AI Practitioner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="assets/img/Gautham6450_LinkedInWhatsApp_min.ico"
+      type="image/x-icon"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
 
-      .profile-image {
-        width: 120px;
-        height: 150px;
-        object-position: center 30%;
+      /* ===== THEME SWITCHER ===== */
+      .theme-switcher {
+        position: fixed;
+        top: 1.5rem;
+        right: 1.5rem;
+        z-index: 1000;
+        display: flex;
+        gap: 0.5rem;
+        background: var(--glass);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 0.5rem;
+        border-radius: 50px;
+        border: 1px solid var(--border);
       }
 
-      .hero h1 {
-        font-size: 2rem;
-      }
-
-      .hero-subtitle {
+      .theme-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         font-size: 1rem;
       }
 
+      .theme-btn:hover {
+        transform: scale(1.1);
+      }
+
+      .theme-btn.active {
+        border-color: var(--accent);
+        box-shadow: 0 0 15px rgba(74, 158, 255, 0.4);
+      }
+
+      .theme-btn.dark-blue {
+        background: linear-gradient(135deg, #0a1628, #1a2d4a);
+      }
+      .theme-btn.light {
+        background: linear-gradient(135deg, #ffffff, #f0f4f8);
+      }
+      .theme-btn.red {
+        background: linear-gradient(135deg, #1a0505, #4a1515);
+      }
+
+      /* Theme: Dark Blue (Default) */
+      :root,
+      [data-theme="dark-blue"] {
+        --primary: #0a1628;
+        --secondary: #1a2d4a;
+        --accent: #4a9eff;
+        --accent-light: #7db8ff;
+        --text: #e8ecf1;
+        --text-muted: #8a9bb0;
+        --card-bg: rgba(26, 45, 74, 0.6);
+        --glass: rgba(255, 255, 255, 0.05);
+        --border: rgba(74, 158, 255, 0.15);
+      }
+
+      /* Theme: Light */
+      [data-theme="light"] {
+        --primary: #f8fafc;
+        --secondary: #ffffff;
+        --accent: #2563eb;
+        --accent-light: #3b82f6;
+        --text: #1e293b;
+        --text-muted: #64748b;
+        --card-bg: rgba(255, 255, 255, 0.9);
+        --glass: rgba(0, 0, 0, 0.05);
+        --border: rgba(0, 0, 0, 0.1);
+      }
+
+      [data-theme="light"] .hero-bg::after {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.9) 0%,
+          rgba(248, 250, 252, 0.8) 50%,
+          rgba(255, 255, 255, 0.9) 100%
+        );
+      }
+
+      [data-theme="light"] .profile-image {
+        box-shadow: 0 0 40px rgba(37, 99, 235, 0.2);
+      }
+
+      [data-theme="light"] .section-title {
+        color: #1e293b;
+      }
+
+      [data-theme="light"] .hero h1 {
+        background: linear-gradient(135deg, #1e293b 0%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      [data-theme="light"] .contact-value a,
+      [data-theme="light"] .portfolio-category,
+      [data-theme="light"] .skill-category h4,
+      [data-theme="light"] .hero-subtitle {
+        color: var(--accent);
+      }
+
+      [data-theme="light"] .btn-primary {
+        box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+      }
+
+      [data-theme="light"] ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+
+      [data-theme="light"] ::-webkit-scrollbar-thumb {
+        background: var(--accent);
+      }
+
+      /* Theme: Red Dark */
+      [data-theme="red"] {
+        --primary: #1a0505;
+        --secondary: #2d1515;
+        --accent: #ef4444;
+        --accent-light: #f87171;
+        --text: #fecaca;
+        --text-muted: #fca5a5;
+        --card-bg: rgba(45, 21, 21, 0.6);
+        --glass: rgba(255, 255, 255, 0.05);
+        --border: rgba(239, 68, 68, 0.2);
+      }
+
+      [data-theme="red"] .hero-bg::after {
+        background: linear-gradient(
+          135deg,
+          rgba(26, 5, 5, 0.95) 0%,
+          rgba(45, 21, 21, 0.7) 50%,
+          rgba(26, 5, 5, 0.9) 100%
+        );
+      }
+
+      [data-theme="red"] .profile-image {
+        border-color: var(--accent);
+        box-shadow: 0 0 40px rgba(239, 68, 68, 0.3);
+      }
+
+      [data-theme="red"] .hero h1 {
+        background: linear-gradient(135deg, #fff 0%, var(--accent-light) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      [data-theme="red"] ::-webkit-scrollbar-thumb {
+        background: var(--accent);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family:
+          "Manrope",
+          -apple-system,
+          sans-serif;
+        background: var(--primary);
+        color: var(--text);
+        line-height: 1.6;
+        overflow-x: hidden;
+        transition:
+          background 0.3s ease,
+          color 0.3s ease;
+      }
+
+      /* ===== HERO SECTION ===== */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 2rem;
+        overflow: hidden;
+      }
+
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+
+      .hero-bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.4) saturate(0.8);
+      }
+
+      .hero-bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(10, 22, 40, 0.95) 0%,
+          rgba(10, 22, 40, 0.7) 50%,
+          rgba(10, 22, 40, 0.9) 100%
+        );
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        max-width: 900px;
+        width: 100%;
+        padding: 3rem 2rem;
+        background: var(--glass);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        animation: fadeUp 1s ease-out;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .profile-image {
+        width: 160px;
+        height: 200px;
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        object-fit: cover;
+        object-position: center 30%;
+        border: 4px solid var(--accent);
+        margin-bottom: 1.5rem;
+        box-shadow: 0 0 40px rgba(74, 158, 255, 0.3);
+      }
+
+      .hero h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #fff 0%, var(--accent-light) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-subtitle {
+        font-size: 1.25rem;
+        color: var(--accent-light);
+        margin-bottom: 1.5rem;
+        font-weight: 500;
+      }
+
       .hero-description {
-        font-size: 0.95rem;
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        line-height: 1.8;
       }
 
       .hero-buttons {
-        flex-direction: column;
-        align-items: center;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
       }
 
       .btn {
-        width: 100%;
-        justify-content: center;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.75rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
       }
 
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-light);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(74, 158, 255, 0.3);
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--text);
+        border: 2px solid var(--border);
+      }
+
+      .btn-outline:hover {
+        background: var(--glass);
+        border-color: var(--accent);
+      }
+
+      /* ===== SECTIONS ===== */
       section {
-        padding: 3rem 1rem;
+        padding: 5rem 2rem;
+      }
+
+      .section-center {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 4vw, 2.75rem);
+        text-align: center;
+        margin-bottom: 1rem;
+        color: #fff;
+      }
+
+      .section-subtitle {
+        text-align: center;
+        color: var(--text-muted);
+        margin-bottom: 3rem;
+        font-size: 1.1rem;
+      }
+
+      /* ===== ABOUT SECTION ===== */
+      .about {
+        background: linear-gradient(
+          180deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
       }
 
       .about-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .about-text {
+        font-size: 1.1rem;
+        line-height: 1.9;
+        color: var(--text);
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .skill-category {
+        background: var(--glass);
+        border: 1px solid var(--border);
+        border-radius: 16px;
         padding: 1.5rem;
       }
 
+      .skill-category h4 {
+        color: var(--accent-light);
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .skill-tag {
+        background: rgba(74, 158, 255, 0.1);
+        border: 1px solid rgba(74, 158, 255, 0.2);
+        color: var(--accent-light);
+        padding: 0.4rem 0.9rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+      }
+
+      /* ===== EXPERIENCE SECTION ===== */
+      .experience {
+        background: var(--secondary);
+      }
+
+      .timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
       .timeline::before {
-        left: 0;
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 100%;
+        background: var(--border);
       }
 
-      .timeline-item,
+      .timeline-item {
+        position: relative;
+        margin-bottom: 3rem;
+        width: 50%;
+        padding-right: 3rem;
+      }
+
       .timeline-item:nth-child(even) {
-        width: 100%;
-        margin-left: 0;
-        padding-left: 2rem;
+        margin-left: 50%;
         padding-right: 0;
+        padding-left: 3rem;
       }
 
-      .timeline-item:nth-child(odd) .timeline-content::before,
+      .timeline-content {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.5rem;
+        position: relative;
+      }
+
+      .timeline-content::before {
+        content: "";
+        position: absolute;
+        top: 1.5rem;
+        width: 12px;
+        height: 12px;
+        background: var(--accent);
+        border-radius: 50%;
+        border: 3px solid var(--secondary);
+      }
+
+      .timeline-item:nth-child(odd) .timeline-content::before {
+        right: -2.6rem;
+      }
+
       .timeline-item:nth-child(even) .timeline-content::before {
-        left: -1.7rem;
-        right: auto;
+        left: -2.6rem;
+      }
+
+      .timeline-date {
+        color: var(--accent);
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+
+      .timeline-company {
+        color: var(--accent-light);
+        margin-bottom: 0.75rem;
+        font-size: 0.95rem;
+      }
+
+      .timeline-desc {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      /* ===== PORTFOLIO SECTION ===== */
+      .portfolio {
+        background: linear-gradient(
+          180deg,
+          var(--secondary) 0%,
+          var(--primary) 100%
+        );
       }
 
       .portfolio-grid {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .portfolio-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        overflow: hidden;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .portfolio-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .portfolio-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--secondary) 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+      }
+
+      .portfolio-content {
+        padding: 1.5rem;
+      }
+
+      .portfolio-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .portfolio-category {
+        color: var(--accent-light);
+        font-size: 0.85rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .portfolio-desc {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+
+      .portfolio-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+
+      .portfolio-tag {
+        background: rgba(74, 158, 255, 0.1);
+        color: var(--accent-light);
+        padding: 0.3rem 0.7rem;
+        border-radius: 15px;
+        font-size: 0.75rem;
+      }
+
+      .portfolio-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: rgba(255, 200, 0, 0.15);
+        color: #ffc800;
+        padding: 0.4rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        margin-bottom: 0.75rem;
+      }
+
+      /* ===== CONTACT SECTION ===== */
+      .contact {
+        background: var(--primary);
       }
 
       .contact-grid {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        max-width: 800px;
+        margin: 0 auto 3rem;
       }
-    }
 
-    /* ===== ANIMATIONS ===== */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
+      .contact-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
 
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+      .contact-card:hover {
+        border-color: var(--accent);
+        transform: translateY(-3px);
+      }
 
-    /* ===== NAV ===== */
-    .nav-dots {
-      position: fixed;
-      right: 2rem;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      z-index: 100;
-    }
+      .contact-icon {
+        width: 50px;
+        height: 50px;
+        background: rgba(74, 158, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.5rem;
+      }
 
-    .nav-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--glass);
-      border: 2px solid var(--border);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+      .contact-label {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-bottom: 0.25rem;
+      }
 
-    .nav-dot:hover,
-    .nav-dot.active {
-      background: var(--accent);
-      border-color: var(--accent);
-    }
+      .contact-value {
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 600;
+      }
 
-    @media (max-width: 768px) {
+      .contact-value a {
+        color: var(--accent-light);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .contact-value a:hover {
+        color: var(--accent);
+      }
+
+      .whatsapp-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: #25d366;
+        color: #fff;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+      }
+
+      .whatsapp-btn:hover {
+        background: #20bd5a;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+      }
+
+      /* ===== FOOTER ===== */
+      footer {
+        background: var(--secondary);
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .footer-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .social-link {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: var(--glass);
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--text);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .social-link:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        transform: translateY(-3px);
+      }
+
+      .footer-text {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .footer-text a {
+        color: var(--accent-light);
+        text-decoration: none;
+      }
+
+      /* ===== MOBILE RESPONSIVE ===== */
+      @media (max-width: 768px) {
+        .hero-content {
+          padding: 2rem 1.5rem;
+          margin: 1rem;
+          border-radius: 16px;
+        }
+
+        .profile-image {
+          width: 120px;
+          height: 150px;
+          object-position: center 30%;
+        }
+
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .hero-subtitle {
+          font-size: 1rem;
+        }
+
+        .hero-description {
+          font-size: 0.95rem;
+        }
+
+        .hero-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        section {
+          padding: 3rem 1rem;
+        }
+
+        .about-card {
+          padding: 1.5rem;
+        }
+
+        .timeline::before {
+          left: 0;
+        }
+
+        .timeline-item,
+        .timeline-item:nth-child(even) {
+          width: 100%;
+          margin-left: 0;
+          padding-left: 2rem;
+          padding-right: 0;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before,
+        .timeline-item:nth-child(even) .timeline-content::before {
+          left: -1.7rem;
+          right: auto;
+        }
+
+        .portfolio-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ===== ANIMATIONS ===== */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ===== NAV ===== */
       .nav-dots {
-        display: none;
+        position: fixed;
+        right: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        z-index: 100;
       }
-    }
 
-    /* ===== SCROLLBAR ===== */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
+      .nav-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--glass);
+        border: 2px solid var(--border);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
 
-    ::-webkit-scrollbar-track {
-      background: var(--primary);
-    }
+      .nav-dot:hover,
+      .nav-dot.active {
+        background: var(--accent);
+        border-color: var(--accent);
+      }
 
-    ::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 4px;
-    }
-  </style>
-</head>
-<body>
-  <!-- Theme Switcher -->
-  <div class="theme-switcher">
-    <button class="theme-btn dark-blue active" data-theme="dark-blue" title="Dark Blue">◐</button>
-    <button class="theme-btn light" data-theme="light" title="Light">☀</button>
-    <button class="theme-btn red" data-theme="red" title="Red">◆</button>
-  </div>
+      @media (max-width: 768px) {
+        .nav-dots {
+          display: none;
+        }
+      }
 
-  <!-- Navigation Dots -->
-  <nav class="nav-dots">
-    <a href="#hero" class="nav-dot active" title="Home"></a>
-    <a href="#about" class="nav-dot" title="About"></a>
-    <a href="#experience" class="nav-dot" title="Experience"></a>
-    <a href="#portfolio" class="nav-dot" title="Portfolio"></a>
-    <a href="#contact" class="nav-dot" title="Contact"></a>
-  </nav>
+      /* ===== SCROLLBAR ===== */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
 
-  <!-- Hero Section -->
-  <section class="hero" id="hero">
-    <div class="hero-bg">
-      <img src="assets/img/Gautham6365_Company websiteTeams (1)-min.jpg" alt="Team photo">
+      ::-webkit-scrollbar-track {
+        background: var(--primary);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--accent);
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+      <button
+        class="theme-btn dark-blue active"
+        data-theme="dark-blue"
+        title="Dark Blue"
+      >
+        ◐
+      </button>
+      <button class="theme-btn light" data-theme="light" title="Light">
+        ☀
+      </button>
+      <button class="theme-btn red" data-theme="red" title="Red">◆</button>
     </div>
-    <div class="hero-content">
-      <img src="assets/img/Gautham6450_LinkedInWhatsApp (1)-min.jpg" alt="Gautam Kumar" class="profile-image">
-      <h1>Gautam Kumar</h1>
-      <p class="hero-subtitle">Staff Engineer | Full-Stack Developer | AI/ML Specialist</p>
-      <p class="hero-description">
-        15+ years crafting scalable solutions with Azure AI, LLM & GPT Models. 
-        Leading teams and delivering enterprise architectures from Hong Kong since 2017.
-      </p>
-      <div class="hero-buttons">
-        <a href="#contact" class="btn btn-primary">
-          <span>📧</span> Get in Touch
-        </a>
-        <a href="https://www.linkedin.com/in/gautam958" target="_blank" class="btn btn-outline">
-          <span>💼</span> LinkedIn Profile
-        </a>
+
+    <!-- Navigation Dots -->
+    <nav class="nav-dots">
+      <a href="#hero" class="nav-dot active" title="Home"></a>
+      <a href="#about" class="nav-dot" title="About"></a>
+      <a href="#experience" class="nav-dot" title="Experience"></a>
+      <a href="#portfolio" class="nav-dot" title="Portfolio"></a>
+      <a href="#contact" class="nav-dot" title="Contact"></a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <div class="hero-bg">
+        <img
+          src="assets/img/Gautham6365_Company websiteTeams (1)-min.jpg"
+          alt="Team photo"
+        />
       </div>
-    </div>
-  </section>
+      <div class="hero-content">
+        <img
+          src="assets/img/Gautham6450_LinkedInWhatsApp (1)-min.jpg"
+          alt="Gautam Kumar"
+          class="profile-image"
+        />
+        <h1>Gautam Kumar</h1>
+        <p class="hero-subtitle">
+          Staff Engineer | Full-Stack Developer | AI Practitioner
+        </p>
+        <p class="hero-description">
+          15+ years crafting scalable solutions with Azure AI, LLM & GPT Models.
+          Leading teams and delivering enterprise architectures from Hong Kong
+          since 2017.
+        </p>
+        <div class="hero-buttons">
+          <a href="#contact" class="btn btn-primary">
+            <span>📧</span> Get in Touch
+          </a>
+          <a
+            href="https://www.linkedin.com/in/gautam958"
+            target="_blank"
+            class="btn btn-outline"
+          >
+            <span>💼</span> LinkedIn Profile
+          </a>
+        </div>
+      </div>
+    </section>
 
-  <!-- About Section -->
-  <section class="about" id="about">
-    <div class="section-center">
-      <h2 class="section-title">About Me</h2>
-      <p class="section-subtitle">A results-driven engineering leader</p>
-      
-      <div class="about-card fade-in">
-        <p class="about-text">
-          Highly accomplished and results-oriented Staff Engineer with 15+ years of experience 
-          in full-stack development, Microsoft Azure cloud solutions, and technical leadership. 
-          Proven ability to design, develop, and deploy scalable applications across web, mobile, 
-          and Windows platforms. Expert in Azure AI, LLM/GPT Models, Angular, and .NET Core.
+    <!-- About Section -->
+    <section class="about" id="about">
+      <div class="section-center">
+        <h2 class="section-title">About Me</h2>
+        <p class="section-subtitle">
+          A results-driven engineering leader, passionate about innovation and
+          technology
+        </p>
+
+        <div class="about-card fade-in">
+          <p class="about-text">
+            Highly accomplished and results-oriented Staff Engineer with 15+
+            years of experience in full-stack development, Microsoft Azure cloud
+            solutions, and technical leadership. Proven ability to design,
+            develop, and deploy scalable applications across web, mobile, and
+            Windows platforms. Expert in Full Stack development, Azure cloud
+            solutions, Azure AI, LLM/GPT Models, Typescript, Python, and .NET
+            Core with a strong focus on enterprise solutions. multiple databases
+            including SQL Server, Azure Cosmos DB, and Oracle.
+          </p>
+        </div>
+
+        <div class="skills-grid">
+          <div class="skill-category fade-in">
+            <h4>💻 Development</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">AI Development</span>
+              <span class="skill-tag">Typescript</span>
+              <span class="skill-tag">.NET Core</span>
+              <span class="skill-tag">C#</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Databases</span>
+            </div>
+          </div>
+          <div class="skill-category fade-in">
+            <h4>☁️ Cloud & AI</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">Azure AI</span>
+              <span class="skill-tag">LLM/GPT</span>
+              <span class="skill-tag">OpenAI</span>
+              <span class="skill-tag">Azure Cosmos Graph DB, Vector DB</span>
+              <span class="skill-tag">Azure Document Intelligence</span>
+            </div>
+          </div>
+          <div class="skill-category fade-in">
+            <h4>🏢 Enterprise</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">SAP/ERP Systems</span>
+              <span class="skill-tag">WMS</span>
+              <span class="skill-tag">CRM</span>
+              <span class="skill-tag">Oracle</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+      <div class="section-center">
+        <h2 class="section-title">Experience</h2>
+        <p class="section-subtitle">A journey of continuous growth</p>
+
+        <div class="timeline">
+          <div class="timeline-item fade-in">
+            <div class="timeline-content">
+              <span class="timeline-date">Aug 2021 - March 2026</span>
+              <h3 class="timeline-title">Staff Engineer</h3>
+              <p class="timeline-company">CIGP Hong Kong</p>
+              <p class="timeline-desc">
+                Leading high-performing engineering teams, delivering scalable
+                cloud architectures, and implementing AI-powered solutions for
+                enterprise clients.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in">
+            <div class="timeline-content">
+              <span class="timeline-date">Jan 2017 - Jul 2021</span>
+              <h3 class="timeline-title">Technical Lead</h3>
+              <p class="timeline-company">Nityo Infotech Service</p>
+              <p class="timeline-desc">
+                Architected enterprise solutions using Azure cloud, led
+                development teams, and delivered large-scale projects for global
+                clients.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in">
+            <div class="timeline-content">
+              <span class="timeline-date">Aug 2016 - Dec 2016</span>
+              <h3 class="timeline-title">Software Engineer</h3>
+              <p class="timeline-company">Espire Infolabs</p>
+              <p class="timeline-desc">
+                Developed enterprise web applications, optimized database
+                performance, and implemented modern frontend frameworks.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in">
+            <div class="timeline-content">
+              <span class="timeline-date">Aug 2012 - Aug 2016</span>
+              <h3 class="timeline-title">Team Lead</h3>
+              <p class="timeline-company">Barcode India Ltd</p>
+              <p class="timeline-desc">
+                Built WPF applications for warehouse management, integrated
+                barcode/RFID systems, and delivered Windows-based enterprise
+                software.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in">
+            <div class="timeline-content">
+              <span class="timeline-date">Jan 2010 - Aug 2012</span>
+              <h3 class="timeline-title">Software Engineer</h3>
+              <p class="timeline-company">Digital Info Solutions Pvt. Ltd.</p>
+              <p class="timeline-desc">
+                Developed many subscription based payroll, accounting software
+                for SME clients, implemented new features, and optimized
+                performance for web applications.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+      <div class="section-center">
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">Enterprise solutions that drive impact</p>
+
+        <div class="portfolio-grid">
+          <div class="portfolio-card fade-in">
+            <div class="portfolio-image">🤖</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"
+                ><span>🔒</span> Enterprise Project</span
+              >
+              <h3 class="portfolio-title">AI-Powered ERP System</h3>
+              <p class="portfolio-category">Enterprise Resource Planning</p>
+              <p class="portfolio-desc">
+                Full-stack ERP with Azure AI integration, LLM-powered analytics,
+                and real-time dashboards for enterprise operations.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">Azure AI</span>
+                <span class="portfolio-tag">Angular</span>
+                <span class="portfolio-tag">.NET Core</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="portfolio-card fade-in">
+            <div class="portfolio-image">📦</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"
+                ><span>🔒</span> Enterprise Project</span
+              >
+              <h3 class="portfolio-title">Warehouse Management System</h3>
+              <p class="portfolio-category">Logistics & Supply Chain</p>
+              <p class="portfolio-desc">
+                Comprehensive WMS with barcode/RFID tracking, mobile device
+                integration, PTL systems, and real-time dashboards.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">WPF</span>
+                <span class="portfolio-tag">Oracle</span>
+                <span class="portfolio-tag">Barcode</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="portfolio-card fade-in">
+            <div class="portfolio-image">📊</div>
+            <div class="portfolio-content">
+              <span class="portfolio-badge"
+                ><span>🔒</span> Enterprise Project</span
+              >
+              <h3 class="portfolio-title">Financial Analytics Platform</h3>
+              <p class="portfolio-category">Data & Analytics</p>
+              <p class="portfolio-desc">
+                Real-time financial dashboards with predictive analytics, Azure
+                Cosmos DB backend, and interactive visualizations.
+              </p>
+              <div class="portfolio-tags">
+                <span class="portfolio-tag">React</span>
+                <span class="portfolio-tag">Azure</span>
+                <span class="portfolio-tag">Cosmos DB</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+      <div class="section-center">
+        <h2 class="section-title">Let's Connect</h2>
+        <p class="section-subtitle">Open to opportunities and collaborations</p>
+
+        <div class="contact-grid">
+          <div class="contact-card fade-in">
+            <div class="contact-icon">📍</div>
+            <p class="contact-label">Location</p>
+            <p class="contact-value">Austin Avenue, Hong Kong</p>
+          </div>
+
+          <div class="contact-card fade-in">
+            <div class="contact-icon">📧</div>
+            <p class="contact-label">Email</p>
+            <p class="contact-value">
+              <a href="mailto:gautam958@gmail.com">gautam958@gmail.com</a>
+            </p>
+          </div>
+
+          <div class="contact-card fade-in">
+            <div class="contact-icon">💼</div>
+            <p class="contact-label">LinkedIn</p>
+            <p class="contact-value">
+              <a href="https://www.linkedin.com/in/gautam958" target="_blank"
+                >linkedin.com/in/gautam958</a
+              >
+            </p>
+          </div>
+        </div>
+
+        <div style="text-align: center">
+          <a
+            href="https://wa.me/85253451910?text=Hi%20Gautam,%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!"
+            target="_blank"
+            class="whatsapp-btn"
+          >
+            <span>📱</span> Message on WhatsApp (HK)
+          </a>
+          <br />
+          <a
+            href="https://wa.me/919650979813?text=Hi%20Gautam,%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!"
+            target="_blank"
+            class="whatsapp-btn"
+            style="background: #25d366; margin-top: 1rem"
+          >
+            <span>📱</span> Message on WhatsApp (IN)
+          </a>
+          <br />
+          <a
+            href="tel:+85253451910"
+            class="btn btn-outline"
+            style="margin-top: 1rem"
+          >
+            <span>📞</span> Call HK: +852 53451910
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="social-links">
+          <a
+            href="https://www.linkedin.com/in/gautam958"
+            target="_blank"
+            class="social-link"
+            title="LinkedIn"
+          >
+            💼
+          </a>
+          <a
+            href="mailto:gautam958@gmail.com"
+            class="social-link"
+            title="Email"
+          >
+            ✉️
+          </a>
+          <a
+            href="https://wa.me/85253451910"
+            target="_blank"
+            class="social-link"
+            title="WhatsApp"
+          >
+            📱
+          </a>
+        </div>
+        <p class="footer-text">
+          © 2024 <a href="https://www.gautam958web.in">gautam958web.in</a> |
+          Powered by Azure
         </p>
       </div>
+    </footer>
 
-      <div class="skills-grid">
-        <div class="skill-category fade-in">
-          <h4>💻 Development</h4>
-          <div class="skill-tags">
-            <span class="skill-tag">Angular</span>
-            <span class="skill-tag">.NET Core</span>
-            <span class="skill-tag">C#</span>
-            <span class="skill-tag">TypeScript</span>
-            <span class="skill-tag">SQL Server</span>
-          </div>
-        </div>
-        <div class="skill-category fade-in">
-          <h4>☁️ Cloud & AI</h4>
-          <div class="skill-tags">
-            <span class="skill-tag">Azure AI</span>
-            <span class="skill-tag">LLM/GPT</span>
-            <span class="skill-tag">OpenAI</span>
-            <span class="skill-tag">Azure Cosmos DB</span>
-          </div>
-        </div>
-        <div class="skill-category fade-in">
-          <h4>🏢 Enterprise</h4>
-          <div class="skill-tags">
-            <span class="skill-tag">ERP Systems</span>
-            <span class="skill-tag">WMS</span>
-            <span class="skill-tag">CRM</span>
-            <span class="skill-tag">Oracle</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    <script>
+      // Scroll animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
 
-  <!-- Experience Section -->
-  <section class="experience" id="experience">
-    <div class="section-center">
-      <h2 class="section-title">Experience</h2>
-      <p class="section-subtitle">A journey of continuous growth</p>
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, observerOptions);
 
-      <div class="timeline">
-        <div class="timeline-item fade-in">
-          <div class="timeline-content">
-            <span class="timeline-date">2022 - Present</span>
-            <h3 class="timeline-title">Staff Engineer</h3>
-            <p class="timeline-company">CIGP Hong Kong</p>
-            <p class="timeline-desc">Leading high-performing engineering teams, delivering scalable cloud architectures, and implementing AI-powered solutions for enterprise clients.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item fade-in">
-          <div class="timeline-content">
-            <span class="timeline-date">2019 - 2022</span>
-            <h3 class="timeline-title">Senior Software Engineer</h3>
-            <p class="timeline-company">Nityo Infotech Service</p>
-            <p class="timeline-desc">Architected enterprise solutions using Azure cloud, led development teams, and delivered large-scale projects for global clients.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item fade-in">
-          <div class="timeline-content">
-            <span class="timeline-date">2017 - 2019</span>
-            <h3 class="timeline-title">Software Engineer</h3>
-            <p class="timeline-company">Espire Infolabs</p>
-            <p class="timeline-desc">Developed enterprise web applications, optimized database performance, and implemented modern frontend frameworks.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item fade-in">
-          <div class="timeline-content">
-            <span class="timeline-date">2014 - 2017</span>
-            <h3 class="timeline-title">Software Developer</h3>
-            <p class="timeline-company">Barcode India Ltd</p>
-            <p class="timeline-desc">Built WPF applications for warehouse management, integrated barcode/RFID systems, and delivered Windows-based enterprise software.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Portfolio Section -->
-  <section class="portfolio" id="portfolio">
-    <div class="section-center">
-      <h2 class="section-title">Featured Projects</h2>
-      <p class="section-subtitle">Enterprise solutions that drive impact</p>
-
-      <div class="portfolio-grid">
-        <div class="portfolio-card fade-in">
-          <div class="portfolio-image">🤖</div>
-          <div class="portfolio-content">
-            <span class="portfolio-badge"><span>🔒</span> Enterprise Project</span>
-            <h3 class="portfolio-title">AI-Powered ERP System</h3>
-            <p class="portfolio-category">Enterprise Resource Planning</p>
-            <p class="portfolio-desc">Full-stack ERP with Azure AI integration, LLM-powered analytics, and real-time dashboards for enterprise operations.</p>
-            <div class="portfolio-tags">
-              <span class="portfolio-tag">Azure AI</span>
-              <span class="portfolio-tag">Angular</span>
-              <span class="portfolio-tag">.NET Core</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="portfolio-card fade-in">
-          <div class="portfolio-image">📦</div>
-          <div class="portfolio-content">
-            <span class="portfolio-badge"><span>🔒</span> Enterprise Project</span>
-            <h3 class="portfolio-title">Warehouse Management System</h3>
-            <p class="portfolio-category">Logistics & Supply Chain</p>
-            <p class="portfolio-desc">Comprehensive WMS with barcode/RFID tracking, mobile device integration, PTL systems, and real-time dashboards.</p>
-            <div class="portfolio-tags">
-              <span class="portfolio-tag">WPF</span>
-              <span class="portfolio-tag">Oracle</span>
-              <span class="portfolio-tag">Barcode</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="portfolio-card fade-in">
-          <div class="portfolio-image">📊</div>
-          <div class="portfolio-content">
-            <span class="portfolio-badge"><span>🔒</span> Enterprise Project</span>
-            <h3 class="portfolio-title">Financial Analytics Platform</h3>
-            <p class="portfolio-category">Data & Analytics</p>
-            <p class="portfolio-desc">Real-time financial dashboards with predictive analytics, Azure Cosmos DB backend, and interactive visualizations.</p>
-            <div class="portfolio-tags">
-              <span class="portfolio-tag">React</span>
-              <span class="portfolio-tag">Azure</span>
-              <span class="portfolio-tag">Cosmos DB</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section class="contact" id="contact">
-    <div class="section-center">
-      <h2 class="section-title">Let's Connect</h2>
-      <p class="section-subtitle">Open to opportunities and collaborations</p>
-
-      <div class="contact-grid">
-        <div class="contact-card fade-in">
-          <div class="contact-icon">📍</div>
-          <p class="contact-label">Location</p>
-          <p class="contact-value">Austin Avenue, Hong Kong</p>
-        </div>
-
-        <div class="contact-card fade-in">
-          <div class="contact-icon">📧</div>
-          <p class="contact-label">Email</p>
-          <p class="contact-value">
-            <a href="mailto:gautam958@gmail.com">gautam958@gmail.com</a>
-          </p>
-        </div>
-
-        <div class="contact-card fade-in">
-          <div class="contact-icon">💼</div>
-          <p class="contact-label">LinkedIn</p>
-          <p class="contact-value">
-            <a href="https://www.linkedin.com/in/gautam958" target="_blank">linkedin.com/in/gautam958</a>
-          </p>
-        </div>
-      </div>
-
-      <div style="text-align: center;">
-        <a href="https://wa.me/85253451910?text=Hi%20Gautam,%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!" target="_blank" class="whatsapp-btn">
-          <span>📱</span> Message on WhatsApp (HK)
-        </a>
-        <br>
-        <a href="https://wa.me/919650979813?text=Hi%20Gautam,%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!" target="_blank" class="whatsapp-btn" style="background: #25D366; margin-top: 1rem;">
-          <span>📱</span> Message on WhatsApp (IN)
-        </a>
-        <br>
-        <a href="tel:+85253451910" class="btn btn-outline" style="margin-top: 1rem;">
-          <span>📞</span> Call HK: +852 53451910
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <div class="social-links">
-        <a href="https://www.linkedin.com/in/gautam958" target="_blank" class="social-link" title="LinkedIn">
-          💼
-        </a>
-        <a href="mailto:gautam958@gmail.com" class="social-link" title="Email">
-          ✉️
-        </a>
-        <a href="https://wa.me/85253451910" target="_blank" class="social-link" title="WhatsApp">
-          📱
-        </a>
-      </div>
-      <p class="footer-text">
-        © 2024 <a href="https://www.gautam958web.in">gautam958web.in</a> | Powered by Azure
-      </p>
-    </div>
-  </footer>
-
-  <script>
-    // Scroll animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.fade-in').forEach(el => {
-      observer.observe(el);
-    });
-
-    // Navigation dots active state
-    const sections = document.querySelectorAll('section');
-    const navDots = document.querySelectorAll('.nav-dot');
-
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (scrollY >= sectionTop - 200) {
-          current = section.getAttribute('id');
-        }
+      document.querySelectorAll(".fade-in").forEach((el) => {
+        observer.observe(el);
       });
 
-      navDots.forEach(dot => {
-        dot.classList.remove('active');
-        if (dot.getAttribute('href') === '#' + current) {
-          dot.classList.add('active');
-        }
+      // Navigation dots active state
+      const sections = document.querySelectorAll("section");
+      const navDots = document.querySelectorAll(".nav-dot");
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          if (scrollY >= sectionTop - 200) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        navDots.forEach((dot) => {
+          dot.classList.remove("active");
+          if (dot.getAttribute("href") === "#" + current) {
+            dot.classList.add("active");
+          }
+        });
       });
-    });
 
-    // Smooth scroll for navigation
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
+      // Smooth scroll for navigation
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
       });
-    });
 
-    // Theme Switcher
-    const themeBtns = document.querySelectorAll('.theme-btn');
-    const html = document.documentElement;
+      // Theme Switcher
+      const themeBtns = document.querySelectorAll(".theme-btn");
+      const html = document.documentElement;
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'dark-blue';
-    html.setAttribute('data-theme', savedTheme);
-    themeBtns.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.theme === savedTheme);
-    });
-
-    // Theme switch functionality
-    themeBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const theme = btn.dataset.theme;
-        html.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-        
-        themeBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+      // Load saved theme
+      const savedTheme = localStorage.getItem("theme") || "dark-blue";
+      html.setAttribute("data-theme", savedTheme);
+      themeBtns.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.theme === savedTheme);
       });
-    });
-  </script>
-</body>
+
+      // Theme switch functionality
+      themeBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const theme = btn.dataset.theme;
+          html.setAttribute("data-theme", theme);
+          localStorage.setItem("theme", theme);
+
+          themeBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+        });
+      });
+    </script>
+  </body>
 </html>
