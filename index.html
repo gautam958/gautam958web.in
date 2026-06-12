@@ -1583,24 +1583,23 @@
         );
       }
 
-      // ===== Visitor Tracking (localStorage — no API) =====
+      // ===== Visitor Tracking (Azure Function API) =====
       (function trackVisitor() {
-        var STORAGE_KEY = "sello_visitors";
-        var MAX_RECORDS = 5000;
+        var API_URL = 'https://communication-fn.azurewebsites.net/api/visitors?code=SFX8VCrbCZSKzGtBLYsM4KIPWEeyqyDkqF0xItiWF63-AzFumJqcJw==';
 
         // ===== sello_vid: stable anonymous visitor id =====
         function getOrCreateVisitorId() {
-          var vid = localStorage.getItem("sello_vid");
+          var vid = localStorage.getItem('sello_vid');
           if (vid) return vid;
-          vid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+          vid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
             /[xy]/g,
             function (c) {
               var r = (Math.random() * 16) | 0;
-              var v = c === "x" ? r : (r & 0x3) | 0x8;
+              var v = c === 'x' ? r : (r & 0x3) | 0x8;
               return v.toString(16);
             },
           );
-          localStorage.setItem("sello_vid", vid);
+          localStorage.setItem('sello_vid', vid);
           return vid;
         }
 
@@ -1608,37 +1607,35 @@
         var ua = navigator.userAgent;
 
         function parseBrowser(u) {
-          if (u.indexOf("Edg/") > -1) return "Edge";
-          if (u.indexOf("OPR/") > -1) return "Opera";
-          if (u.indexOf("Firefox/") > -1) return "Firefox";
-          if (u.indexOf("Chrome/") > -1 && u.indexOf("Safari/") > -1)
-            return "Chrome";
-          if (u.indexOf("Safari/") > -1) return "Safari";
-          return "Other";
+          if (u.indexOf('Edg/') > -1) return 'Edge';
+          if (u.indexOf('OPR/') > -1) return 'Opera';
+          if (u.indexOf('Firefox/') > -1) return 'Firefox';
+          if (u.indexOf('Chrome/') > -1 && u.indexOf('Safari/') > -1)
+            return 'Chrome';
+          if (u.indexOf('Safari/') > -1) return 'Safari';
+          return 'Other';
         }
 
         function parseOS(u) {
-          if (u.indexOf("Win") > -1) return "Windows";
-          if (u.indexOf("Mac") > -1) return "macOS";
-          if (u.indexOf("Linux") > -1) return "Linux";
-          if (u.indexOf("Android") > -1) return "Android";
-          if (u.indexOf("iPhone") > -1 || u.indexOf("iPad") > -1) return "iOS";
-          return "Unknown";
+          if (u.indexOf('Win') > -1) return 'Windows';
+          if (u.indexOf('Mac') > -1) return 'macOS';
+          if (u.indexOf('Linux') > -1) return 'Linux';
+          if (u.indexOf('Android') > -1) return 'Android';
+          if (u.indexOf('iPhone') > -1 || u.indexOf('iPad') > -1) return 'iOS';
+          return 'Unknown';
         }
 
         function parseDevice(u) {
-          if (u.indexOf("Mobile") > -1 || u.indexOf("Android") > -1)
-            return "Mobile";
-          if (u.indexOf("iPad") > -1 || u.indexOf("Tablet") > -1)
-            return "Tablet";
-          return "Desktop";
+          if (u.indexOf('Mobile') > -1 || u.indexOf('Android') > -1)
+            return 'Mobile';
+          if (u.indexOf('iPad') > -1 || u.indexOf('Tablet') > -1)
+            return 'Tablet';
+          return 'Desktop';
         }
 
         // ===== SHA-256 hash for IP privacy =====
         function sha256(message) {
-          // crypto.subtle requires HTTPS secure context
           if (!window.crypto || !window.crypto.subtle) {
-            // Fallback: simple DJB2 hash for non-HTTPS contexts
             var hash = 5381;
             for (var i = 0; i < message.length; i++) {
               hash = ((hash << 5) + hash) + message.charCodeAt(i);
@@ -1648,20 +1645,20 @@
           }
           var msgBuffer = new TextEncoder().encode(message);
           return crypto.subtle
-            .digest("SHA-256", msgBuffer)
+            .digest('SHA-256', msgBuffer)
             .then(function (hashBuffer) {
               var hashArray = Array.from(new Uint8Array(hashBuffer));
               return hashArray
                 .map(function (b) {
-                  return b.toString(16).padStart(2, "0");
+                  return b.toString(16).padStart(2, '0');
                 })
-                .join("");
+                .join('');
             });
         }
 
         // ===== Resolve IP location via ipapi.co (client-side) =====
         function resolveLocation() {
-          return fetch("https://ipapi.co/json/")
+          return fetch('https://ipapi.co/json/')
             .then(function (r) {
               return r.ok ? r.json() : {};
             })
@@ -1676,56 +1673,35 @@
             timestamp: new Date().toISOString(),
             page: window.location.pathname,
             url: window.location.href,
-            referrer: document.referrer || "direct",
+            referrer: document.referrer || 'direct',
             userAgent: ua,
             device:
-              parseBrowser(ua) + " / " + parseOS(ua) + " / " + parseDevice(ua),
+              parseBrowser(ua) + ' / ' + parseOS(ua) + ' / ' + parseDevice(ua),
             browser: parseBrowser(ua),
             os: parseOS(ua),
             deviceType: parseDevice(ua),
             language: navigator.language,
-            screen: screen.width + "x" + screen.height,
-            country: (loc && loc.country) || "",
-            region: (loc && loc.region) || "",
-            city: (loc && loc.city) || "",
-            timezone: (loc && loc.timezone) || "",
-            ipHash: hashedIp || "",
+            screen: screen.width + 'x' + screen.height,
+            country: (loc && loc.country) || '',
+            region: (loc && loc.region) || '',
+            city: (loc && loc.city) || '',
+            timezone: (loc && loc.timezone) || '',
+            ipHash: hashedIp || '',
           };
         }
 
-        // ===== Main: resolve location, hash IP, store in localStorage =====
+        // ===== Main: resolve location, hash IP, POST to Azure Function =====
         resolveLocation()
           .then(function (loc) {
-            var ipToHash = loc && loc.ip ? loc.ip : "unknown";
+            var ipToHash = loc && loc.ip ? loc.ip : 'unknown';
             return sha256(ipToHash).then(function (hashedIp) {
               var entry = buildEntry(loc, hashedIp);
 
-              // Read existing records from localStorage
-              var records = [];
-              try {
-                var raw = localStorage.getItem(STORAGE_KEY);
-                records = raw ? JSON.parse(raw) : [];
-              } catch (e) {
-                records = [];
-              }
-
-              records.push(entry);
-
-              // Enforce 5,000 record cap — keep newest
-              if (records.length > MAX_RECORDS) {
-                records = records.slice(records.length - MAX_RECORDS);
-              }
-
-              // Write back to localStorage
-              try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
-              } catch (e) {
-                // localStorage full — trim to 2,500 and retry
-                records = records.slice(records.length - 2500);
-                try {
-                  localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
-                } catch (e2) {}
-              }
+              return fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(entry),
+              });
             });
           })
           .catch(function () {});
