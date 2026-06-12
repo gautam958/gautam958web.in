@@ -1,0 +1,1151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin — Visitor History | gautam958web.in</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <style>
+      /* ===== ADMIN PAGE STYLES ===== */
+      body {
+        background: var(--primary);
+        min-height: 100vh;
+      }
+
+      .admin-header {
+        text-align: center;
+        padding: 3rem 2rem 1rem;
+      }
+
+      .admin-header h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
+        background: linear-gradient(135deg, #fff 0%, var(--accent-light) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+      }
+
+      .admin-header p {
+        color: var(--text-muted);
+        font-size: 1rem;
+      }
+
+      .admin-link {
+        display: inline-block;
+        margin-top: 0.75rem;
+        color: var(--accent-light);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+      }
+
+      .admin-link:hover {
+        opacity: 1;
+      }
+
+      /* Setup Panel */
+      .setup-panel {
+        max-width: 600px;
+        margin: 2rem auto;
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 2rem;
+      }
+
+      .setup-panel h2 {
+        font-size: 1.2rem;
+        color: var(--accent-light);
+        margin-bottom: 1rem;
+      }
+
+      .setup-panel p {
+        color: var(--text-muted);
+        font-size: 0.88rem;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+      }
+
+      .setup-panel code {
+        background: rgba(74, 158, 255, 0.1);
+        border: 1px solid rgba(74, 158, 255, 0.2);
+        padding: 0.15rem 0.5rem;
+        border-radius: 6px;
+        font-size: 0.82rem;
+        color: var(--accent-light);
+      }
+
+      .setup-steps {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+      }
+
+      .setup-steps li {
+        position: relative;
+        padding: 0.6rem 0 0.6rem 2rem;
+        color: var(--text-muted);
+        font-size: 0.88rem;
+      }
+
+      .setup-steps li::before {
+        content: attr(data-step);
+        position: absolute;
+        left: 0;
+        top: 0.5rem;
+        width: 24px;
+        height: 24px;
+        background: var(--accent);
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: 700;
+      }
+
+      .setup-steps a {
+        color: var(--accent-light);
+        text-decoration: underline;
+      }
+
+      /* Config Form */
+      .config-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .config-form label {
+        color: var(--text-muted);
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .config-form input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--glass);
+        color: var(--text);
+        font-family: "Manrope", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+
+      .config-form input:focus {
+        border-color: var(--accent);
+      }
+
+      .config-form button {
+        padding: 0.8rem 1.5rem;
+        border-radius: 50px;
+        border: none;
+        background: var(--accent);
+        color: #fff;
+        font-family: "Manrope", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .config-form button:hover {
+        background: var(--accent-light);
+        transform: translateY(-2px);
+      }
+
+      /* Dashboard */
+      .dashboard {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+        display: none;
+      }
+
+      .dashboard.active {
+        display: block;
+      }
+
+      /* Stats Cards */
+      .admin-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .admin-stat-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.25rem;
+        text-align: center;
+      }
+
+      .admin-stat-number {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--accent-light);
+      }
+
+      .admin-stat-label {
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        margin-top: 0.3rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      /* Controls */
+      .admin-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .admin-search {
+        padding: 0.6rem 1rem;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--glass);
+        color: var(--text);
+        font-family: "Manrope", sans-serif;
+        font-size: 0.85rem;
+        outline: none;
+        min-width: 280px;
+        transition: border-color 0.3s;
+      }
+
+      .admin-search:focus {
+        border-color: var(--accent);
+      }
+
+      .admin-btn {
+        padding: 0.6rem 1.25rem;
+        border-radius: 50px;
+        border: 1px solid var(--border);
+        background: var(--glass);
+        color: var(--text);
+        font-family: "Manrope", sans-serif;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .admin-btn:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+      }
+
+      .admin-btn.danger {
+        border-color: rgba(239, 68, 68, 0.3);
+        color: #f87171;
+      }
+
+      .admin-btn.danger:hover {
+        background: #ef4444;
+        border-color: #ef4444;
+        color: #fff;
+      }
+
+      /* Filter Row */
+      .filter-row {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+      }
+
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .filter-group label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .filter-select {
+        padding: 0.45rem 0.75rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--glass);
+        color: var(--text);
+        font-family: "Manrope", sans-serif;
+        font-size: 0.78rem;
+        outline: none;
+        cursor: pointer;
+        min-width: 130px;
+        transition: border-color 0.3s;
+      }
+
+      .filter-select:focus {
+        border-color: var(--accent);
+      }
+
+      /* Table */
+      .admin-table-wrap {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
+      .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.82rem;
+      }
+
+      .admin-table thead {
+        background: rgba(74, 158, 255, 0.08);
+      }
+
+      .admin-table th {
+        padding: 0.85rem 1rem;
+        text-align: left;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--accent-light);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+        cursor: pointer;
+        user-select: none;
+        transition: color 0.3s;
+      }
+
+      .admin-table th:hover {
+        color: var(--text);
+      }
+
+      .admin-table th .sort-icon {
+        margin-left: 0.3rem;
+        opacity: 0.4;
+      }
+
+      .admin-table th.sorted .sort-icon {
+        opacity: 1;
+      }
+
+      .admin-table td {
+        padding: 0.7rem 1rem;
+        color: var(--text-muted);
+        font-size: 0.82rem;
+        border-bottom: 1px solid rgba(74, 158, 255, 0.06);
+        max-width: 220px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .admin-table tbody tr {
+        transition: background 0.2s;
+      }
+
+      .admin-table tbody tr:hover {
+        background: rgba(74, 158, 255, 0.04);
+      }
+
+      .admin-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .page-badge {
+        display: inline-block;
+        background: rgba(74, 158, 255, 0.1);
+        color: var(--accent-light);
+        padding: 0.2rem 0.55rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .location-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      .country-flag {
+        font-size: 1rem;
+      }
+
+      .device-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: rgba(74, 158, 255, 0.08);
+        color: var(--accent-light);
+        padding: 0.2rem 0.55rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .device-icon {
+        font-size: 0.85rem;
+      }
+
+      /* Loading */
+      .loading-spinner {
+        text-align: center;
+        padding: 3rem;
+        color: var(--text-muted);
+      }
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid var(--border);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 0 auto 1rem;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      /* Empty state */
+      .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--text-muted);
+      }
+
+      .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      /* Pagination */
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+        padding-bottom: 1.5rem;
+      }
+
+      .pagination button {
+        padding: 0.45rem 0.85rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--glass);
+        color: var(--text-muted);
+        font-family: "Manrope", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .pagination button:hover:not(:disabled) {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+      }
+
+      .pagination button:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+
+      .pagination button.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+      }
+
+      .pagination-info {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+      }
+
+      @media (max-width: 768px) {
+        .admin-table-wrap {
+          overflow-x: auto;
+        }
+
+        .admin-controls {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .admin-search {
+          min-width: unset;
+        }
+
+        .admin-stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .filter-row {
+          gap: 0.5rem;
+        }
+
+        .filter-group {
+          flex: 1 1 45%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Theme Switcher (same as main site) -->
+    <div class="theme-switcher" id="themeSwitcher">
+      <button class="theme-toggle-btn" id="themeToggle" title="Change Theme">
+        🎨
+      </button>
+      <div class="theme-dropdown" id="themeDropdown">
+        <button class="theme-option dark-blue active" data-theme="dark-blue" title="Dark Blue">
+          <span class="theme-swatch"></span>
+          <span class="theme-label">Dark Blue</span>
+        </button>
+        <button class="theme-option light" data-theme="light" title="Light">
+          <span class="theme-swatch"></span>
+          <span class="theme-label">Light</span>
+        </button>
+        <button class="theme-option red" data-theme="red" title="Red Dark">
+          <span class="theme-swatch"></span>
+          <span class="theme-label">Red Dark</span>
+        </button>
+        <button class="theme-option midnight" data-theme="midnight" title="Midnight Aurora">
+          <span class="theme-swatch"></span>
+          <span class="theme-label">Midnight</span>
+        </button>
+        <button class="theme-option indigo" data-theme="indigo" title="Indigo (Sello)">
+          <span class="theme-swatch"></span>
+          <span class="theme-label">Indigo</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <div class="admin-header">
+      <h1>📊 Visitor Dashboard</h1>
+      <p>Track and analyze your website visitors</p>
+      <a href="index.html" class="admin-link">← Back to Portfolio</a>
+    </div>
+
+    <!-- Setup Panel (shown when no config) -->
+    <div class="setup-panel" id="setupPanel">
+      <h2>⚙️ Setup jsonbin.io</h2>
+      <p>To start tracking visitors, you need a free <strong>jsonbin.io</strong> account. Follow these steps:</p>
+      <ol class="setup-steps">
+        <li data-step="1">
+          Go to <a href="https://jsonbin.io" target="_blank">jsonbin.io</a> and create a free account
+        </li>
+        <li data-step="2">
+          Copy your <strong>API Key</strong> from the <a href="https://jsonbin.io/app/keys" target="_blank">API Keys page</a>
+        </li>
+        <li data-step="3">
+          Create a new Bin via the API or dashboard — it will contain an empty array <code>[]</code>
+        </li>
+        <li data-step="4">
+          Paste both values below and click <strong>Connect</strong>
+        </li>
+      </ol>
+      <p style="font-size: 0.78rem; opacity: 0.6;">Your credentials are stored in your browser's localStorage only — never sent elsewhere.</p>
+      <div class="config-form">
+        <label for="binIdInput">Bin ID</label>
+        <input type="text" id="binIdInput" placeholder="e.g. 66f1a2b3c4d5e6f78g9h0i1j" />
+        <label for="apiKeyInput">API Key (Master Key)</label>
+        <input type="password" id="apiKeyInput" placeholder="Your jsonbin.io API key" />
+        <button id="connectBtn">🔗 Connect</button>
+      </div>
+    </div>
+
+    <!-- Dashboard (shown when config is valid) -->
+    <div class="dashboard" id="dashboard">
+      <!-- Stats -->
+      <div class="admin-stats">
+        <div class="admin-stat-card">
+          <div class="admin-stat-number" id="totalVisits">—</div>
+          <div class="admin-stat-label">Total Visits</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="admin-stat-number" id="uniquePages">—</div>
+          <div class="admin-stat-label">Pages Visited</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="admin-stat-number" id="todayVisits">—</div>
+          <div class="admin-stat-label">Today</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="admin-stat-number" id="uniqueCountries">—</div>
+          <div class="admin-stat-label">Countries</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="admin-stat-number" id="topPage">—</div>
+          <div class="admin-stat-label">Most Popular Page</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="admin-stat-number" id="topCountry">—</div>
+          <div class="admin-stat-label">Top Country</div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="admin-controls">
+        <input type="text" class="admin-search" id="searchInput" placeholder="🔍 Search by page, country, device, referrer..." />
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="admin-btn" id="refreshBtn">🔄 Refresh</button>
+          <button class="admin-btn" id="exportBtn">📥 Export CSV</button>
+          <button class="admin-btn danger" id="clearBtn">🗑️ Clear Data</button>
+        </div>
+      </div>
+
+      <!-- Filter Row -->
+      <div class="filter-row">
+        <div class="filter-group">
+          <label for="filterCountry">Country</label>
+          <select class="filter-select" id="filterCountry">
+            <option value="">All Countries</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filterRegion">Region</label>
+          <select class="filter-select" id="filterRegion">
+            <option value="">All Regions</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filterCity">City</label>
+          <select class="filter-select" id="filterCity">
+            <option value="">All Cities</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filterPage">Page</label>
+          <select class="filter-select" id="filterPage">
+            <option value="">All Pages</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filterBrowser">Browser</label>
+          <select class="filter-select" id="filterBrowser">
+            <option value="">All Browsers</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filterOS">OS</label>
+          <select class="filter-select" id="filterOS">
+            <option value="">All OS</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filterDevice">Device</label>
+          <select class="filter-select" id="filterDevice">
+            <option value="">All Devices</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th data-sort="timestamp" class="sorted">Timestamp <span class="sort-icon">▼</span></th>
+              <th data-sort="page">Page <span class="sort-icon">▼</span></th>
+              <th data-sort="country">Country <span class="sort-icon">▼</span></th>
+              <th data-sort="region">Region <span class="sort-icon">▼</span></th>
+              <th data-sort="city">City <span class="sort-icon">▼</span></th>
+              <th data-sort="device">Device <span class="sort-icon">▼</span></th>
+              <th data-sort="browser">Browser <span class="sort-icon">▼</span></th>
+              <th data-sort="os">OS <span class="sort-icon">▼</span></th>
+              <th data-sort="referrer">Referrer <span class="sort-icon">▼</span></th>
+              <th data-sort="language">Language <span class="sort-icon">▼</span></th>
+              <th data-sort="screen">Screen <span class="sort-icon">▼</span></th>
+            </tr>
+          </thead>
+          <tbody id="visitorTableBody">
+          </tbody>
+        </table>
+
+        <!-- Loading -->
+        <div class="loading-spinner" id="loadingSpinner" style="display: none;">
+          <div class="spinner"></div>
+          <p>Loading visitor data...</p>
+        </div>
+
+        <!-- Empty state -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+          <div class="empty-state-icon">📭</div>
+          <p>No visitor records yet. Share your site to start tracking!</p>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination"></div>
+    </div>
+
+    <script>
+      // ===== Theme Switcher =====
+      (function () {
+        var savedTheme = localStorage.getItem("theme") || "dark-blue";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+
+        var toggle = document.getElementById("themeToggle");
+        var dropdown = document.getElementById("themeDropdown");
+        var options = document.querySelectorAll(".theme-option");
+
+        options.forEach(function (opt) {
+          opt.classList.toggle("active", opt.dataset.theme === savedTheme);
+        });
+
+        toggle.addEventListener("click", function (e) {
+          e.stopPropagation();
+          dropdown.classList.toggle("open");
+          toggle.classList.toggle("open");
+        });
+
+        options.forEach(function (opt) {
+          opt.addEventListener("click", function () {
+            var theme = opt.dataset.theme;
+            document.documentElement.setAttribute("data-theme", theme);
+            localStorage.setItem("theme", theme);
+            options.forEach(function (b) { b.classList.remove("active"); });
+            opt.classList.add("active");
+            dropdown.classList.remove("open");
+            toggle.classList.remove("open");
+          });
+        });
+
+        document.addEventListener("click", function () {
+          dropdown.classList.remove("open");
+          toggle.classList.remove("open");
+        });
+      })();
+
+      // ===== Admin Logic =====
+      (function () {
+        var BIN_ID_KEY = "admin_bin_id";
+        var API_KEY_KEY = "admin_api_key";
+        var PER_PAGE = 25;
+        var currentPage = 1;
+        var allRecords = [];
+        var sortField = "timestamp";
+        var sortAsc = false;
+
+        var setupPanel = document.getElementById("setupPanel");
+        var dashboard = document.getElementById("dashboard");
+        var loadingSpinner = document.getElementById("loadingSpinner");
+        var emptyState = document.getElementById("emptyState");
+        var tableBody = document.getElementById("visitorTableBody");
+        var searchInput = document.getElementById("searchInput");
+
+        // Country flag map
+        var countryFlags = {
+          "AF":"🇦🇫","AL":"🇦🇱","DZ":"🇩🇿","AR":"🇦🇷","AU":"🇦🇺","AT":"🇦🇹",
+          "BD":"🇧🇩","BE":"🇧🇪","BR":"🇧🇷","BG":"🇧🇬","KH":"🇰🇭","CA":"🇨🇦",
+          "CL":"🇨🇱","CN":"🇨🇳","CO":"🇨🇴","HR":"🇭🇷","CZ":"🇨🇿","DK":"🇩🇰",
+          "EG":"🇪🇬","EE":"🇪🇪","FI":"🇫🇮","FR":"🇫🇷","DE":"🇩🇪","GH":"🇬🇭",
+          "GR":"🇬🇷","HK":"🇭🇰","HU":"🇭🇺","IN":"🇮🇳","ID":"🇮🇩","IR":"🇮🇷",
+          "IQ":"🇮🇶","IE":"🇮🇪","IL":"🇮🇱","IT":"🇮🇹","JM":"🇯🇲","JP":"🇯🇵",
+          "JO":"🇯🇴","KZ":"🇰🇿","KE":"🇰🇪","KR":"🇰🇷","KW":"🇰🇼","LA":"🇱🇦",
+          "LV":"🇱🇻","LT":"🇱🇹","MY":"🇲🇾","MX":"🇲🇽","MA":"🇲🇦","MM":"🇲🇲",
+          "NP":"🇳🇵","NL":"🇳🇱","NZ":"🇳🇿","NG":"🇳🇬","NO":"🇳🇴","PK":"🇵🇰",
+          "PH":"🇵🇭","PL":"🇵🇱","PT":"🇵🇹","QA":"🇶🇦","RO":"🇷🇴","RU":"🇷🇺",
+          "SA":"🇸🇦","SG":"🇸🇬","SK":"🇸🇰","SI":"🇸🇮","ZA":"🇿🇦","ES":"🇪🇸",
+          "SE":"🇸🇪","CH":"🇨🇭","TW":"🇹🇼","TZ":"🇹🇿","TH":"🇹🇭","TR":"🇹🇷",
+          "UG":"🇺🇬","UA":"🇺🇦","AE":"🇦🇪","GB":"🇬🇧","US":"🇺🇸","VN":"🇻🇳",
+        };
+
+        // Device type icon
+        function deviceIcon(d) {
+          if (d === "Mobile") return "📱";
+          if (d === "Tablet") return "📋";
+          return "💻";
+        }
+
+        // Load saved config
+        var savedBinId = localStorage.getItem(BIN_ID_KEY) || "";
+        var savedApiKey = localStorage.getItem(API_KEY_KEY) || "";
+
+        if (savedBinId && savedApiKey) {
+          setupPanel.style.display = "none";
+          dashboard.classList.add("active");
+          loadData(savedBinId, savedApiKey);
+        }
+
+        // Connect button
+        document.getElementById("connectBtn").addEventListener("click", function () {
+          var binId = document.getElementById("binIdInput").value.trim();
+          var apiKey = document.getElementById("apiKeyInput").value.trim();
+          if (!binId || !apiKey) {
+            alert("Please enter both Bin ID and API Key.");
+            return;
+          }
+          localStorage.setItem(BIN_ID_KEY, binId);
+          localStorage.setItem(API_KEY_KEY, apiKey);
+          setupPanel.style.display = "none";
+          dashboard.classList.add("active");
+          loadData(binId, apiKey);
+        });
+
+        // Refresh
+        document.getElementById("refreshBtn").addEventListener("click", function () {
+          var binId = localStorage.getItem(BIN_ID_KEY);
+          var apiKey = localStorage.getItem(API_KEY_KEY);
+          if (binId && apiKey) loadData(binId, apiKey);
+        });
+
+        // Search
+        searchInput.addEventListener("input", function () {
+          currentPage = 1;
+          renderTable();
+        });
+
+        // Filter dropdowns
+        ["filterCountry", "filterRegion", "filterCity", "filterPage", "filterBrowser", "filterOS", "filterDevice"].forEach(function (id) {
+          document.getElementById(id).addEventListener("change", function () {
+            currentPage = 1;
+            renderTable();
+          });
+        });
+
+        // Sort headers
+        document.querySelectorAll(".admin-table th[data-sort]").forEach(function (th) {
+          th.addEventListener("click", function () {
+            var field = th.dataset.sort;
+            if (sortField === field) {
+              sortAsc = !sortAsc;
+            } else {
+              sortField = field;
+              sortAsc = true;
+            }
+            document.querySelectorAll(".admin-table th").forEach(function (h) { h.classList.remove("sorted"); });
+            th.classList.add("sorted");
+            th.querySelector(".sort-icon").textContent = sortAsc ? "▲" : "▼";
+            renderTable();
+          });
+        });
+
+        // Export CSV
+        document.getElementById("exportBtn").addEventListener("click", function () {
+          if (!allRecords.length) return;
+          var csv = "Timestamp,Page,Country,Region,City,Device,Browser,OS,Device Type,Referrer,Language,Screen,User Agent\n";
+          allRecords.forEach(function (r) {
+            csv += [
+              '"' + (r.timestamp || "") + '"',
+              '"' + (r.page || "") + '"',
+              '"' + (r.country || "") + '"',
+              '"' + (r.region || "") + '"',
+              '"' + (r.city || "") + '"',
+              '"' + (r.device || "") + '"',
+              '"' + (r.browser || "") + '"',
+              '"' + (r.os || "") + '"',
+              '"' + (r.deviceType || "") + '"',
+              '"' + (r.referrer || "") + '"',
+              '"' + (r.language || "") + '"',
+              '"' + (r.screen || "") + '"',
+              '"' + (r.userAgent || "") + '"',
+            ].join(",") + "\n";
+          });
+          var blob = new Blob([csv], { type: "text/csv" });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement("a");
+          a.href = url;
+          a.download = "visitor-history-" + new Date().toISOString().slice(0, 10) + ".csv";
+          a.click();
+          URL.revokeObjectURL(url);
+        });
+
+        // Clear data
+        document.getElementById("clearBtn").addEventListener("click", function () {
+          if (!confirm("Are you sure you want to clear all visitor data? This cannot be undone.")) return;
+          var binId = localStorage.getItem(BIN_ID_KEY);
+          var apiKey = localStorage.getItem(API_KEY_KEY);
+          fetch("https://api.jsonbin.io/v3/b/" + binId, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json", "X-Master-Key": apiKey },
+            body: JSON.stringify([]),
+          }).then(function () {
+            allRecords = [];
+            renderTable();
+            updateStats();
+          });
+        });
+
+        function loadData(binId, apiKey) {
+          loadingSpinner.style.display = "block";
+          emptyState.style.display = "none";
+          tableBody.innerHTML = "";
+
+          fetch("https://api.jsonbin.io/v3/b/" + binId, {
+            headers: { "X-Master-Key": apiKey },
+          })
+            .then(function (r) {
+              if (!r.ok) throw new Error("API error: " + r.status);
+              return r.json();
+            })
+            .then(function (data) {
+              allRecords = Array.isArray(data.record) ? data.record : [];
+              allRecords.sort(function (a, b) {
+                return new Date(b.timestamp) - new Date(a.timestamp);
+              });
+              loadingSpinner.style.display = "none";
+              if (allRecords.length === 0) {
+                emptyState.style.display = "block";
+              }
+              updateStats();
+              populateFilters();
+              renderTable();
+            })
+            .catch(function (err) {
+              loadingSpinner.style.display = "none";
+              emptyState.innerHTML = '<div class="empty-state-icon">⚠️</div><p>Failed to load data: ' + escHtml(err.message) + '</p><p style="font-size:0.8rem;margin-top:0.5rem;color:var(--text-muted)">Check your Bin ID and API Key.</p>';
+              emptyState.style.display = "block";
+            });
+        }
+
+        function populateFilters() {
+          var countries = {}, regions = {}, cities = {}, pages = {}, browsers = {}, oss = {}, devices = {};
+          allRecords.forEach(function (r) {
+            if (r.country) countries[r.country] = true;
+            if (r.region) regions[r.region] = true;
+            if (r.city) cities[r.city] = true;
+            if (r.page) pages[r.page] = true;
+            if (r.browser) browsers[r.browser] = true;
+            if (r.os) oss[r.os] = true;
+            if (r.deviceType) devices[r.deviceType] = true;
+          });
+
+          function fillSelect(id, obj) {
+            var sel = document.getElementById(id);
+            var current = sel.value;
+            sel.innerHTML = '<option value="">' + sel.options[0].text + '</option>';
+            Object.keys(obj).sort().forEach(function (k) {
+              var opt = document.createElement("option");
+              opt.value = k;
+              opt.textContent = k;
+              sel.appendChild(opt);
+            });
+            sel.value = current;
+          }
+
+          fillSelect("filterCountry", countries);
+          fillSelect("filterRegion", regions);
+          fillSelect("filterCity", cities);
+          fillSelect("filterPage", pages);
+          fillSelect("filterBrowser", browsers);
+          fillSelect("filterOS", oss);
+          fillSelect("filterDevice", devices);
+        }
+
+        function updateStats() {
+          document.getElementById("totalVisits").textContent = allRecords.length;
+
+          var pages = {}, countries = {};
+          allRecords.forEach(function (r) {
+            var p = r.page || "unknown";
+            pages[p] = (pages[p] || 0) + 1;
+            var c = r.country || "Unknown";
+            countries[c] = (countries[c] || 0) + 1;
+          });
+          document.getElementById("uniquePages").textContent = Object.keys(pages).length;
+
+          var today = new Date().toISOString().slice(0, 10);
+          var todayCount = allRecords.filter(function (r) {
+            return r.timestamp && r.timestamp.slice(0, 10) === today;
+          }).length;
+          document.getElementById("todayVisits").textContent = todayCount;
+
+          var topPage = "—";
+          var maxCount = 0;
+          Object.keys(pages).forEach(function (p) {
+            if (pages[p] > maxCount) { maxCount = pages[p]; topPage = p; }
+          });
+          document.getElementById("topPage").textContent = topPage.length > 12 ? topPage.slice(0, 12) + "…" : topPage;
+          document.getElementById("topPage").title = topPage;
+
+          var topC = "—";
+          var maxC = 0;
+          Object.keys(countries).forEach(function (c) {
+            if (countries[c] > maxC) { maxC = countries[c]; topC = c; }
+          });
+          document.getElementById("topCountry").textContent = topC;
+          document.getElementById("uniqueCountries").textContent = Object.keys(countries).length;
+        }
+
+        function getFilteredRecords() {
+          var query = (searchInput.value || "").toLowerCase();
+          var fCountry = document.getElementById("filterCountry").value;
+          var fRegion = document.getElementById("filterRegion").value;
+          var fCity = document.getElementById("filterCity").value;
+          var fPage = document.getElementById("filterPage").value;
+          var fBrowser = document.getElementById("filterBrowser").value;
+          var fOS = document.getElementById("filterOS").value;
+          var fDevice = document.getElementById("filterDevice").value;
+
+          return allRecords.filter(function (r) {
+            if (query) {
+              var searchable = ((r.page || "") + " " + (r.country || "") + " " + (r.region || "") + " " + (r.city || "") + " " + (r.referrer || "") + " " + (r.device || "") + " " + (r.browser || "") + " " + (r.os || "") + " " + (r.userAgent || "")).toLowerCase();
+              if (searchable.indexOf(query) === -1) return false;
+            }
+            if (fCountry && r.country !== fCountry) return false;
+            if (fRegion && r.region !== fRegion) return false;
+            if (fCity && r.city !== fCity) return false;
+            if (fPage && r.page !== fPage) return false;
+            if (fBrowser && r.browser !== fBrowser) return false;
+            if (fOS && r.os !== fOS) return false;
+            if (fDevice && r.deviceType !== fDevice) return false;
+            return true;
+          });
+        }
+
+        function renderTable() {
+          var filtered = getFilteredRecords();
+
+          filtered.sort(function (a, b) {
+            var va = a[sortField] || "";
+            var vb = b[sortField] || "";
+            if (sortField === "timestamp") {
+              va = new Date(va).getTime() || 0;
+              vb = new Date(vb).getTime() || 0;
+            }
+            if (va < vb) return sortAsc ? -1 : 1;
+            if (va > vb) return sortAsc ? 1 : -1;
+            return 0;
+          });
+
+          var totalPages = Math.ceil(filtered.length / PER_PAGE) || 1;
+          if (currentPage > totalPages) currentPage = totalPages;
+          var start = (currentPage - 1) * PER_PAGE;
+          var pageRecords = filtered.slice(start, start + PER_PAGE);
+
+          tableBody.innerHTML = "";
+          pageRecords.forEach(function (r) {
+            var tr = document.createElement("tr");
+            var ts = "—";
+            if (r.timestamp) {
+              try {
+                var d = new Date(r.timestamp);
+                ts = d.toLocaleDateString() + " " + d.toLocaleTimeString();
+              } catch (e) {
+                ts = r.timestamp;
+              }
+            }
+
+            var flag = countryFlags[r.country] || "🌍";
+            var locParts = [r.city, r.region, r.country].filter(Boolean).join(", ") || "—";
+            var devIcon = deviceIcon(r.deviceType);
+
+            tr.innerHTML =
+              '<td title="' + escHtml(r.timestamp || "") + '">' + escHtml(ts) + "</td>" +
+              '<td><span class="page-badge">' + escHtml(r.page || "/") + "</span></td>" +
+              '<td><span class="location-badge"><span class="country-flag">' + flag + "</span>" + escHtml(r.country || "—") + "</span></td>" +
+              '<td title="' + escHtml(r.region || "") + '">' + escHtml(truncate(r.region || "—", 20)) + "</td>" +
+              '<td title="' + escHtml(r.city || "") + '">' + escHtml(truncate(r.city || "—", 20)) + "</td>" +
+              '<td><span class="device-badge"><span class="device-icon">' + devIcon + "</span>" + escHtml(r.deviceType || "—") + "</span></td>" +
+              '<td>' + escHtml(r.browser || "—") + "</td>" +
+              '<td>' + escHtml(r.os || "—") + "</td>" +
+              '<td title="' + escHtml(r.referrer || "") + '">' + escHtml(truncate(r.referrer || "direct", 25)) + "</td>" +
+              '<td>' + escHtml(r.language || "—") + "</td>" +
+              '<td>' + escHtml(r.screen || "—") + "</td>";
+            tableBody.appendChild(tr);
+          });
+
+          if (filtered.length === 0 && allRecords.length > 0) {
+            tableBody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:2rem;color:var(--text-muted);">No results match your filters.</td></tr>';
+          } else if (filtered.length === 0) {
+            emptyState.style.display = "block";
+            loadingSpinner.style.display = "none";
+          }
+
+          renderPagination(totalPages, filtered.length);
+        }
+
+        function renderPagination(totalPages, totalFiltered) {
+          var pag = document.getElementById("pagination");
+          pag.innerHTML = "";
+          if (totalPages <= 1) return;
+
+          var prev = document.createElement("button");
+          prev.textContent = "← Prev";
+          prev.disabled = currentPage === 1;
+          prev.addEventListener("click", function () { currentPage--; renderTable(); });
+          pag.appendChild(prev);
+
+          for (var i = 1; i <= totalPages; i++) {
+            if (totalPages > 7 && Math.abs(i - currentPage) > 2 && i !== 1 && i !== totalPages) {
+              if (i === currentPage - 3 || i === currentPage + 3) {
+                var dots = document.createElement("span");
+                dots.textContent = "…";
+                dots.className = "pagination-info";
+                pag.appendChild(dots);
+              }
+              continue;
+            }
+            var btn = document.createElement("button");
+            btn.textContent = i;
+            if (i === currentPage) btn.className = "active";
+            (function (page) {
+              btn.addEventListener("click", function () { currentPage = page; renderTable(); });
+            })(i);
+            pag.appendChild(btn);
+          }
+
+          var info = document.createElement("span");
+          info.className = "pagination-info";
+          info.textContent = " " + totalFiltered + " records ";
+          pag.appendChild(info);
+
+          var next = document.createElement("button");
+          next.textContent = "Next →";
+          next.disabled = currentPage === totalPages;
+          next.addEventListener("click", function () { currentPage++; renderTable(); });
+          pag.appendChild(next);
+        }
+
+        function truncate(str, len) {
+          if (!str) return "";
+          return str.length > len ? str.slice(0, len) + "…" : str;
+        }
+
+        function escHtml(str) {
+          var div = document.createElement("div");
+          div.textContent = str;
+          return div.innerHTML;
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -1277,7 +1277,7 @@
               </div>
             </div>
             <a
-              href="https://wa.me/919650979813?text=Hi%20Gautam,%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!"
+              href="https://wa.me/919650979813?text=Hi%20Gautam%2C%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!"
               target="_blank"
               class="whatsapp-btn"
             >
@@ -1321,7 +1321,7 @@
               </div>
             </div>
             <a
-              href="https://wa.me/85253451910?text=Hi%20Gautam,%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!"
+              href="https://wa.me/85253451910?text=Hi%20Gautam%2C%20I%20found%20your%20profile%20and%20would%20like%20to%20connect!"
               target="_blank"
               class="whatsapp-btn"
             >
@@ -1550,6 +1550,109 @@
           window.scrollTo({ top: 0, behavior: "smooth" });
         });
       }
+
+      // ===== Theme Switcher — Hide on Scroll =====
+      const themeSwitcher = document.getElementById("themeSwitcher");
+      const themeDropdownAdmin = document.getElementById("themeDropdown");
+      let lastScrollY = 0;
+      const THEME_HIDE_THRESHOLD = 80;
+
+      if (themeSwitcher) {
+        window.addEventListener("scroll", () => {
+          const currentY = window.scrollY;
+          // Close dropdown if open before hiding
+          if (themeDropdownAdmin && themeDropdownAdmin.classList.contains("open")) {
+            themeDropdownAdmin.classList.remove("open");
+            themeToggle.classList.remove("open");
+          }
+          if (currentY > THEME_HIDE_THRESHOLD && currentY > lastScrollY) {
+            themeSwitcher.classList.add("hidden");
+          } else if (currentY < lastScrollY || currentY <= THEME_HIDE_THRESHOLD) {
+            themeSwitcher.classList.remove("hidden");
+          }
+          lastScrollY = currentY;
+        }, { passive: true });
+      }
+
+      // ===== Visitor Tracking (jsonbin.io) =====
+      (function trackVisitor() {
+        var BIN_ID = localStorage.getItem("admin_bin_id") || "";
+        var API_KEY = localStorage.getItem("admin_api_key") || "";
+        if (!BIN_ID || !API_KEY) return;
+
+        var ua = navigator.userAgent;
+
+        function parseBrowser(u) {
+          if (u.indexOf("Edg/") > -1) return "Edge";
+          if (u.indexOf("OPR/") > -1) return "Opera";
+          if (u.indexOf("Firefox/") > -1) return "Firefox";
+          if (u.indexOf("Chrome/") > -1 && u.indexOf("Safari/") > -1) return "Chrome";
+          if (u.indexOf("Safari/") > -1) return "Safari";
+          return "Other";
+        }
+
+        function parseOS(u) {
+          if (u.indexOf("Win") > -1) return "Windows";
+          if (u.indexOf("Mac") > -1) return "macOS";
+          if (u.indexOf("Linux") > -1) return "Linux";
+          if (u.indexOf("Android") > -1) return "Android";
+          if (u.indexOf("iPhone") > -1 || u.indexOf("iPad") > -1) return "iOS";
+          return "Unknown";
+        }
+
+        function parseDevice(u) {
+          if (u.indexOf("Mobile") > -1 || u.indexOf("Android") > -1) return "Mobile";
+          if (u.indexOf("iPad") > -1 || u.indexOf("Tablet") > -1) return "Tablet";
+          return "Desktop";
+        }
+
+        var deviceInfo = parseBrowser(ua) + " / " + parseOS(ua) + " / " + parseDevice(ua);
+
+        function buildEntry(loc) {
+          return {
+            timestamp: new Date().toISOString(),
+            page: window.location.pathname,
+            url: window.location.href,
+            referrer: document.referrer || "direct",
+            userAgent: ua,
+            device: deviceInfo,
+            browser: parseBrowser(ua),
+            os: parseOS(ua),
+            deviceType: parseDevice(ua),
+            language: navigator.language,
+            screen: screen.width + "x" + screen.height,
+            country: (loc && loc.country) || "",
+            region: (loc && loc.region) || "",
+            city: (loc && loc.city) || "",
+          };
+        }
+
+        // Step 1: Fetch location, then save record
+        fetch("https://ipapi.co/json/")
+          .then(function (r) { return r.ok ? r.json() : {}; })
+          .catch(function () { return {}; })
+          .then(function (loc) {
+            var entry = buildEntry(loc);
+            // Step 2: GET existing records
+            return fetch("https://api.jsonbin.io/v3/b/" + BIN_ID, {
+              method: "GET",
+              headers: { "X-Master-Key": API_KEY },
+            }).then(function (r) { return r.json(); }).then(function (data) {
+              var records = Array.isArray(data.record) ? data.record : [];
+              records.push(entry);
+              // Step 3: PUT back
+              return fetch("https://api.jsonbin.io/v3/b/" + BIN_ID, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                  "X-Master-Key": API_KEY,
+                },
+                body: JSON.stringify(records),
+              });
+            });
+          })
+          .catch(function () {});
+      })();
 
       // ===== Typing effect for hero subtitle =====
       const heroSubtitle = document.querySelector(".hero-subtitle");
