@@ -1378,8 +1378,7 @@
           </a>
         </div>
         <p class="footer-text">
-          © 2026 <a href="https://www.gautam958web.in">gautam958web.in</a> |
-          Made with ❤️ by Gautam Kumar
+          © 2026 <a href="https://www.gautam958web.in">gautam958web.in</a>
         </p>
       </div>
     </footer>
@@ -1588,7 +1587,8 @@
 
       // ===== Visitor Tracking (jsonbin.io + sello_vid + SHA-256 IP hashing) =====
       (function trackVisitor() {
-        var cfg = typeof TRACKING_CONFIG !== 'undefined' ? TRACKING_CONFIG : null;
+        var cfg =
+          typeof TRACKING_CONFIG !== "undefined" ? TRACKING_CONFIG : null;
         if (!cfg || !cfg.BIN_ID || !cfg.API_KEY) return;
         var BIN_ID = cfg.BIN_ID;
         var API_KEY = cfg.API_KEY;
@@ -1596,15 +1596,18 @@
 
         // ===== sello_vid: stable anonymous visitor id in localStorage =====
         function getOrCreateVisitorId() {
-          var vid = localStorage.getItem('sello_vid');
+          var vid = localStorage.getItem("sello_vid");
           if (vid) return vid;
           // Generate UUID v4
-          vid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = Math.random() * 16 | 0;
-            var v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-          });
-          localStorage.setItem('sello_vid', vid);
+          vid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+            /[xy]/g,
+            function (c) {
+              var r = (Math.random() * 16) | 0;
+              var v = c === "x" ? r : (r & 0x3) | 0x8;
+              return v.toString(16);
+            },
+          );
+          localStorage.setItem("sello_vid", vid);
           return vid;
         }
 
@@ -1612,44 +1615,57 @@
         var ua = navigator.userAgent;
 
         function parseBrowser(u) {
-          if (u.indexOf('Edg/') > -1) return 'Edge';
-          if (u.indexOf('OPR/') > -1) return 'Opera';
-          if (u.indexOf('Firefox/') > -1) return 'Firefox';
-          if (u.indexOf('Chrome/') > -1 && u.indexOf('Safari/') > -1) return 'Chrome';
-          if (u.indexOf('Safari/') > -1) return 'Safari';
-          return 'Other';
+          if (u.indexOf("Edg/") > -1) return "Edge";
+          if (u.indexOf("OPR/") > -1) return "Opera";
+          if (u.indexOf("Firefox/") > -1) return "Firefox";
+          if (u.indexOf("Chrome/") > -1 && u.indexOf("Safari/") > -1)
+            return "Chrome";
+          if (u.indexOf("Safari/") > -1) return "Safari";
+          return "Other";
         }
 
         function parseOS(u) {
-          if (u.indexOf('Win') > -1) return 'Windows';
-          if (u.indexOf('Mac') > -1) return 'macOS';
-          if (u.indexOf('Linux') > -1) return 'Linux';
-          if (u.indexOf('Android') > -1) return 'Android';
-          if (u.indexOf('iPhone') > -1 || u.indexOf('iPad') > -1) return 'iOS';
-          return 'Unknown';
+          if (u.indexOf("Win") > -1) return "Windows";
+          if (u.indexOf("Mac") > -1) return "macOS";
+          if (u.indexOf("Linux") > -1) return "Linux";
+          if (u.indexOf("Android") > -1) return "Android";
+          if (u.indexOf("iPhone") > -1 || u.indexOf("iPad") > -1) return "iOS";
+          return "Unknown";
         }
 
         function parseDevice(u) {
-          if (u.indexOf('Mobile') > -1 || u.indexOf('Android') > -1) return 'Mobile';
-          if (u.indexOf('iPad') > -1 || u.indexOf('Tablet') > -1) return 'Tablet';
-          return 'Desktop';
+          if (u.indexOf("Mobile") > -1 || u.indexOf("Android") > -1)
+            return "Mobile";
+          if (u.indexOf("iPad") > -1 || u.indexOf("Tablet") > -1)
+            return "Tablet";
+          return "Desktop";
         }
 
         // ===== SHA-256 hash for IP privacy =====
         function sha256(message) {
           var msgBuffer = new TextEncoder().encode(message);
-          return crypto.subtle.digest('SHA-256', msgBuffer).then(function(hashBuffer) {
-            var hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
-          });
+          return crypto.subtle
+            .digest("SHA-256", msgBuffer)
+            .then(function (hashBuffer) {
+              var hashArray = Array.from(new Uint8Array(hashBuffer));
+              return hashArray
+                .map(function (b) {
+                  return b.toString(16).padStart(2, "0");
+                })
+                .join("");
+            });
         }
 
         // ===== Resolve IP location via ipapi.co (client-side) =====
         // Location is fetched client-side; IP hashing ensures privacy on storage
         function resolveLocation() {
-          return fetch('https://ipapi.co/json/')
-            .then(function(r) { return r.ok ? r.json() : {}; })
-            .catch(function() { return {}; });
+          return fetch("https://ipapi.co/json/")
+            .then(function (r) {
+              return r.ok ? r.json() : {};
+            })
+            .catch(function () {
+              return {};
+            });
         }
 
         function buildEntry(loc, hashedIp) {
@@ -1658,54 +1674,59 @@
             timestamp: new Date().toISOString(),
             page: window.location.pathname,
             url: window.location.href,
-            referrer: document.referrer || 'direct',
+            referrer: document.referrer || "direct",
             userAgent: ua,
-            device: parseBrowser(ua) + ' / ' + parseOS(ua) + ' / ' + parseDevice(ua),
+            device:
+              parseBrowser(ua) + " / " + parseOS(ua) + " / " + parseDevice(ua),
             browser: parseBrowser(ua),
             os: parseOS(ua),
             deviceType: parseDevice(ua),
             language: navigator.language,
-            screen: screen.width + 'x' + screen.height,
-            country: (loc && loc.country) || '',
-            region: (loc && loc.region) || '',
-            city: (loc && loc.city) || '',
-            timezone: (loc && loc.timezone) || '',
-            ipHash: hashedIp || '',
+            screen: screen.width + "x" + screen.height,
+            country: (loc && loc.country) || "",
+            region: (loc && loc.region) || "",
+            city: (loc && loc.city) || "",
+            timezone: (loc && loc.timezone) || "",
+            ipHash: hashedIp || "",
           };
         }
 
         // ===== Main tracking flow =====
-        resolveLocation().then(function(loc) {
-          var ipToHash = (loc && loc.ip) ? loc.ip : 'unknown';
-          return sha256(ipToHash).then(function(hashedIp) {
-            var entry = buildEntry(loc, hashedIp);
+        resolveLocation()
+          .then(function (loc) {
+            var ipToHash = loc && loc.ip ? loc.ip : "unknown";
+            return sha256(ipToHash).then(function (hashedIp) {
+              var entry = buildEntry(loc, hashedIp);
 
-            // GET existing records, append, enforce 5K cap, PUT back
-            return fetch('https://api.jsonbin.io/v3/b/' + BIN_ID, {
-              method: 'GET',
-              headers: { 'X-Master-Key': API_KEY },
-            })
-            .then(function(r) { return r.json(); })
-            .then(function(data) {
-              var records = Array.isArray(data.record) ? data.record : [];
-              records.push(entry);
+              // GET existing records, append, enforce 5K cap, PUT back
+              return fetch("https://api.jsonbin.io/v3/b/" + BIN_ID, {
+                method: "GET",
+                headers: { "X-Master-Key": API_KEY },
+              })
+                .then(function (r) {
+                  return r.json();
+                })
+                .then(function (data) {
+                  var records = Array.isArray(data.record) ? data.record : [];
+                  records.push(entry);
 
-              // Enforce 5,000 record cap — keep newest
-              if (records.length > MAX_RECORDS) {
-                records = records.slice(records.length - MAX_RECORDS);
-              }
+                  // Enforce 5,000 record cap — keep newest
+                  if (records.length > MAX_RECORDS) {
+                    records = records.slice(records.length - MAX_RECORDS);
+                  }
 
-              return fetch('https://api.jsonbin.io/v3/b/' + BIN_ID, {
-                method: 'PUT',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'X-Master-Key': API_KEY,
-                },
-                body: JSON.stringify(records),
-              });
+                  return fetch("https://api.jsonbin.io/v3/b/" + BIN_ID, {
+                    method: "PUT",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "X-Master-Key": API_KEY,
+                    },
+                    body: JSON.stringify(records),
+                  });
+                });
             });
-          });
-        }).catch(function() {});
+          })
+          .catch(function () {});
       })();
 
       // ===== Typing effect for hero subtitle =====
