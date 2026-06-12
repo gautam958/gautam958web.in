@@ -1369,10 +1369,10 @@
             📱
           </a>
           <a
-            href="https://www.gautam958web.in"
+            href="visitors.html"
             target="_blank"
             class="social-link"
-            title="Website"
+            title="Visitors"
           >
             🌐
           </a>
@@ -1560,25 +1560,36 @@
       const THEME_HIDE_THRESHOLD = 80;
 
       if (themeSwitcher) {
-        window.addEventListener("scroll", () => {
-          const currentY = window.scrollY;
-          // Close dropdown if open before hiding
-          if (themeDropdownAdmin && themeDropdownAdmin.classList.contains("open")) {
-            themeDropdownAdmin.classList.remove("open");
-            themeToggle.classList.remove("open");
-          }
-          if (currentY > THEME_HIDE_THRESHOLD && currentY > lastScrollY) {
-            themeSwitcher.classList.add("hidden");
-          } else if (currentY < lastScrollY || currentY <= THEME_HIDE_THRESHOLD) {
-            themeSwitcher.classList.remove("hidden");
-          }
-          lastScrollY = currentY;
-        }, { passive: true });
+        window.addEventListener(
+          "scroll",
+          () => {
+            const currentY = window.scrollY;
+            // Close dropdown if open before hiding
+            if (
+              themeDropdownAdmin &&
+              themeDropdownAdmin.classList.contains("open")
+            ) {
+              themeDropdownAdmin.classList.remove("open");
+              themeToggle.classList.remove("open");
+            }
+            if (currentY > THEME_HIDE_THRESHOLD && currentY > lastScrollY) {
+              themeSwitcher.classList.add("hidden");
+            } else if (
+              currentY < lastScrollY ||
+              currentY <= THEME_HIDE_THRESHOLD
+            ) {
+              themeSwitcher.classList.remove("hidden");
+            }
+            lastScrollY = currentY;
+          },
+          { passive: true },
+        );
       }
 
       // ===== Visitor Tracking (jsonbin.io) =====
       (function trackVisitor() {
-        var cfg = typeof TRACKING_CONFIG !== "undefined" ? TRACKING_CONFIG : null;
+        var cfg =
+          typeof TRACKING_CONFIG !== "undefined" ? TRACKING_CONFIG : null;
         if (!cfg || !cfg.BIN_ID || !cfg.API_KEY) return;
         var BIN_ID = cfg.BIN_ID;
         var API_KEY = cfg.API_KEY;
@@ -1589,7 +1600,8 @@
           if (u.indexOf("Edg/") > -1) return "Edge";
           if (u.indexOf("OPR/") > -1) return "Opera";
           if (u.indexOf("Firefox/") > -1) return "Firefox";
-          if (u.indexOf("Chrome/") > -1 && u.indexOf("Safari/") > -1) return "Chrome";
+          if (u.indexOf("Chrome/") > -1 && u.indexOf("Safari/") > -1)
+            return "Chrome";
           if (u.indexOf("Safari/") > -1) return "Safari";
           return "Other";
         }
@@ -1604,12 +1616,15 @@
         }
 
         function parseDevice(u) {
-          if (u.indexOf("Mobile") > -1 || u.indexOf("Android") > -1) return "Mobile";
-          if (u.indexOf("iPad") > -1 || u.indexOf("Tablet") > -1) return "Tablet";
+          if (u.indexOf("Mobile") > -1 || u.indexOf("Android") > -1)
+            return "Mobile";
+          if (u.indexOf("iPad") > -1 || u.indexOf("Tablet") > -1)
+            return "Tablet";
           return "Desktop";
         }
 
-        var deviceInfo = parseBrowser(ua) + " / " + parseOS(ua) + " / " + parseDevice(ua);
+        var deviceInfo =
+          parseBrowser(ua) + " / " + parseOS(ua) + " / " + parseDevice(ua);
 
         function buildEntry(loc) {
           return {
@@ -1632,27 +1647,35 @@
 
         // Step 1: Fetch location, then save record
         fetch("https://ipapi.co/json/")
-          .then(function (r) { return r.ok ? r.json() : {}; })
-          .catch(function () { return {}; })
+          .then(function (r) {
+            return r.ok ? r.json() : {};
+          })
+          .catch(function () {
+            return {};
+          })
           .then(function (loc) {
             var entry = buildEntry(loc);
             // Step 2: GET existing records
             return fetch("https://api.jsonbin.io/v3/b/" + BIN_ID, {
               method: "GET",
               headers: { "X-Master-Key": API_KEY },
-            }).then(function (r) { return r.json(); }).then(function (data) {
-              var records = Array.isArray(data.record) ? data.record : [];
-              records.push(entry);
-              // Step 3: PUT back
-              return fetch("https://api.jsonbin.io/v3/b/" + BIN_ID, {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json",
-                  "X-Master-Key": API_KEY,
-                },
-                body: JSON.stringify(records),
+            })
+              .then(function (r) {
+                return r.json();
+              })
+              .then(function (data) {
+                var records = Array.isArray(data.record) ? data.record : [];
+                records.push(entry);
+                // Step 3: PUT back
+                return fetch("https://api.jsonbin.io/v3/b/" + BIN_ID, {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "X-Master-Key": API_KEY,
+                  },
+                  body: JSON.stringify(records),
+                });
               });
-            });
           })
           .catch(function () {});
       })();

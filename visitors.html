@@ -383,6 +383,189 @@
         font-size: 0.8rem;
       }
 
+      /* Login Overlay */
+      .login-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 22, 40, 0.92);
+        backdrop-filter: blur(12px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 0.4s ease;
+      }
+
+      .login-overlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .login-popup {
+        background: var(--card-bg, rgba(20, 35, 60, 0.95));
+        border: 1px solid var(--border, rgba(74, 158, 255, 0.15));
+        border-radius: 20px;
+        padding: 2.5rem 2rem;
+        max-width: 380px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        animation: popupSlideIn 0.4s ease;
+      }
+
+      @keyframes popupSlideIn {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+        20%, 40%, 60%, 80% { transform: translateX(4px); }
+      }
+
+      .login-input.shake {
+        animation: shake 0.5s ease;
+        border-color: #ef4444;
+      }
+
+      .login-icon {
+        font-size: 3rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .login-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        color: var(--text, #fff);
+        margin-bottom: 0.4rem;
+      }
+
+      .login-subtitle {
+        color: var(--text-muted, rgba(255,255,255,0.5));
+        font-size: 0.85rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .login-input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+        border: 1px solid var(--border, rgba(74, 158, 255, 0.2));
+        background: var(--glass, rgba(255,255,255,0.05));
+        color: var(--text, #fff);
+        font-family: "Manrope", sans-serif;
+        font-size: 0.95rem;
+        outline: none;
+        margin-bottom: 1rem;
+        transition: border-color 0.3s;
+        box-sizing: border-box;
+      }
+
+      .login-input:focus {
+        border-color: var(--accent, #4a9eff);
+      }
+
+      .login-error {
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #f87171;
+        padding: 0.6rem 0.8rem;
+        border-radius: 10px;
+        font-size: 0.82rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .login-btn {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 50px;
+        border: none;
+        background: linear-gradient(135deg, var(--accent, #4a9eff), var(--accent-light, #7bb8ff));
+        color: #fff;
+        font-family: "Manrope", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.3s;
+      }
+
+      .login-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(74, 158, 255, 0.3);
+      }
+
+      .login-btn:active {
+        transform: translateY(0);
+      }
+
+      .login-back {
+        display: inline-block;
+        margin-top: 1.25rem;
+        color: var(--text-muted, rgba(255,255,255,0.5));
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 600;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+      }
+
+      .login-back:hover {
+        opacity: 1;
+      }
+
+      /* Access Denied overlay */
+      .access-denied {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--text-muted, rgba(255,255,255,0.5));
+        display: none;
+      }
+
+      .access-denied.active {
+        display: block;
+      }
+
+      .access-denied-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+      }
+
+      .access-denied h2 {
+        font-family: "Playfair Display", serif;
+        color: #f87171;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .access-denied p {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .access-denied .retry-btn {
+        display: inline-block;
+        padding: 0.6rem 1.5rem;
+        border-radius: 50px;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        background: transparent;
+        color: #f87171;
+        font-family: "Manrope", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+
+      .access-denied .retry-btn:hover {
+        background: #ef4444;
+        border-color: #ef4444;
+        color: #fff;
+      }
+
       @media (max-width: 768px) {
         .admin-table-wrap {
           overflow-x: auto;
@@ -450,7 +633,20 @@
 
 
 
-    <!-- Dashboard (shown when config is valid) -->
+    <!-- Login Popup -->
+    <div class="login-overlay" id="loginOverlay">
+      <div class="login-popup">
+        <div class="login-icon">🔐</div>
+        <h2 class="login-title">Visitor Dashboard Access</h2>
+        <p class="login-subtitle">Enter your authority key to continue</p>
+        <input type="password" class="login-input" id="authorityKeyInput" placeholder="Enter authority key" />
+        <div class="login-error" id="loginError" style="display: none;">⚠️ Access Denied — Invalid authority key</div>
+        <button class="login-btn" id="loginBtn">🔑 Verify & Access</button>
+        <a href="index.html" class="login-back">← Back to Portfolio</a>
+      </div>
+    </div>
+
+    <!-- Dashboard (shown when config is valid and authorized) -->
     <div class="dashboard" id="dashboard">
       <!-- Stats -->
       <div class="admin-stats">
@@ -575,6 +771,15 @@
       <div class="pagination" id="pagination"></div>
     </div>
 
+    <!-- Access Denied state -->
+    <div class="access-denied" id="accessDenied">
+      <div class="access-denied-icon">🚫</div>
+      <h2>Access Denied</h2>
+      <p>You do not have permission to view the visitor dashboard.</p>
+      <button class="retry-btn" id="retryBtn">Try Again</button>
+      <a href="index.html" class="login-back" style="margin-top:1rem;display:inline-block;">← Back to Portfolio</a>
+    </div>
+
     <script>
       // ===== Theme Switcher =====
       (function () {
@@ -660,9 +865,72 @@
           return;
         }
 
-        // Auto-load on page open
-        dashboard.classList.add("active");
-        loadData(cfg.BIN_ID, cfg.API_KEY);
+        // ===== Login / Authority Key Validation =====
+        var AUTH_KEY = typeof AUTHORITY_KEY !== "undefined" ? AUTHORITY_KEY : "";
+        var loginOverlay = document.getElementById("loginOverlay");
+        var loginInput = document.getElementById("authorityKeyInput");
+        var loginError = document.getElementById("loginError");
+        var loginBtn = document.getElementById("loginBtn");
+        var accessDenied = document.getElementById("accessDenied");
+        var retryBtn = document.getElementById("retryBtn");
+        var loginAttempts = 0;
+
+        function attemptLogin() {
+          var enteredKey = loginInput.value.trim();
+          loginError.style.display = "none";
+
+          if (!enteredKey) {
+            loginError.textContent = "⚠️ Please enter an authority key.";
+            loginError.style.display = "block";
+            return;
+          }
+
+          if (!AUTH_KEY) {
+            loginError.textContent = "⚠️ Authority key not configured. Check config.js.";
+            loginError.style.display = "block";
+            return;
+          }
+
+          if (enteredKey === AUTH_KEY) {
+            // Success — hide login overlay, show dashboard
+            loginOverlay.classList.add("hidden");
+            setTimeout(function () { loginOverlay.style.display = "none"; }, 400);
+            dashboard.classList.add("active");
+            loadData(cfg.BIN_ID, cfg.API_KEY);
+          } else {
+            loginAttempts++;
+            loginInput.value = "";
+            loginInput.focus();
+
+            if (loginAttempts >= 5) {
+              // Too many failures — show access denied
+              loginOverlay.classList.add("hidden");
+              setTimeout(function () { loginOverlay.style.display = "none"; }, 400);
+              accessDenied.classList.add("active");
+            } else {
+              loginError.textContent = "⚠️ Access Denied — Invalid authority key (" + (5 - loginAttempts) + " attempts remaining)";
+              loginError.style.display = "block";
+              loginInput.classList.add("shake");
+              setTimeout(function () { loginInput.classList.remove("shake"); }, 500);
+            }
+          }
+        }
+
+        loginBtn.addEventListener("click", attemptLogin);
+        loginInput.addEventListener("keydown", function (e) {
+          if (e.key === "Enter") attemptLogin();
+        });
+
+        retryBtn.addEventListener("click", function () {
+          accessDenied.classList.remove("active");
+          loginAttempts = 0;
+          loginOverlay.style.display = "flex";
+          loginOverlay.classList.remove("hidden");
+          loginInput.value = "";
+          loginError.style.display = "none";
+        });
+
+        // Don't auto-load dashboard — wait for authentication
 
         // Refresh
         document.getElementById("refreshBtn").addEventListener("click", function () {

@@ -2,7 +2,7 @@
  * Visitor Tracking Configuration
  * ================================
  * Store your jsonbin.io credentials here.
- * Both index.html and admin.html use these values.
+ * Both index.html and visitors.html use these values.
  *
  * HOW TO GET YOUR CREDENTIALS:
  * 1. Sign up at https://jsonbin.io
@@ -14,3 +14,9 @@ var TRACKING_CONFIG = {
   BIN_ID: "6a2c162fda38895dfeb537c7",
   API_KEY: "$2a$10$RB2F37b99q363tkROFStmeXmOZfo/EAs5DUgvxZT6Ictn3Eg6ujRG",
 };
+
+/**
+ * Authority Key for Visitors Page
+ * Users must enter this key to access the visitor dashboard.
+ */
+var AUTHORITY_KEY = "gautam2026";
