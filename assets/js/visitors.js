@@ -72,84 +72,103 @@
     return '💻';
   }
 
-  // ===== Login / Authority Key Validation =====
-  var AUTH_KEY = typeof AUTHORITY_KEY !== 'undefined' ? AUTHORITY_KEY : 'gautam2026';
+  // ===== Google Sign-In =====
   var loginOverlay = document.getElementById('loginOverlay');
-  var loginInput = document.getElementById('authorityKeyInput');
   var loginError = document.getElementById('loginError');
-  var loginBtn = document.getElementById('loginBtn');
   var accessDenied = document.getElementById('accessDenied');
   var retryBtn = document.getElementById('retryBtn');
-  var loginAttempts = 0;
+  var allowedEmails = typeof ALLOWED_EMAILS !== 'undefined' ? ALLOWED_EMAILS : [];
+  var clientId = typeof GOOGLE_CLIENT_ID !== 'undefined' ? GOOGLE_CLIENT_ID : '';
 
-  function attemptLogin() {
-    var enteredKey = loginInput.value.trim();
+  function showLoginOverlay() {
     loginError.style.display = 'none';
+    loginOverlay.style.display = 'flex';
+    loginOverlay.classList.remove('hidden');
+    var container = document.getElementById('googleSignInBtn');
+    container.innerHTML = '';
+    initGoogleSignIn();
+  }
 
-    if (!enteredKey) {
-      loginError.textContent = '⚠️ Please enter an authority key.';
-      loginError.style.display = 'block';
-      return;
-    }
-    if (!AUTH_KEY) {
-      loginError.textContent = '⚠️ Authority key not configured. Check config.js.';
-      loginError.style.display = 'block';
-      return;
-    }
+  function grantAccess() {
+    loginOverlay.classList.add('hidden');
+    setTimeout(function () { loginOverlay.style.display = 'none'; }, 400);
+    dashboard.classList.add('active');
+    loadData();
+  }
 
-    if (enteredKey === AUTH_KEY) {
-      loginOverlay.classList.add('hidden');
-      setTimeout(function () { loginOverlay.style.display = 'none'; }, 400);
-      dashboard.classList.add('active');
-      loadData();
-    } else {
-      loginAttempts++;
-      loginInput.value = '';
-      loginInput.focus();
-      if (loginAttempts >= 5) {
-        loginOverlay.classList.add('hidden');
-        setTimeout(function () { loginOverlay.style.display = 'none'; }, 400);
-        accessDenied.classList.add('active');
-      } else {
-        loginError.textContent = '⚠️ Access Denied — Invalid authority key (' + (5 - loginAttempts) + ' attempts remaining)';
-        loginError.style.display = 'block';
-        loginInput.classList.add('shake');
-        setTimeout(function () { loginInput.classList.remove('shake'); }, 500);
-      }
+  function showAccessDenied(msg) {
+    loginError.textContent = msg || '⚠️ Access Denied — Your Google account is not authorized.';
+    loginError.style.display = 'block';
+  }
+
+  function decodeJwt(token) {
+    try {
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      return JSON.parse(decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join('')));
+    } catch (e) {
+      return null;
     }
   }
 
-  loginBtn.addEventListener('click', attemptLogin);
-  loginInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') attemptLogin(); });
-
-  // Focus trap: keep tab within login popup
-  loginOverlay.addEventListener('keydown', function (e) {
-    if (e.key !== 'Tab') return;
-    var focusable = loginOverlay.querySelectorAll('button, input, a:not(.login-back)');
-    if (focusable.length === 0) return;
-    var first = focusable[0];
-    var last = focusable[focusable.length - 1];
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
+  function handleCredentialResponse(response) {
+    var payload = decodeJwt(response.credential);
+    if (!payload || !payload.email) {
+      showAccessDenied('⚠️ Could not verify your Google account. Please try again.');
+      return;
     }
-  });
+
+    var email = payload.email.toLowerCase();
+    if (allowedEmails.length === 0) {
+      showAccessDenied('⚠️ No authorized emails configured. Update ALLOWED_EMAILS in config.js.');
+      return;
+    }
+    if (allowedEmails.indexOf(email) === -1) {
+      showAccessDenied('⚠️ Access Denied — "' + email + '" is not authorized.');
+      return;
+    }
+
+    grantAccess();
+  }
+
+  function initGoogleSignIn() {
+    if (!clientId || clientId.indexOf('YOUR_GOOGLE_CLIENT_ID') !== -1) {
+      showAccessDenied('⚠️ Google Client ID not configured. Update config.js with your Google OAuth Client ID.');
+      return;
+    }
+    if (typeof google === 'undefined' || !google.accounts) {
+      setTimeout(initGoogleSignIn, 200);
+      return;
+    }
+    google.accounts.id.initialize({
+      client_id: clientId,
+      callback: handleCredentialResponse,
+      auto_select: false,
+    });
+    google.accounts.id.renderButton(
+      document.getElementById('googleSignInBtn'),
+      { theme: 'outline', size: 'large', width: 280, text: 'signin_with' }
+    );
+  }
+
+  initGoogleSignIn();
 
   retryBtn.addEventListener('click', function () {
     accessDenied.classList.remove('active');
-    loginAttempts = 0;
-    loginOverlay.style.display = 'flex';
-    loginOverlay.classList.remove('hidden');
-    loginInput.value = '';
-    loginError.style.display = 'none';
+    showLoginOverlay();
   });
 
   // Refresh
   document.getElementById('refreshBtn').addEventListener('click', function () {
     loadData();
+  });
+
+  // Logout
+  document.getElementById('logoutBtn').addEventListener('click', function () {
+    dashboard.classList.remove('active');
+    showLoginOverlay();
   });
 
   // Search

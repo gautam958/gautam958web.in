@@ -90,12 +90,13 @@ The site includes a visitor tracking system powered by an **Azure Function API**
 - **Filterable/sortable table** with search, 6 filter dropdowns, and column sorting
 - **Export options:** CSV and JSON file download
 - **Clear data** button to reset all records
-- Protected by an authority key (see `config.js`)
+- Protected by **Google Sign-In** — only authorized Google accounts can access (see `config.js`)
 
-### Access
+### Access (Google Sign-In)
 1. Navigate to `visitors.html`
-2. Enter the authority key from `config.js`
-3. View visitor analytics and export data
+2. Click **"Sign in with Google"** and authenticate with your Google account
+3. Only emails listed in `config.js` `ALLOWED_EMAILS` are authorized
+4. View visitor analytics and export data
 
 ### Azure Function API (`visitors`)
 
@@ -246,7 +247,7 @@ public static async Task<IActionResult> Run(HttpRequest req, ILogger log)
 /
 ├── index.html                         # Main portfolio (HTML + CSS)
 ├── visitors.html                      # Admin visitor dashboard (HTML + CSS)
-├── config.js                          # Authority key for admin access
+├── config.js                          # Google OAuth config (Client ID + allowed emails)
 ├── visitors.json                      # Visitor data export template
 ├── assets/
 │   ├── css/style.css                  # Global styles with theme system
@@ -298,7 +299,8 @@ public static async Task<IActionResult> Run(HttpRequest req, ILogger log)
 
 4. **Access admin dashboard**
    - Open `visitors.html` in your browser
-   - Enter the authority key defined in `config.js`
+   - Sign in with your Google account
+   - Add your email to `ALLOWED_EMAILS` in `config.js`
 
 ---
 
@@ -328,6 +330,7 @@ This project follows WCAG 2.1 guidelines:
 - **Screen reader support** — Typing effect uses `aria-live` region for announcements
 - **Semantic HTML** — `<main>` landmark, `<nav>` with labels, `<section>` with `aria-label`
 - **Keyboard navigation** — Focus trap on login overlay, all controls keyboard-accessible
+- **Google Sign-In** — OAuth 2.0 authentication replaces static password, securing admin access
 
 ---
 
