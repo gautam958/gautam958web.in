@@ -130,16 +130,17 @@
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
+    <!-- Skip to content link for keyboard navigation -->
+    <a href="#about" class="skip-link">Skip to main content</a>
+
     <!-- Aurora Background (Midnight Theme) -->
     <div class="aurora-bg">
       <div class="aurora-blob"></div>
       <div class="aurora-blob"></div>
       <div class="aurora-blob"></div>
-    </div>
-
-    <!-- Theme Switcher -->
+    </div>    <!-- Theme Switcher -->
     <div class="theme-switcher" id="themeSwitcher">
-      <button class="theme-toggle-btn" id="themeToggle" title="Change Theme">
+      <button class="theme-toggle-btn" id="themeToggle" title="Change Theme" aria-label="Change color theme" aria-expanded="false" aria-haspopup="true">
         🎨
       </button>
       <div class="theme-dropdown" id="themeDropdown">
@@ -179,32 +180,21 @@
     </div>
 
     <!-- Navigation Dots -->
-    <nav class="nav-dots">
-      <a href="#hero" class="nav-dot active" title="Home"
-        ><span class="nav-label">Home</span></a
-      >
-      <a href="#about" class="nav-dot" title="About"
-        ><span class="nav-label">About</span></a
-      >
-      <a href="#skills" class="nav-dot" title="Skills"
-        ><span class="nav-label">Skills</span></a
-      >
-      <a href="#experience" class="nav-dot" title="Experience"
-        ><span class="nav-label">Experience</span></a
-      >
-      <a href="#portfolio" class="nav-dot" title="Portfolio"
-        ><span class="nav-label">Projects</span></a
-      >
-      <a href="#education" class="nav-dot" title="Education"
-        ><span class="nav-label">Education</span></a
-      >
-      <a href="#contact" class="nav-dot" title="Contact"
-        ><span class="nav-label">Contact</span></a
-      >
+    <nav class="nav-dots" aria-label="Page sections">
+      <a href="#hero" class="nav-dot active" title="Home" aria-label="Go to Home section"><span class="nav-label">Home</span></a>
+      <a href="#about" class="nav-dot" title="About" aria-label="Go to About section"><span class="nav-label">About</span></a>
+      <a href="#skills" class="nav-dot" title="Skills" aria-label="Go to Skills section"><span class="nav-label">Skills</span></a>
+      <a href="#experience" class="nav-dot" title="Experience" aria-label="Go to Experience section"><span class="nav-label">Experience</span></a>
+      <a href="#portfolio" class="nav-dot" title="Portfolio" aria-label="Go to Projects section"><span class="nav-label">Projects</span></a>
+      <a href="#education" class="nav-dot" title="Education" aria-label="Go to Education section"><span class="nav-label">Education</span></a>
+      <a href="#contact" class="nav-dot" title="Contact" aria-label="Go to Contact section"><span class="nav-label">Contact</span></a>
     </nav>
 
+    <!-- Main Content -->
+    <main>
+
     <!-- Hero Section -->
-    <section class="hero" id="hero">
+    <section class="hero" id="hero" aria-label="Hero">
       <div class="hero-bg">
         <img
           src="assets/img/Gautham6365_Company websiteTeams (1)-min.jpg"
@@ -268,7 +258,7 @@
     </section>
 
     <!-- About Section -->
-    <section class="about" id="about">
+    <section class="about" id="about" aria-label="About Me">
       <div class="section-center">
         <h2 class="section-title">About Me</h2>
         <p class="section-subtitle">
@@ -293,7 +283,7 @@
     </section>
 
     <!-- Skills Section (NEW) -->
-    <section class="skills" id="skills">
+    <section class="skills" id="skills" aria-label="Technical Expertise">
       <div class="section-center">
         <h2 class="section-title">Technical Expertise</h2>
         <p class="section-subtitle">
@@ -422,7 +412,7 @@
     </section>
 
     <!-- Experience Section -->
-    <section class="experience" id="experience">
+    <section class="experience" id="experience" aria-label="Work Experience">
       <div class="section-center">
         <h2 class="section-title">Experience</h2>
         <p class="section-subtitle">
@@ -519,7 +509,7 @@
     </section>
 
     <!-- Portfolio Section -->
-    <section class="portfolio" id="portfolio">
+    <section class="portfolio" id="portfolio" aria-label="Featured Projects">
       <div class="section-center">
         <h2 class="section-title">Featured Projects</h2>
         <p class="section-subtitle">
@@ -1188,8 +1178,8 @@
       </div>
     </section>
 
-    <!-- Education Section (NEW) -->
-    <section class="education" id="education">
+    <!-- Education Section -->
+    <section class="education" id="education" aria-label="Education and Certifications">
       <div class="section-center">
         <h2 class="section-title">Education & Certifications</h2>
         <p class="section-subtitle">
@@ -1228,7 +1218,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="contact" id="contact">
+    <section class="contact" id="contact" aria-label="Contact">
       <div class="section-center">
         <h2 class="section-title">Let's Connect</h2>
         <p class="section-subtitle">Open to opportunities and collaborations</p>
@@ -1337,7 +1327,9 @@
     </section>
 
     <!-- Back to Top Button -->
-    <button class="back-to-top" title="Back to top">⬆</button>
+    <button class="back-to-top" title="Back to top" aria-label="Back to top">⬆</button>
+
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -1348,6 +1340,7 @@
             target="_blank"
             class="social-link"
             title="LinkedIn"
+            aria-label="LinkedIn profile"
           >
             💼
           </a>
@@ -1355,6 +1348,7 @@
             href="mailto:gautam958@gmail.com"
             class="social-link"
             title="Email"
+            aria-label="Send email"
           >
             ✉️
           </a>
@@ -1363,6 +1357,7 @@
             target="_blank"
             class="social-link"
             title="WhatsApp"
+            aria-label="WhatsApp"
           >
             📱
           </a>
@@ -1371,6 +1366,7 @@
             target="_blank"
             class="social-link"
             title="Visitors"
+            aria-label="Visitor dashboard"
           >
             🌐
           </a>
@@ -1381,325 +1377,6 @@
       </div>
     </footer>
 
-    <script>
-      // ===== Scroll animations =====
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      }, observerOptions);
-
-      document.querySelectorAll(".fade-in").forEach((el) => {
-        observer.observe(el);
-      });
-
-      // ===== Navigation dots active state =====
-      const sections = document.querySelectorAll("section");
-      const navDots = document.querySelectorAll(".nav-dot");
-
-      window.addEventListener("scroll", () => {
-        let current = "";
-        sections.forEach((section) => {
-          const sectionTop = section.offsetTop;
-          if (scrollY >= sectionTop - 200) {
-            current = section.getAttribute("id");
-          }
-        });
-
-        navDots.forEach((dot) => {
-          dot.classList.remove("active");
-          if (dot.getAttribute("href") === "#" + current) {
-            dot.classList.add("active");
-          }
-        });
-      });
-
-      // ===== Smooth scroll for navigation =====
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
-          if (target) {
-            target.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }
-        });
-      });
-
-      // ===== Theme Switcher =====
-      const themeToggle = document.getElementById("themeToggle");
-      const themeDropdown = document.getElementById("themeDropdown");
-      const themeOptions = document.querySelectorAll(".theme-option");
-      const html = document.documentElement;
-
-      const savedTheme = localStorage.getItem("theme") || "dark-blue";
-      html.setAttribute("data-theme", savedTheme);
-      themeOptions.forEach((opt) => {
-        opt.classList.toggle("active", opt.dataset.theme === savedTheme);
-      });
-
-      themeToggle.addEventListener("click", (e) => {
-        e.stopPropagation();
-        themeDropdown.classList.toggle("open");
-        themeToggle.classList.toggle("open");
-      });
-
-      themeOptions.forEach((opt) => {
-        opt.addEventListener("click", () => {
-          const theme = opt.dataset.theme;
-          html.setAttribute("data-theme", theme);
-          localStorage.setItem("theme", theme);
-
-          themeOptions.forEach((b) => b.classList.remove("active"));
-          opt.classList.add("active");
-
-          themeDropdown.classList.remove("open");
-          themeToggle.classList.remove("open");
-        });
-      });
-
-      document.addEventListener("click", () => {
-        themeDropdown.classList.remove("open");
-        themeToggle.classList.remove("open");
-      });
-
-      // ===== Portfolio Filter =====
-      const filterBtns = document.querySelectorAll(".filter-btn");
-      const portfolioCards = document.querySelectorAll(".portfolio-card");
-
-      filterBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          filterBtns.forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
-
-          const filter = btn.dataset.filter;
-
-          portfolioCards.forEach((card) => {
-            if (filter === "all" || card.dataset.category === filter) {
-              card.classList.remove("hidden");
-              card.classList.add("visible");
-            } else {
-              card.classList.add("hidden");
-            }
-          });
-        });
-      });
-
-      // ===== Animated counters for stats =====
-      function animateCounters() {
-        const statNumbers = document.querySelectorAll(".stat-number");
-        statNumbers.forEach((stat) => {
-          const text = stat.textContent;
-          const match = text.match(/(\d+)/);
-          if (match) {
-            const target = parseInt(match[1]);
-            const suffix = text.replace(/\d+/, "");
-            let current = 0;
-            const increment = target / 40;
-            const timer = setInterval(() => {
-              current += increment;
-              if (current >= target) {
-                current = target;
-                clearInterval(timer);
-              }
-              stat.textContent = Math.floor(current) + suffix;
-            }, 30);
-          }
-        });
-      }
-
-      const statsObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              animateCounters();
-              statsObserver.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.5 },
-      );
-
-      const statsRow = document.querySelector(".stats-row");
-      if (statsRow) {
-        statsObserver.observe(statsRow);
-      }
-
-      // ===== Back to Top Button =====
-      const backToTopBtn = document.querySelector(".back-to-top");
-      if (backToTopBtn) {
-        window.addEventListener("scroll", () => {
-          if (window.scrollY > 400) {
-            backToTopBtn.classList.add("visible");
-          } else {
-            backToTopBtn.classList.remove("visible");
-          }
-        });
-
-        backToTopBtn.addEventListener("click", () => {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-      }
-
-      // ===== Theme Switcher — Hide on Scroll =====
-      const themeSwitcher = document.getElementById("themeSwitcher");
-      const themeDropdownAdmin = document.getElementById("themeDropdown");
-      let lastScrollY = 0;
-      const THEME_HIDE_THRESHOLD = 80;
-
-      if (themeSwitcher) {
-        window.addEventListener(
-          "scroll",
-          () => {
-            const currentY = window.scrollY;
-            // Close dropdown if open before hiding
-            if (
-              themeDropdownAdmin &&
-              themeDropdownAdmin.classList.contains("open")
-            ) {
-              themeDropdownAdmin.classList.remove("open");
-              themeToggle.classList.remove("open");
-            }
-            if (currentY > THEME_HIDE_THRESHOLD && currentY > lastScrollY) {
-              themeSwitcher.classList.add("hidden");
-            } else if (
-              currentY < lastScrollY ||
-              currentY <= THEME_HIDE_THRESHOLD
-            ) {
-              themeSwitcher.classList.remove("hidden");
-            }
-            lastScrollY = currentY;
-          },
-          { passive: true },
-        );
-      }
-
-      // ===== Visitor Tracking (Azure Function API) =====
-      (function trackVisitor() {
-        var API_URL = 'https://communication-fn.azurewebsites.net/api/visitors?code=SFX8VCrbCZSKzGtBLYsM4KIPWEeyqyDkqF0xItiWF63-AzFumJqcJw==';
-
-        // ===== sello_vid: stable anonymous visitor id =====
-        function getOrCreateVisitorId() {
-          var vid = localStorage.getItem('sello_vid');
-          if (vid) return vid;
-          vid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-            /[xy]/g,
-            function (c) {
-              var r = (Math.random() * 16) | 0;
-              var v = c === 'x' ? r : (r & 0x3) | 0x8;
-              return v.toString(16);
-            },
-          );
-          localStorage.setItem('sello_vid', vid);
-          return vid;
-        }
-
-        var visitorId = getOrCreateVisitorId();
-        var ua = navigator.userAgent;
-
-        function parseBrowser(u) {
-          if (u.indexOf('Edg/') > -1) return 'Edge';
-          if (u.indexOf('OPR/') > -1) return 'Opera';
-          if (u.indexOf('Firefox/') > -1) return 'Firefox';
-          if (u.indexOf('Chrome/') > -1 && u.indexOf('Safari/') > -1)
-            return 'Chrome';
-          if (u.indexOf('Safari/') > -1) return 'Safari';
-          return 'Other';
-        }
-
-        function parseOS(u) {
-          if (u.indexOf('Win') > -1) return 'Windows';
-          if (u.indexOf('Mac') > -1) return 'macOS';
-          if (u.indexOf('Linux') > -1) return 'Linux';
-          if (u.indexOf('Android') > -1) return 'Android';
-          if (u.indexOf('iPhone') > -1 || u.indexOf('iPad') > -1) return 'iOS';
-          return 'Unknown';
-        }
-
-        function parseDevice(u) {
-          if (u.indexOf('Mobile') > -1 || u.indexOf('Android') > -1)
-            return 'Mobile';
-          if (u.indexOf('iPad') > -1 || u.indexOf('Tablet') > -1)
-            return 'Tablet';
-          return 'Desktop';
-        }
-
-        function buildEntry() {
-          return {
-            sello_vid: visitorId,
-            timestamp: new Date().toISOString(),
-            page: window.location.pathname,
-            url: window.location.href,
-            referrer: document.referrer || 'direct',
-            userAgent: ua,
-            device:
-              parseBrowser(ua) + ' / ' + parseOS(ua) + ' / ' + parseDevice(ua),
-            browser: parseBrowser(ua),
-            os: parseOS(ua),
-            deviceType: parseDevice(ua),
-            language: navigator.language,
-            screen: screen.width + 'x' + screen.height,
-          };
-        }
-
-        // ===== Main: POST visit to Azure Function =====
-        var entry = buildEntry();
-        fetch(API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(entry),
-        }).catch(function () {});
-      })();
-
-      // ===== Typing effect for hero subtitle =====
-      const heroSubtitle = document.querySelector(".hero-subtitle");
-      if (heroSubtitle) {
-        const roles = [
-          "Staff Engineer | Full-Stack Developer | AI Practitioner",
-          "Azure Cloud Expert | .NET Core Specialist",
-          "15+ Years Enterprise Experience",
-          "AI/ML & LLM Integration Specialist",
-        ];
-        let roleIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-
-        function typeRole() {
-          const currentRole = roles[roleIndex];
-
-          if (isDeleting) {
-            heroSubtitle.textContent = currentRole.substring(0, charIndex - 1);
-            charIndex--;
-          } else {
-            heroSubtitle.textContent = currentRole.substring(0, charIndex + 1);
-            charIndex++;
-          }
-
-          let typeSpeed = isDeleting ? 30 : 60;
-
-          if (!isDeleting && charIndex === currentRole.length) {
-            typeSpeed = 2000;
-            isDeleting = true;
-          } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            roleIndex = (roleIndex + 1) % roles.length;
-            typeSpeed = 500;
-          }
-
-          setTimeout(typeRole, typeSpeed);
-        }
-
-        setTimeout(typeRole, 2000);
-      }
-    </script>
+    <script src="assets/js/main.js" defer></script>
   </body>
 </html>

@@ -12,6 +12,78 @@
   padding: 0;
 }
 
+/* ===== ACCESSIBILITY: Skip link & Screen reader only ===== */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0 0 8px 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  z-index: 10000;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===== Focus styles for keyboard navigation ===== */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===== PREFERS REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .fade-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero-subtitle {
+    min-height: auto;
+  }
+
+  [data-theme="midnight"] .aurora-blob {
+    animation: none;
+  }
+}
+
 /* ===== THEME SWITCHER ===== */
 .theme-switcher {
   position: fixed;
@@ -1857,4 +1929,28 @@ footer {
     animation: none;
     opacity: 0.08;
   }
+
+  /* Performance: reduce backdrop-filter on mobile */
+  .hero-content,
+  .about-card,
+  .skill-group,
+  .stat-card,
+  .portfolio-card,
+  .education-card,
+  .contact-card,
+  .location-section,
+  .timeline-content,
+  .theme-dropdown,
+  .theme-toggle-btn {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* ===== WILL-CHANGE: only on hover for reduced memory usage ===== */
+.skill-group:hover,
+.portfolio-card:hover,
+.education-card:hover,
+.location-section:hover {
+  will-change: transform;
 }
