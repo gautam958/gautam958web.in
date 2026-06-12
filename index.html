@@ -1633,41 +1633,7 @@
           return 'Desktop';
         }
 
-        // ===== SHA-256 hash for IP privacy =====
-        function sha256(message) {
-          if (!window.crypto || !window.crypto.subtle) {
-            var hash = 5381;
-            for (var i = 0; i < message.length; i++) {
-              hash = ((hash << 5) + hash) + message.charCodeAt(i);
-              hash |= 0;
-            }
-            return Promise.resolve('fallback-' + Math.abs(hash).toString(36));
-          }
-          var msgBuffer = new TextEncoder().encode(message);
-          return crypto.subtle
-            .digest('SHA-256', msgBuffer)
-            .then(function (hashBuffer) {
-              var hashArray = Array.from(new Uint8Array(hashBuffer));
-              return hashArray
-                .map(function (b) {
-                  return b.toString(16).padStart(2, '0');
-                })
-                .join('');
-            });
-        }
-
-        // ===== Resolve IP location via ipapi.co (client-side) =====
-        function resolveLocation() {
-          return fetch('https://ipapi.co/json/')
-            .then(function (r) {
-              return r.ok ? r.json() : {};
-            })
-            .catch(function () {
-              return {};
-            });
-        }
-
-        function buildEntry(loc, hashedIp) {
+        function buildEntry() {
           return {
             sello_vid: visitorId,
             timestamp: new Date().toISOString(),
@@ -1682,29 +1648,16 @@
             deviceType: parseDevice(ua),
             language: navigator.language,
             screen: screen.width + 'x' + screen.height,
-            country: (loc && loc.country) || '',
-            region: (loc && loc.region) || '',
-            city: (loc && loc.city) || '',
-            timezone: (loc && loc.timezone) || '',
-            ipHash: hashedIp || '',
           };
         }
 
-        // ===== Main: resolve location, hash IP, POST to Azure Function =====
-        resolveLocation()
-          .then(function (loc) {
-            var ipToHash = loc && loc.ip ? loc.ip : 'unknown';
-            return sha256(ipToHash).then(function (hashedIp) {
-              var entry = buildEntry(loc, hashedIp);
-
-              return fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(entry),
-              });
-            });
-          })
-          .catch(function () {});
+        // ===== Main: POST visit to Azure Function =====
+        var entry = buildEntry();
+        fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(entry),
+        }).catch(function () {});
       })();
 
       // ===== Typing effect for hero subtitle =====
