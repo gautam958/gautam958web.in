@@ -128,6 +128,8 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/style.css" />
+    <!-- Tracking Config -->
+    <script src="config.js"></script>
   </head>
   <body>
     <!-- Aurora Background (Midnight Theme) -->
@@ -1576,9 +1578,10 @@
 
       // ===== Visitor Tracking (jsonbin.io) =====
       (function trackVisitor() {
-        var BIN_ID = localStorage.getItem("admin_bin_id") || "";
-        var API_KEY = localStorage.getItem("admin_api_key") || "";
-        if (!BIN_ID || !API_KEY) return;
+        var cfg = typeof TRACKING_CONFIG !== "undefined" ? TRACKING_CONFIG : null;
+        if (!cfg || !cfg.BIN_ID || !cfg.API_KEY) return;
+        var BIN_ID = cfg.BIN_ID;
+        var API_KEY = cfg.API_KEY;
 
         var ua = navigator.userAgent;
 

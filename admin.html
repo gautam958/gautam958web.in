@@ -12,6 +12,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/style.css" />
+    <!-- Tracking Config -->
+    <script src="config.js"></script>
     <style>
       /* ===== ADMIN PAGE STYLES ===== */
       body {
@@ -54,124 +56,7 @@
         opacity: 1;
       }
 
-      /* Setup Panel */
-      .setup-panel {
-        max-width: 600px;
-        margin: 2rem auto;
-        background: var(--card-bg);
-        backdrop-filter: blur(10px);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        padding: 2rem;
-      }
 
-      .setup-panel h2 {
-        font-size: 1.2rem;
-        color: var(--accent-light);
-        margin-bottom: 1rem;
-      }
-
-      .setup-panel p {
-        color: var(--text-muted);
-        font-size: 0.88rem;
-        line-height: 1.7;
-        margin-bottom: 1rem;
-      }
-
-      .setup-panel code {
-        background: rgba(74, 158, 255, 0.1);
-        border: 1px solid rgba(74, 158, 255, 0.2);
-        padding: 0.15rem 0.5rem;
-        border-radius: 6px;
-        font-size: 0.82rem;
-        color: var(--accent-light);
-      }
-
-      .setup-steps {
-        list-style: none;
-        padding: 0;
-        margin: 1rem 0;
-      }
-
-      .setup-steps li {
-        position: relative;
-        padding: 0.6rem 0 0.6rem 2rem;
-        color: var(--text-muted);
-        font-size: 0.88rem;
-      }
-
-      .setup-steps li::before {
-        content: attr(data-step);
-        position: absolute;
-        left: 0;
-        top: 0.5rem;
-        width: 24px;
-        height: 24px;
-        background: var(--accent);
-        color: #fff;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.7rem;
-        font-weight: 700;
-      }
-
-      .setup-steps a {
-        color: var(--accent-light);
-        text-decoration: underline;
-      }
-
-      /* Config Form */
-      .config-form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        margin-top: 1.5rem;
-      }
-
-      .config-form label {
-        color: var(--text-muted);
-        font-size: 0.82rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-
-      .config-form input {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        border-radius: 12px;
-        border: 1px solid var(--border);
-        background: var(--glass);
-        color: var(--text);
-        font-family: "Manrope", sans-serif;
-        font-size: 0.9rem;
-        outline: none;
-        transition: border-color 0.3s;
-      }
-
-      .config-form input:focus {
-        border-color: var(--accent);
-      }
-
-      .config-form button {
-        padding: 0.8rem 1.5rem;
-        border-radius: 50px;
-        border: none;
-        background: var(--accent);
-        color: #fff;
-        font-family: "Manrope", sans-serif;
-        font-size: 0.9rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.3s;
-      }
-
-      .config-form button:hover {
-        background: var(--accent-light);
-        transform: translateY(-2px);
-      }
 
       /* Dashboard */
       .dashboard {
@@ -563,33 +448,7 @@
       <a href="index.html" class="admin-link">← Back to Portfolio</a>
     </div>
 
-    <!-- Setup Panel (shown when no config) -->
-    <div class="setup-panel" id="setupPanel">
-      <h2>⚙️ Setup jsonbin.io</h2>
-      <p>To start tracking visitors, you need a free <strong>jsonbin.io</strong> account. Follow these steps:</p>
-      <ol class="setup-steps">
-        <li data-step="1">
-          Go to <a href="https://jsonbin.io" target="_blank">jsonbin.io</a> and create a free account
-        </li>
-        <li data-step="2">
-          Copy your <strong>API Key</strong> from the <a href="https://jsonbin.io/app/keys" target="_blank">API Keys page</a>
-        </li>
-        <li data-step="3">
-          Create a new Bin via the API or dashboard — it will contain an empty array <code>[]</code>
-        </li>
-        <li data-step="4">
-          Paste both values below and click <strong>Connect</strong>
-        </li>
-      </ol>
-      <p style="font-size: 0.78rem; opacity: 0.6;">Your credentials are stored in your browser's localStorage only — never sent elsewhere.</p>
-      <div class="config-form">
-        <label for="binIdInput">Bin ID</label>
-        <input type="text" id="binIdInput" placeholder="e.g. 66f1a2b3c4d5e6f78g9h0i1j" />
-        <label for="apiKeyInput">API Key (Master Key)</label>
-        <input type="password" id="apiKeyInput" placeholder="Your jsonbin.io API key" />
-        <button id="connectBtn">🔗 Connect</button>
-      </div>
-    </div>
+
 
     <!-- Dashboard (shown when config is valid) -->
     <div class="dashboard" id="dashboard">
@@ -756,15 +615,12 @@
 
       // ===== Admin Logic =====
       (function () {
-        var BIN_ID_KEY = "admin_bin_id";
-        var API_KEY_KEY = "admin_api_key";
         var PER_PAGE = 25;
         var currentPage = 1;
         var allRecords = [];
         var sortField = "timestamp";
         var sortAsc = false;
 
-        var setupPanel = document.getElementById("setupPanel");
         var dashboard = document.getElementById("dashboard");
         var loadingSpinner = document.getElementById("loadingSpinner");
         var emptyState = document.getElementById("emptyState");
@@ -795,36 +651,22 @@
           return "💻";
         }
 
-        // Load saved config
-        var savedBinId = localStorage.getItem(BIN_ID_KEY) || "";
-        var savedApiKey = localStorage.getItem(API_KEY_KEY) || "";
+        // Use shared config from config.js
+        var cfg = typeof TRACKING_CONFIG !== "undefined" ? TRACKING_CONFIG : null;
 
-        if (savedBinId && savedApiKey) {
-          setupPanel.style.display = "none";
-          dashboard.classList.add("active");
-          loadData(savedBinId, savedApiKey);
+        if (!cfg || !cfg.BIN_ID || !cfg.API_KEY) {
+          emptyState.innerHTML = '<div class="empty-state-icon">⚠️</div><p>Config missing — please check config.js</p>';
+          emptyState.style.display = "block";
+          return;
         }
 
-        // Connect button
-        document.getElementById("connectBtn").addEventListener("click", function () {
-          var binId = document.getElementById("binIdInput").value.trim();
-          var apiKey = document.getElementById("apiKeyInput").value.trim();
-          if (!binId || !apiKey) {
-            alert("Please enter both Bin ID and API Key.");
-            return;
-          }
-          localStorage.setItem(BIN_ID_KEY, binId);
-          localStorage.setItem(API_KEY_KEY, apiKey);
-          setupPanel.style.display = "none";
-          dashboard.classList.add("active");
-          loadData(binId, apiKey);
-        });
+        // Auto-load on page open
+        dashboard.classList.add("active");
+        loadData(cfg.BIN_ID, cfg.API_KEY);
 
         // Refresh
         document.getElementById("refreshBtn").addEventListener("click", function () {
-          var binId = localStorage.getItem(BIN_ID_KEY);
-          var apiKey = localStorage.getItem(API_KEY_KEY);
-          if (binId && apiKey) loadData(binId, apiKey);
+          loadData(cfg.BIN_ID, cfg.API_KEY);
         });
 
         // Search
@@ -891,11 +733,9 @@
         // Clear data
         document.getElementById("clearBtn").addEventListener("click", function () {
           if (!confirm("Are you sure you want to clear all visitor data? This cannot be undone.")) return;
-          var binId = localStorage.getItem(BIN_ID_KEY);
-          var apiKey = localStorage.getItem(API_KEY_KEY);
-          fetch("https://api.jsonbin.io/v3/b/" + binId, {
+          fetch("https://api.jsonbin.io/v3/b/" + cfg.BIN_ID, {
             method: "PUT",
-            headers: { "Content-Type": "application/json", "X-Master-Key": apiKey },
+            headers: { "Content-Type": "application/json", "X-Master-Key": cfg.API_KEY },
             body: JSON.stringify([]),
           }).then(function () {
             allRecords = [];
