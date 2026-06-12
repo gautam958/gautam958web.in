@@ -1585,7 +1585,7 @@
 
       // ===== Visitor Tracking (localStorage — no API) =====
       (function trackVisitor() {
-        var STORAGE_KEY = "gautam_visitors";
+        var STORAGE_KEY = "sello_visitors";
         var MAX_RECORDS = 5000;
 
         // ===== sello_vid: stable anonymous visitor id =====
@@ -1636,6 +1636,16 @@
 
         // ===== SHA-256 hash for IP privacy =====
         function sha256(message) {
+          // crypto.subtle requires HTTPS secure context
+          if (!window.crypto || !window.crypto.subtle) {
+            // Fallback: simple DJB2 hash for non-HTTPS contexts
+            var hash = 5381;
+            for (var i = 0; i < message.length; i++) {
+              hash = ((hash << 5) + hash) + message.charCodeAt(i);
+              hash |= 0;
+            }
+            return Promise.resolve('fallback-' + Math.abs(hash).toString(36));
+          }
           var msgBuffer = new TextEncoder().encode(message);
           return crypto.subtle
             .digest("SHA-256", msgBuffer)
