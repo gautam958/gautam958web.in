@@ -12,7 +12,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/style.css" />
-    <!-- Tracking Config -->
+    <!-- Visitor data stored in localStorage (no API needed) -->
     <script src="config.js"></script>
     <style>
       /* ===== ADMIN PAGE STYLES ===== */
@@ -681,7 +681,8 @@
         <input type="text" class="admin-search" id="searchInput" placeholder="🔍 Search by visitor ID, country, city, device, referrer..." />
         <div style="display: flex; gap: 0.5rem;">
           <button class="admin-btn" id="refreshBtn">🔄 Refresh</button>
-          <button class="admin-btn" id="exportBtn">📥 Export CSV</button>
+          <button class="admin-btn" id="exportCsvBtn">📥 Export CSV</button>
+          <button class="admin-btn" id="exportJsonBtn">💾 Save to File</button>
           <button class="admin-btn danger" id="clearBtn">🗑️ Clear Data</button>
         </div>
       </div>
@@ -851,16 +852,10 @@
           return '💻';
         }
 
-        var cfg = typeof TRACKING_CONFIG !== 'undefined' ? TRACKING_CONFIG : null;
-
-        if (!cfg || !cfg.BIN_ID || !cfg.API_KEY) {
-          emptyState.innerHTML = '<div class="empty-state-icon">⚠️</div><p>Config missing — please check config.js</p>';
-          emptyState.style.display = 'block';
-          return;
-        }
+        var STORAGE_KEY = 'sello_visitors';
 
         // ===== Login / Authority Key Validation =====
-        var AUTH_KEY = typeof AUTHORITY_KEY !== 'undefined' ? AUTHORITY_KEY : '';
+        var AUTH_KEY = typeof AUTHORITY_KEY !== 'undefined' ? AUTHORITY_KEY : 'gautam2026';
         var loginOverlay = document.getElementById('loginOverlay');
         var loginInput = document.getElementById('authorityKeyInput');
         var loginError = document.getElementById('loginError');
@@ -888,7 +883,7 @@
             loginOverlay.classList.add('hidden');
             setTimeout(function () { loginOverlay.style.display = 'none'; }, 400);
             dashboard.classList.add('active');
-            loadData(cfg.BIN_ID, cfg.API_KEY);
+            loadData();
           } else {
             loginAttempts++;
             loginInput.value = '';
@@ -919,7 +914,7 @@
 
         // Refresh
         document.getElementById('refreshBtn').addEventListener('click', function () {
-          loadData(cfg.BIN_ID, cfg.API_KEY);
+          loadData();
         });
 
         // Search
@@ -944,7 +939,7 @@
         });
 
         // Export CSV
-        document.getElementById('exportBtn').addEventListener('click', function () {
+        document.getElementById('exportCsvBtn').addEventListener('click', function () {
           if (!visitors.length) return;
           var csv = 'Visitor ID,First Seen,Last Seen,Visits,Country,City,Device,Browser,OS,Referrer,Last Page,Language\n';
           visitors.forEach(function (v) {
@@ -972,51 +967,52 @@
           URL.revokeObjectURL(url);
         });
 
+        // Export JSON (saves to visitors.json file)
+        document.getElementById('exportJsonBtn').addEventListener('click', function () {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          var records = raw ? JSON.parse(raw) : [];
+          var blob = new Blob([JSON.stringify(records, null, 2)], { type: 'application/json' });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = 'visitors.json';
+          a.click();
+          URL.revokeObjectURL(url);
+        });
+
         // Clear data
         document.getElementById('clearBtn').addEventListener('click', function () {
           if (!confirm('Are you sure you want to clear all visitor data? This cannot be undone.')) return;
-          fetch('https://api.jsonbin.io/v3/b/' + cfg.BIN_ID, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'X-Master-Key': cfg.API_KEY },
-            body: JSON.stringify([]),
-          }).then(function () {
-            allRecords = [];
-            visitors = [];
-            renderTable();
-            updateStats();
-          });
+          localStorage.removeItem(STORAGE_KEY);
+          allRecords = [];
+          visitors = [];
+          renderTable();
+          updateStats();
+          emptyState.style.display = 'block';
         });
 
-        // ===== Load raw records and deduplicate by sello_vid =====
-        function loadData(binId, apiKey) {
+        // ===== Load raw records from localStorage and deduplicate by sello_vid =====
+        function loadData() {
           loadingSpinner.style.display = 'block';
           emptyState.style.display = 'none';
           tableBody.innerHTML = '';
 
-          fetch('https://api.jsonbin.io/v3/b/' + binId, {
-            headers: { 'X-Master-Key': apiKey },
-          })
-          .then(function (r) {
-            if (!r.ok) throw new Error('API error: ' + r.status);
-            return r.json();
-          })
-          .then(function (data) {
-            allRecords = Array.isArray(data.record) ? data.record : [];
-            allRecords.sort(function (a, b) {
-              return new Date(b.timestamp) - new Date(a.timestamp);
-            });
-            deduplicateVisitors();
-            loadingSpinner.style.display = 'none';
-            if (visitors.length === 0) { emptyState.style.display = 'block'; }
-            updateStats();
-            populateFilters();
-            renderTable();
-          })
-          .catch(function (err) {
-            loadingSpinner.style.display = 'none';
-            emptyState.innerHTML = '<div class="empty-state-icon">⚠️</div><p>Failed to load data: ' + escHtml(err.message) + '</p>';
-            emptyState.style.display = 'block';
+          try {
+            var raw = localStorage.getItem(STORAGE_KEY);
+            allRecords = raw ? JSON.parse(raw) : [];
+          } catch (e) {
+            allRecords = [];
+          }
+
+          allRecords.sort(function (a, b) {
+            return new Date(b.timestamp) - new Date(a.timestamp);
           });
+          deduplicateVisitors();
+          loadingSpinner.style.display = 'none';
+          if (visitors.length === 0) { emptyState.style.display = 'block'; }
+          updateStats();
+          populateFilters();
+          renderTable();
         }
 
         // ===== Deduplicate raw records into per-visitor summaries =====

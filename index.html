@@ -128,8 +128,6 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/style.css" />
-    <!-- Tracking Config -->
-    <script src="config.js"></script>
   </head>
   <body>
     <!-- Aurora Background (Midnight Theme) -->
@@ -1585,20 +1583,15 @@
         );
       }
 
-      // ===== Visitor Tracking (jsonbin.io + sello_vid + SHA-256 IP hashing) =====
+      // ===== Visitor Tracking (localStorage — no API) =====
       (function trackVisitor() {
-        var cfg =
-          typeof TRACKING_CONFIG !== "undefined" ? TRACKING_CONFIG : null;
-        if (!cfg || !cfg.BIN_ID || !cfg.API_KEY) return;
-        var BIN_ID = cfg.BIN_ID;
-        var API_KEY = cfg.API_KEY;
+        var STORAGE_KEY = "gautam_visitors";
         var MAX_RECORDS = 5000;
 
-        // ===== sello_vid: stable anonymous visitor id in localStorage =====
+        // ===== sello_vid: stable anonymous visitor id =====
         function getOrCreateVisitorId() {
           var vid = localStorage.getItem("sello_vid");
           if (vid) return vid;
-          // Generate UUID v4
           vid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
             /[xy]/g,
             function (c) {
@@ -1657,7 +1650,6 @@
         }
 
         // ===== Resolve IP location via ipapi.co (client-side) =====
-        // Location is fetched client-side; IP hashing ensures privacy on storage
         function resolveLocation() {
           return fetch("https://ipapi.co/json/")
             .then(function (r) {
@@ -1691,39 +1683,39 @@
           };
         }
 
-        // ===== Main tracking flow =====
+        // ===== Main: resolve location, hash IP, store in localStorage =====
         resolveLocation()
           .then(function (loc) {
             var ipToHash = loc && loc.ip ? loc.ip : "unknown";
             return sha256(ipToHash).then(function (hashedIp) {
               var entry = buildEntry(loc, hashedIp);
 
-              // GET existing records, append, enforce 5K cap, PUT back
-              return fetch("https://api.jsonbin.io/v3/b/" + BIN_ID, {
-                method: "GET",
-                headers: { "X-Master-Key": API_KEY },
-              })
-                .then(function (r) {
-                  return r.json();
-                })
-                .then(function (data) {
-                  var records = Array.isArray(data.record) ? data.record : [];
-                  records.push(entry);
+              // Read existing records from localStorage
+              var records = [];
+              try {
+                var raw = localStorage.getItem(STORAGE_KEY);
+                records = raw ? JSON.parse(raw) : [];
+              } catch (e) {
+                records = [];
+              }
 
-                  // Enforce 5,000 record cap — keep newest
-                  if (records.length > MAX_RECORDS) {
-                    records = records.slice(records.length - MAX_RECORDS);
-                  }
+              records.push(entry);
 
-                  return fetch("https://api.jsonbin.io/v3/b/" + BIN_ID, {
-                    method: "PUT",
-                    headers: {
-                      "Content-Type": "application/json",
-                      "X-Master-Key": API_KEY,
-                    },
-                    body: JSON.stringify(records),
-                  });
-                });
+              // Enforce 5,000 record cap — keep newest
+              if (records.length > MAX_RECORDS) {
+                records = records.slice(records.length - MAX_RECORDS);
+              }
+
+              // Write back to localStorage
+              try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+              } catch (e) {
+                // localStorage full — trim to 2,500 and retry
+                records = records.slice(records.length - 2500);
+                try {
+                  localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+                } catch (e2) {}
+              }
             });
           })
           .catch(function () {});
