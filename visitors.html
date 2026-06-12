@@ -651,34 +651,34 @@
       <!-- Stats -->
       <div class="admin-stats">
         <div class="admin-stat-card">
-          <div class="admin-stat-number" id="totalVisits">—</div>
-          <div class="admin-stat-label">Total Visits</div>
+          <div class="admin-stat-number" id="totalVisitors">—</div>
+          <div class="admin-stat-label">Total Visitors</div>
         </div>
         <div class="admin-stat-card">
-          <div class="admin-stat-number" id="uniquePages">—</div>
-          <div class="admin-stat-label">Pages Visited</div>
+          <div class="admin-stat-number" id="newToday">—</div>
+          <div class="admin-stat-label">New Today</div>
         </div>
         <div class="admin-stat-card">
-          <div class="admin-stat-number" id="todayVisits">—</div>
-          <div class="admin-stat-label">Today</div>
+          <div class="admin-stat-number" id="returningVisitors">—</div>
+          <div class="admin-stat-label">Returning</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="admin-stat-number" id="activeVisitors">—</div>
+          <div class="admin-stat-label">Active (30 min)</div>
         </div>
         <div class="admin-stat-card">
           <div class="admin-stat-number" id="uniqueCountries">—</div>
           <div class="admin-stat-label">Countries</div>
         </div>
         <div class="admin-stat-card">
-          <div class="admin-stat-number" id="topPage">—</div>
-          <div class="admin-stat-label">Most Popular Page</div>
-        </div>
-        <div class="admin-stat-card">
-          <div class="admin-stat-number" id="topCountry">—</div>
-          <div class="admin-stat-label">Top Country</div>
+          <div class="admin-stat-number" id="totalPageViews">—</div>
+          <div class="admin-stat-label">Total Page Views</div>
         </div>
       </div>
 
       <!-- Controls -->
       <div class="admin-controls">
-        <input type="text" class="admin-search" id="searchInput" placeholder="🔍 Search by page, country, device, referrer..." />
+        <input type="text" class="admin-search" id="searchInput" placeholder="🔍 Search by visitor ID, country, city, device, referrer..." />
         <div style="display: flex; gap: 0.5rem;">
           <button class="admin-btn" id="refreshBtn">🔄 Refresh</button>
           <button class="admin-btn" id="exportBtn">📥 Export CSV</button>
@@ -694,12 +694,7 @@
             <option value="">All Countries</option>
           </select>
         </div>
-        <div class="filter-group">
-          <label for="filterRegion">Region</label>
-          <select class="filter-select" id="filterRegion">
-            <option value="">All Regions</option>
-          </select>
-        </div>
+
         <div class="filter-group">
           <label for="filterCity">City</label>
           <select class="filter-select" id="filterCity">
@@ -737,17 +732,17 @@
         <table class="admin-table">
           <thead>
             <tr>
-              <th data-sort="timestamp" class="sorted">Timestamp <span class="sort-icon">▼</span></th>
-              <th data-sort="page">Page <span class="sort-icon">▼</span></th>
+              <th data-sort="vid" class="sorted">Visitor ID <span class="sort-icon">▼</span></th>
+              <th data-sort="firstSeen">First Seen <span class="sort-icon">▼</span></th>
+              <th data-sort="lastSeen">Last Seen <span class="sort-icon">▼</span></th>
+              <th data-sort="visits">Visits <span class="sort-icon">▼</span></th>
               <th data-sort="country">Country <span class="sort-icon">▼</span></th>
-              <th data-sort="region">Region <span class="sort-icon">▼</span></th>
               <th data-sort="city">City <span class="sort-icon">▼</span></th>
-              <th data-sort="device">Device <span class="sort-icon">▼</span></th>
+              <th data-sort="deviceType">Device <span class="sort-icon">▼</span></th>
               <th data-sort="browser">Browser <span class="sort-icon">▼</span></th>
               <th data-sort="os">OS <span class="sort-icon">▼</span></th>
               <th data-sort="referrer">Referrer <span class="sort-icon">▼</span></th>
-              <th data-sort="language">Language <span class="sort-icon">▼</span></th>
-              <th data-sort="screen">Screen <span class="sort-icon">▼</span></th>
+              <th data-sort="lastPage">Last Page <span class="sort-icon">▼</span></th>
             </tr>
           </thead>
           <tbody id="visitorTableBody">
@@ -818,334 +813,355 @@
         });
       })();
 
-      // ===== Admin Logic =====
+      // ===== Admin Logic (per-visitor deduplication via sello_vid) =====
       (function () {
         var PER_PAGE = 25;
         var currentPage = 1;
-        var allRecords = [];
-        var sortField = "timestamp";
+        var allRecords = [];       // raw page-view records from jsonbin
+        var visitors = [];          // deduplicated visitor objects
+        var sortField = 'lastSeen';
         var sortAsc = false;
 
-        var dashboard = document.getElementById("dashboard");
-        var loadingSpinner = document.getElementById("loadingSpinner");
-        var emptyState = document.getElementById("emptyState");
-        var tableBody = document.getElementById("visitorTableBody");
-        var searchInput = document.getElementById("searchInput");
+        var dashboard = document.getElementById('dashboard');
+        var loadingSpinner = document.getElementById('loadingSpinner');
+        var emptyState = document.getElementById('emptyState');
+        var tableBody = document.getElementById('visitorTableBody');
+        var searchInput = document.getElementById('searchInput');
 
         // Country flag map
         var countryFlags = {
-          "AF":"🇦🇫","AL":"🇦🇱","DZ":"🇩🇿","AR":"🇦🇷","AU":"🇦🇺","AT":"🇦🇹",
-          "BD":"🇧🇩","BE":"🇧🇪","BR":"🇧🇷","BG":"🇧🇬","KH":"🇰🇭","CA":"🇨🇦",
-          "CL":"🇨🇱","CN":"🇨🇳","CO":"🇨🇴","HR":"🇭🇷","CZ":"🇨🇿","DK":"🇩🇰",
-          "EG":"🇪🇬","EE":"🇪🇪","FI":"🇫🇮","FR":"🇫🇷","DE":"🇩🇪","GH":"🇬🇭",
-          "GR":"🇬🇷","HK":"🇭🇰","HU":"🇭🇺","IN":"🇮🇳","ID":"🇮🇩","IR":"🇮🇷",
-          "IQ":"🇮🇶","IE":"🇮🇪","IL":"🇮🇱","IT":"🇮🇹","JM":"🇯🇲","JP":"🇯🇵",
-          "JO":"🇯🇴","KZ":"🇰🇿","KE":"🇰🇪","KR":"🇰🇷","KW":"🇰🇼","LA":"🇱🇦",
-          "LV":"🇱🇻","LT":"🇱🇹","MY":"🇲🇾","MX":"🇲🇽","MA":"🇲🇦","MM":"🇲🇲",
-          "NP":"🇳🇵","NL":"🇳🇱","NZ":"🇳🇿","NG":"🇳🇬","NO":"🇳🇴","PK":"🇵🇰",
-          "PH":"🇵🇭","PL":"🇵🇱","PT":"🇵🇹","QA":"🇶🇦","RO":"🇷🇴","RU":"🇷🇺",
-          "SA":"🇸🇦","SG":"🇸🇬","SK":"🇸🇰","SI":"🇸🇮","ZA":"🇿🇦","ES":"🇪🇸",
-          "SE":"🇸🇪","CH":"🇨🇭","TW":"🇹🇼","TZ":"🇹🇿","TH":"🇹🇭","TR":"🇹🇷",
-          "UG":"🇺🇬","UA":"🇺🇦","AE":"🇦🇪","GB":"🇬🇧","US":"🇺🇸","VN":"🇻🇳",
+          'AF':'🇦🇫','AL':'🇦🇱','DZ':'🇩🇿','AR':'🇦🇷','AU':'🇦🇺','AT':'🇦🇹',
+          'BD':'🇧🇩','BE':'🇧🇪','BR':'🇧🇷','BG':'🇧🇬','KH':'🇰🇭','CA':'🇨🇦',
+          'CL':'🇨🇱','CN':'🇨🇳','CO':'🇨🇴','HR':'🇭🇷','CZ':'🇨🇿','DK':'🇩🇰',
+          'EG':'🇪🇬','EE':'🇪🇪','FI':'🇫🇮','FR':'🇫🇷','DE':'🇩🇪','GH':'🇬🇭',
+          'GR':'🇬🇷','HK':'🇭🇰','HU':'🇭🇺','IN':'🇮🇳','ID':'🇮🇩','IR':'🇮🇷',
+          'IQ':'🇮🇶','IE':'🇮🇪','IL':'🇮🇱','IT':'🇮🇹','JM':'🇯🇲','JP':'🇯🇵',
+          'JO':'🇯🇴','KZ':'🇰🇿','KE':'🇰🇪','KR':'🇰🇷','KW':'🇰🇼','LA':'🇱🇦',
+          'LV':'🇱🇻','LT':'🇱🇹','MY':'🇲🇾','MX':'🇲🇽','MA':'🇲🇦','MM':'🇲🇲',
+          'NP':'🇳🇵','NL':'🇳🇱','NZ':'🇳🇿','NG':'🇳🇬','NO':'🇳🇴','PK':'🇵🇰',
+          'PH':'🇵🇭','PL':'🇵🇱','PT':'🇵🇹','QA':'🇶🇦','RO':'🇷🇴','RU':'🇷🇺',
+          'SA':'🇸🇦','SG':'🇸🇬','SK':'🇸🇰','SI':'🇸🇮','ZA':'🇿🇦','ES':'🇪🇸',
+          'SE':'🇸🇪','CH':'🇨🇭','TW':'🇹🇼','TZ':'🇹🇿','TH':'🇹🇭','TR':'🇹🇷',
+          'UG':'🇺🇬','UA':'🇺🇦','AE':'🇦🇪','GB':'🇬🇧','US':'🇺🇸','VN':'🇻🇳',
         };
 
-        // Device type icon
         function deviceIcon(d) {
-          if (d === "Mobile") return "📱";
-          if (d === "Tablet") return "📋";
-          return "💻";
+          if (d === 'Mobile') return '📱';
+          if (d === 'Tablet') return '📋';
+          return '💻';
         }
 
-        // Use shared config from config.js
-        var cfg = typeof TRACKING_CONFIG !== "undefined" ? TRACKING_CONFIG : null;
+        var cfg = typeof TRACKING_CONFIG !== 'undefined' ? TRACKING_CONFIG : null;
 
         if (!cfg || !cfg.BIN_ID || !cfg.API_KEY) {
           emptyState.innerHTML = '<div class="empty-state-icon">⚠️</div><p>Config missing — please check config.js</p>';
-          emptyState.style.display = "block";
+          emptyState.style.display = 'block';
           return;
         }
 
         // ===== Login / Authority Key Validation =====
-        var AUTH_KEY = typeof AUTHORITY_KEY !== "undefined" ? AUTHORITY_KEY : "";
-        var loginOverlay = document.getElementById("loginOverlay");
-        var loginInput = document.getElementById("authorityKeyInput");
-        var loginError = document.getElementById("loginError");
-        var loginBtn = document.getElementById("loginBtn");
-        var accessDenied = document.getElementById("accessDenied");
-        var retryBtn = document.getElementById("retryBtn");
+        var AUTH_KEY = typeof AUTHORITY_KEY !== 'undefined' ? AUTHORITY_KEY : '';
+        var loginOverlay = document.getElementById('loginOverlay');
+        var loginInput = document.getElementById('authorityKeyInput');
+        var loginError = document.getElementById('loginError');
+        var loginBtn = document.getElementById('loginBtn');
+        var accessDenied = document.getElementById('accessDenied');
+        var retryBtn = document.getElementById('retryBtn');
         var loginAttempts = 0;
 
         function attemptLogin() {
           var enteredKey = loginInput.value.trim();
-          loginError.style.display = "none";
+          loginError.style.display = 'none';
 
           if (!enteredKey) {
-            loginError.textContent = "⚠️ Please enter an authority key.";
-            loginError.style.display = "block";
+            loginError.textContent = '⚠️ Please enter an authority key.';
+            loginError.style.display = 'block';
             return;
           }
-
           if (!AUTH_KEY) {
-            loginError.textContent = "⚠️ Authority key not configured. Check config.js.";
-            loginError.style.display = "block";
+            loginError.textContent = '⚠️ Authority key not configured. Check config.js.';
+            loginError.style.display = 'block';
             return;
           }
 
           if (enteredKey === AUTH_KEY) {
-            // Success — hide login overlay, show dashboard
-            loginOverlay.classList.add("hidden");
-            setTimeout(function () { loginOverlay.style.display = "none"; }, 400);
-            dashboard.classList.add("active");
+            loginOverlay.classList.add('hidden');
+            setTimeout(function () { loginOverlay.style.display = 'none'; }, 400);
+            dashboard.classList.add('active');
             loadData(cfg.BIN_ID, cfg.API_KEY);
           } else {
             loginAttempts++;
-            loginInput.value = "";
+            loginInput.value = '';
             loginInput.focus();
-
             if (loginAttempts >= 5) {
-              // Too many failures — show access denied
-              loginOverlay.classList.add("hidden");
-              setTimeout(function () { loginOverlay.style.display = "none"; }, 400);
-              accessDenied.classList.add("active");
+              loginOverlay.classList.add('hidden');
+              setTimeout(function () { loginOverlay.style.display = 'none'; }, 400);
+              accessDenied.classList.add('active');
             } else {
-              loginError.textContent = "⚠️ Access Denied — Invalid authority key (" + (5 - loginAttempts) + " attempts remaining)";
-              loginError.style.display = "block";
-              loginInput.classList.add("shake");
-              setTimeout(function () { loginInput.classList.remove("shake"); }, 500);
+              loginError.textContent = '⚠️ Access Denied — Invalid authority key (' + (5 - loginAttempts) + ' attempts remaining)';
+              loginError.style.display = 'block';
+              loginInput.classList.add('shake');
+              setTimeout(function () { loginInput.classList.remove('shake'); }, 500);
             }
           }
         }
 
-        loginBtn.addEventListener("click", attemptLogin);
-        loginInput.addEventListener("keydown", function (e) {
-          if (e.key === "Enter") attemptLogin();
-        });
-
-        retryBtn.addEventListener("click", function () {
-          accessDenied.classList.remove("active");
+        loginBtn.addEventListener('click', attemptLogin);
+        loginInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') attemptLogin(); });
+        retryBtn.addEventListener('click', function () {
+          accessDenied.classList.remove('active');
           loginAttempts = 0;
-          loginOverlay.style.display = "flex";
-          loginOverlay.classList.remove("hidden");
-          loginInput.value = "";
-          loginError.style.display = "none";
+          loginOverlay.style.display = 'flex';
+          loginOverlay.classList.remove('hidden');
+          loginInput.value = '';
+          loginError.style.display = 'none';
         });
-
-        // Don't auto-load dashboard — wait for authentication
 
         // Refresh
-        document.getElementById("refreshBtn").addEventListener("click", function () {
+        document.getElementById('refreshBtn').addEventListener('click', function () {
           loadData(cfg.BIN_ID, cfg.API_KEY);
         });
 
         // Search
-        searchInput.addEventListener("input", function () {
-          currentPage = 1;
-          renderTable();
-        });
+        searchInput.addEventListener('input', function () { currentPage = 1; renderTable(); });
 
         // Filter dropdowns
-        ["filterCountry", "filterRegion", "filterCity", "filterPage", "filterBrowser", "filterOS", "filterDevice"].forEach(function (id) {
-          document.getElementById(id).addEventListener("change", function () {
-            currentPage = 1;
-            renderTable();
-          });
+        ['filterCountry','filterCity','filterPage','filterBrowser','filterOS','filterDevice'].forEach(function (id) {
+          document.getElementById(id).addEventListener('change', function () { currentPage = 1; renderTable(); });
         });
 
         // Sort headers
-        document.querySelectorAll(".admin-table th[data-sort]").forEach(function (th) {
-          th.addEventListener("click", function () {
+        document.querySelectorAll('.admin-table th[data-sort]').forEach(function (th) {
+          th.addEventListener('click', function () {
             var field = th.dataset.sort;
-            if (sortField === field) {
-              sortAsc = !sortAsc;
-            } else {
-              sortField = field;
-              sortAsc = true;
-            }
-            document.querySelectorAll(".admin-table th").forEach(function (h) { h.classList.remove("sorted"); });
-            th.classList.add("sorted");
-            th.querySelector(".sort-icon").textContent = sortAsc ? "▲" : "▼";
+            if (sortField === field) { sortAsc = !sortAsc; }
+            else { sortField = field; sortAsc = field === 'visits' ? false : true; }
+            document.querySelectorAll('.admin-table th').forEach(function (h) { h.classList.remove('sorted'); });
+            th.classList.add('sorted');
+            th.querySelector('.sort-icon').textContent = sortAsc ? '▲' : '▼';
             renderTable();
           });
         });
 
         // Export CSV
-        document.getElementById("exportBtn").addEventListener("click", function () {
-          if (!allRecords.length) return;
-          var csv = "Timestamp,Page,Country,Region,City,Device,Browser,OS,Device Type,Referrer,Language,Screen,User Agent\n";
-          allRecords.forEach(function (r) {
+        document.getElementById('exportBtn').addEventListener('click', function () {
+          if (!visitors.length) return;
+          var csv = 'Visitor ID,First Seen,Last Seen,Visits,Country,City,Device,Browser,OS,Referrer,Last Page,Language\n';
+          visitors.forEach(function (v) {
             csv += [
-              '"' + (r.timestamp || "") + '"',
-              '"' + (r.page || "") + '"',
-              '"' + (r.country || "") + '"',
-              '"' + (r.region || "") + '"',
-              '"' + (r.city || "") + '"',
-              '"' + (r.device || "") + '"',
-              '"' + (r.browser || "") + '"',
-              '"' + (r.os || "") + '"',
-              '"' + (r.deviceType || "") + '"',
-              '"' + (r.referrer || "") + '"',
-              '"' + (r.language || "") + '"',
-              '"' + (r.screen || "") + '"',
-              '"' + (r.userAgent || "") + '"',
-            ].join(",") + "\n";
+              '"' + (v.sello_vid || '') + '"',
+              '"' + (v.firstSeen || '') + '"',
+              '"' + (v.lastSeen || '') + '"',
+              '"' + (v.visits || 0) + '"',
+              '"' + (v.country || '') + '"',
+              '"' + (v.city || '') + '"',
+              '"' + (v.deviceType || '') + '"',
+              '"' + (v.browser || '') + '"',
+              '"' + (v.os || '') + '"',
+              '"' + (v.referrer || '') + '"',
+              '"' + (v.lastPage || '') + '"',
+              '"' + (v.language || '') + '"',
+            ].join(',') + '\n';
           });
-          var blob = new Blob([csv], { type: "text/csv" });
+          var blob = new Blob([csv], { type: 'text/csv' });
           var url = URL.createObjectURL(blob);
-          var a = document.createElement("a");
+          var a = document.createElement('a');
           a.href = url;
-          a.download = "visitor-history-" + new Date().toISOString().slice(0, 10) + ".csv";
+          a.download = 'visitors-' + new Date().toISOString().slice(0, 10) + '.csv';
           a.click();
           URL.revokeObjectURL(url);
         });
 
         // Clear data
-        document.getElementById("clearBtn").addEventListener("click", function () {
-          if (!confirm("Are you sure you want to clear all visitor data? This cannot be undone.")) return;
-          fetch("https://api.jsonbin.io/v3/b/" + cfg.BIN_ID, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json", "X-Master-Key": cfg.API_KEY },
+        document.getElementById('clearBtn').addEventListener('click', function () {
+          if (!confirm('Are you sure you want to clear all visitor data? This cannot be undone.')) return;
+          fetch('https://api.jsonbin.io/v3/b/' + cfg.BIN_ID, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'X-Master-Key': cfg.API_KEY },
             body: JSON.stringify([]),
           }).then(function () {
             allRecords = [];
+            visitors = [];
             renderTable();
             updateStats();
           });
         });
 
+        // ===== Load raw records and deduplicate by sello_vid =====
         function loadData(binId, apiKey) {
-          loadingSpinner.style.display = "block";
-          emptyState.style.display = "none";
-          tableBody.innerHTML = "";
+          loadingSpinner.style.display = 'block';
+          emptyState.style.display = 'none';
+          tableBody.innerHTML = '';
 
-          fetch("https://api.jsonbin.io/v3/b/" + binId, {
-            headers: { "X-Master-Key": apiKey },
+          fetch('https://api.jsonbin.io/v3/b/' + binId, {
+            headers: { 'X-Master-Key': apiKey },
           })
-            .then(function (r) {
-              if (!r.ok) throw new Error("API error: " + r.status);
-              return r.json();
-            })
-            .then(function (data) {
-              allRecords = Array.isArray(data.record) ? data.record : [];
-              allRecords.sort(function (a, b) {
-                return new Date(b.timestamp) - new Date(a.timestamp);
-              });
-              loadingSpinner.style.display = "none";
-              if (allRecords.length === 0) {
-                emptyState.style.display = "block";
-              }
-              updateStats();
-              populateFilters();
-              renderTable();
-            })
-            .catch(function (err) {
-              loadingSpinner.style.display = "none";
-              emptyState.innerHTML = '<div class="empty-state-icon">⚠️</div><p>Failed to load data: ' + escHtml(err.message) + '</p><p style="font-size:0.8rem;margin-top:0.5rem;color:var(--text-muted)">Check your Bin ID and API Key.</p>';
-              emptyState.style.display = "block";
+          .then(function (r) {
+            if (!r.ok) throw new Error('API error: ' + r.status);
+            return r.json();
+          })
+          .then(function (data) {
+            allRecords = Array.isArray(data.record) ? data.record : [];
+            allRecords.sort(function (a, b) {
+              return new Date(b.timestamp) - new Date(a.timestamp);
             });
+            deduplicateVisitors();
+            loadingSpinner.style.display = 'none';
+            if (visitors.length === 0) { emptyState.style.display = 'block'; }
+            updateStats();
+            populateFilters();
+            renderTable();
+          })
+          .catch(function (err) {
+            loadingSpinner.style.display = 'none';
+            emptyState.innerHTML = '<div class="empty-state-icon">⚠️</div><p>Failed to load data: ' + escHtml(err.message) + '</p>';
+            emptyState.style.display = 'block';
+          });
+        }
+
+        // ===== Deduplicate raw records into per-visitor summaries =====
+        function deduplicateVisitors() {
+          var visitorMap = {};
+          // Fingerprint for legacy records that lack sello_vid
+          function legacyFingerprint(r) {
+            var raw = (r.userAgent || '') + '|' + (r.language || '') + '|' + (r.screen || '');
+            var hash = 0;
+            for (var i = 0; i < raw.length; i++) {
+              hash = ((hash << 5) - hash) + raw.charCodeAt(i);
+              hash |= 0;
+            }
+            return 'legacy-' + Math.abs(hash).toString(36);
+          }
+
+          allRecords.forEach(function (r) {
+            var vid = r.sello_vid || r.ipHash || legacyFingerprint(r);
+            if (!visitorMap[vid]) {
+              visitorMap[vid] = {
+                sello_vid: vid,
+                firstSeen: r.timestamp,
+                lastSeen: r.timestamp,
+                visits: 0,
+                country: r.country || '',
+                city: r.city || '',
+                region: r.region || '',
+                browser: r.browser || '',
+                os: r.os || '',
+                deviceType: r.deviceType || '',
+                referrer: r.referrer || '',
+                lastPage: r.page || '',
+                language: r.language || '',
+                pages: {},
+              };
+            }
+            var v = visitorMap[vid];
+            v.visits++;
+            // Update first/last seen
+            if (r.timestamp < v.firstSeen) v.firstSeen = r.timestamp;
+            if (r.timestamp > v.lastSeen) {
+              v.lastSeen = r.timestamp;
+              v.country = r.country || v.country;
+              v.city = r.city || v.city;
+              v.region = r.region || v.region;
+              v.browser = r.browser || v.browser;
+              v.os = r.os || v.os;
+              v.deviceType = r.deviceType || v.deviceType;
+              v.referrer = r.referrer || v.referrer;
+              v.lastPage = r.page || v.lastPage;
+              v.language = r.language || v.language;
+            }
+            if (r.page) v.pages[r.page] = (v.pages[r.page] || 0) + 1;
+          });
+          visitors = Object.keys(visitorMap).map(function (k) { return visitorMap[k]; });
         }
 
         function populateFilters() {
-          var countries = {}, regions = {}, cities = {}, pages = {}, browsers = {}, oss = {}, devices = {};
-          allRecords.forEach(function (r) {
-            if (r.country) countries[r.country] = true;
-            if (r.region) regions[r.region] = true;
-            if (r.city) cities[r.city] = true;
-            if (r.page) pages[r.page] = true;
-            if (r.browser) browsers[r.browser] = true;
-            if (r.os) oss[r.os] = true;
-            if (r.deviceType) devices[r.deviceType] = true;
+          var countries = {}, cities = {}, pages = {}, browsers = {}, oss = {}, devices = {};
+          visitors.forEach(function (v) {
+            if (v.country) countries[v.country] = true;
+            if (v.city) cities[v.city] = true;
+            if (v.lastPage) pages[v.lastPage] = true;
+            if (v.browser) browsers[v.browser] = true;
+            if (v.os) oss[v.os] = true;
+            if (v.deviceType) devices[v.deviceType] = true;
           });
-
           function fillSelect(id, obj) {
             var sel = document.getElementById(id);
             var current = sel.value;
-            sel.innerHTML = '<option value="">' + sel.options[0].text + '</option>';
+            var label = sel.options[0] ? sel.options[0].text : '';
+            sel.innerHTML = '<option value="">' + label + '</option>';
             Object.keys(obj).sort().forEach(function (k) {
-              var opt = document.createElement("option");
-              opt.value = k;
-              opt.textContent = k;
-              sel.appendChild(opt);
+              var opt = document.createElement('option');
+              opt.value = k; opt.textContent = k; sel.appendChild(opt);
             });
             sel.value = current;
           }
-
-          fillSelect("filterCountry", countries);
-          fillSelect("filterRegion", regions);
-          fillSelect("filterCity", cities);
-          fillSelect("filterPage", pages);
-          fillSelect("filterBrowser", browsers);
-          fillSelect("filterOS", oss);
-          fillSelect("filterDevice", devices);
+          fillSelect('filterCountry', countries);
+          fillSelect('filterCity', cities);
+          fillSelect('filterPage', pages);
+          fillSelect('filterBrowser', browsers);
+          fillSelect('filterOS', oss);
+          fillSelect('filterDevice', devices);
         }
 
         function updateStats() {
-          document.getElementById("totalVisits").textContent = allRecords.length;
-
-          var pages = {}, countries = {};
-          allRecords.forEach(function (r) {
-            var p = r.page || "unknown";
-            pages[p] = (pages[p] || 0) + 1;
-            var c = r.country || "Unknown";
-            countries[c] = (countries[c] || 0) + 1;
-          });
-          document.getElementById("uniquePages").textContent = Object.keys(pages).length;
-
+          var totalVisitors = visitors.length;
+          var countries = {};
           var today = new Date().toISOString().slice(0, 10);
-          var todayCount = allRecords.filter(function (r) {
-            return r.timestamp && r.timestamp.slice(0, 10) === today;
-          }).length;
-          document.getElementById("todayVisits").textContent = todayCount;
+          var thirtyMinAgo = Date.now() - 30 * 60 * 1000;
+          var newToday = 0;
+          var returning = 0;
+          var active = 0;
 
-          var topPage = "—";
-          var maxCount = 0;
-          Object.keys(pages).forEach(function (p) {
-            if (pages[p] > maxCount) { maxCount = pages[p]; topPage = p; }
+          visitors.forEach(function (v) {
+            if (v.country) countries[v.country] = true;
+            // New today: first seen on today's date
+            if (v.firstSeen && v.firstSeen.slice(0, 10) === today) newToday++;
+            // Returning: visited more than once
+            if (v.visits > 1) returning++;
+            // Active: last seen within 30 minutes
+            if (v.lastSeen && new Date(v.lastSeen).getTime() > thirtyMinAgo) active++;
           });
-          document.getElementById("topPage").textContent = topPage.length > 12 ? topPage.slice(0, 12) + "…" : topPage;
-          document.getElementById("topPage").title = topPage;
 
-          var topC = "—";
-          var maxC = 0;
-          Object.keys(countries).forEach(function (c) {
-            if (countries[c] > maxC) { maxC = countries[c]; topC = c; }
-          });
-          document.getElementById("topCountry").textContent = topC;
-          document.getElementById("uniqueCountries").textContent = Object.keys(countries).length;
+          document.getElementById('totalVisitors').textContent = totalVisitors;
+          document.getElementById('newToday').textContent = newToday;
+          document.getElementById('returningVisitors').textContent = returning;
+          document.getElementById('activeVisitors').textContent = active;
+          document.getElementById('uniqueCountries').textContent = Object.keys(countries).length;
+          document.getElementById('totalPageViews').textContent = allRecords.length;
         }
 
-        function getFilteredRecords() {
-          var query = (searchInput.value || "").toLowerCase();
-          var fCountry = document.getElementById("filterCountry").value;
-          var fRegion = document.getElementById("filterRegion").value;
-          var fCity = document.getElementById("filterCity").value;
-          var fPage = document.getElementById("filterPage").value;
-          var fBrowser = document.getElementById("filterBrowser").value;
-          var fOS = document.getElementById("filterOS").value;
-          var fDevice = document.getElementById("filterDevice").value;
+        function getFilteredVisitors() {
+          var query = (searchInput.value || '').toLowerCase();
+          var fCountry = document.getElementById('filterCountry').value;
+          var fCity = document.getElementById('filterCity').value;
+          var fPage = document.getElementById('filterPage').value;
+          var fBrowser = document.getElementById('filterBrowser').value;
+          var fOS = document.getElementById('filterOS').value;
+          var fDevice = document.getElementById('filterDevice').value;
 
-          return allRecords.filter(function (r) {
+          return visitors.filter(function (v) {
             if (query) {
-              var searchable = ((r.page || "") + " " + (r.country || "") + " " + (r.region || "") + " " + (r.city || "") + " " + (r.referrer || "") + " " + (r.device || "") + " " + (r.browser || "") + " " + (r.os || "") + " " + (r.userAgent || "")).toLowerCase();
-              if (searchable.indexOf(query) === -1) return false;
+              var s = ((v.sello_vid||'') + ' ' + (v.country||'') + ' ' + (v.city||'') + ' ' + (v.referrer||'') + ' ' + (v.browser||'') + ' ' + (v.os||'') + ' ' + (v.deviceType||'') + ' ' + (v.lastPage||'')).toLowerCase();
+              if (s.indexOf(query) === -1) return false;
             }
-            if (fCountry && r.country !== fCountry) return false;
-            if (fRegion && r.region !== fRegion) return false;
-            if (fCity && r.city !== fCity) return false;
-            if (fPage && r.page !== fPage) return false;
-            if (fBrowser && r.browser !== fBrowser) return false;
-            if (fOS && r.os !== fOS) return false;
-            if (fDevice && r.deviceType !== fDevice) return false;
+            if (fCountry && v.country !== fCountry) return false;
+            if (fCity && v.city !== fCity) return false;
+            if (fPage && v.lastPage !== fPage) return false;
+            if (fBrowser && v.browser !== fBrowser) return false;
+            if (fOS && v.os !== fOS) return false;
+            if (fDevice && v.deviceType !== fDevice) return false;
             return true;
           });
         }
 
         function renderTable() {
-          var filtered = getFilteredRecords();
+          var filtered = getFilteredVisitors();
 
           filtered.sort(function (a, b) {
-            var va = a[sortField] || "";
-            var vb = b[sortField] || "";
-            if (sortField === "timestamp") {
+            var va = a[sortField] || '';
+            var vb = b[sortField] || '';
+            if (sortField === 'visits') { va = a.visits; vb = b.visits; }
+            else if (sortField === 'firstSeen' || sortField === 'lastSeen') {
               va = new Date(va).getTime() || 0;
               vb = new Date(vb).getTime() || 0;
             }
@@ -1159,97 +1175,97 @@
           var start = (currentPage - 1) * PER_PAGE;
           var pageRecords = filtered.slice(start, start + PER_PAGE);
 
-          tableBody.innerHTML = "";
-          pageRecords.forEach(function (r) {
-            var tr = document.createElement("tr");
-            var ts = "—";
-            if (r.timestamp) {
-              try {
-                var d = new Date(r.timestamp);
-                ts = d.toLocaleDateString() + " " + d.toLocaleTimeString();
-              } catch (e) {
-                ts = r.timestamp;
-              }
-            }
-
-            var flag = countryFlags[r.country] || "🌍";
-            var locParts = [r.city, r.region, r.country].filter(Boolean).join(", ") || "—";
-            var devIcon = deviceIcon(r.deviceType);
+          tableBody.innerHTML = '';
+          pageRecords.forEach(function (v) {
+            var tr = document.createElement('tr');
+            var flag = countryFlags[v.country] || '🌍';
+            var devIcon = deviceIcon(v.deviceType);
+            var shortVid = v.sello_vid ? v.sello_vid.slice(0, 8) + '…' : '—';
+            var firstSeenFmt = formatDateTime(v.firstSeen);
+            var lastSeenFmt = formatDateTime(v.lastSeen);
 
             tr.innerHTML =
-              '<td title="' + escHtml(r.timestamp || "") + '">' + escHtml(ts) + "</td>" +
-              '<td><span class="page-badge">' + escHtml(r.page || "/") + "</span></td>" +
-              '<td><span class="location-badge"><span class="country-flag">' + flag + "</span>" + escHtml(r.country || "—") + "</span></td>" +
-              '<td title="' + escHtml(r.region || "") + '">' + escHtml(truncate(r.region || "—", 20)) + "</td>" +
-              '<td title="' + escHtml(r.city || "") + '">' + escHtml(truncate(r.city || "—", 20)) + "</td>" +
-              '<td><span class="device-badge"><span class="device-icon">' + devIcon + "</span>" + escHtml(r.deviceType || "—") + "</span></td>" +
-              '<td>' + escHtml(r.browser || "—") + "</td>" +
-              '<td>' + escHtml(r.os || "—") + "</td>" +
-              '<td title="' + escHtml(r.referrer || "") + '">' + escHtml(truncate(r.referrer || "direct", 25)) + "</td>" +
-              '<td>' + escHtml(r.language || "—") + "</td>" +
-              '<td>' + escHtml(r.screen || "—") + "</td>";
+              '<td title="' + escHtml(v.sello_vid || '') + '"><span class="page-badge">' + escHtml(shortVid) + '</span></td>' +
+              '<td title="' + escHtml(v.firstSeen || '') + '">' + escHtml(firstSeenFmt) + '</td>' +
+              '<td title="' + escHtml(v.lastSeen || '') + '">' + escHtml(lastSeenFmt) + '</td>' +
+              '<td><strong>' + v.visits + '</strong></td>' +
+              '<td><span class="location-badge"><span class="country-flag">' + flag + '</span>' + escHtml(v.country || '—') + '</span></td>' +
+              '<td title="' + escHtml(v.city || '') + '">' + escHtml(truncate(v.city || '—', 20)) + '</td>' +
+              '<td><span class="device-badge"><span class="device-icon">' + devIcon + '</span>' + escHtml(v.deviceType || '—') + '</span></td>' +
+              '<td>' + escHtml(v.browser || '—') + '</td>' +
+              '<td>' + escHtml(v.os || '—') + '</td>' +
+              '<td title="' + escHtml(v.referrer || '') + '">' + escHtml(truncate(v.referrer || 'direct', 25)) + '</td>' +
+              '<td><span class="page-badge">' + escHtml(v.lastPage || '—') + '</span></td>';
             tableBody.appendChild(tr);
           });
 
-          if (filtered.length === 0 && allRecords.length > 0) {
+          if (filtered.length === 0 && visitors.length > 0) {
             tableBody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:2rem;color:var(--text-muted);">No results match your filters.</td></tr>';
           } else if (filtered.length === 0) {
-            emptyState.style.display = "block";
-            loadingSpinner.style.display = "none";
+            emptyState.style.display = 'block';
+            loadingSpinner.style.display = 'none';
           }
 
           renderPagination(totalPages, filtered.length);
         }
 
+        function formatDateTime(iso) {
+          if (!iso) return '—';
+          try {
+            var d = new Date(iso);
+            return d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
+          } catch (e) { return iso; }
+        }
+
         function renderPagination(totalPages, totalFiltered) {
-          var pag = document.getElementById("pagination");
-          pag.innerHTML = "";
+          var pag = document.getElementById('pagination');
+          pag.innerHTML = '';
           if (totalPages <= 1) return;
 
-          var prev = document.createElement("button");
-          prev.textContent = "← Prev";
+          var prev = document.createElement('button');
+          prev.textContent = '← Prev';
           prev.disabled = currentPage === 1;
-          prev.addEventListener("click", function () { currentPage--; renderTable(); });
+          prev.addEventListener('click', function () { currentPage--; renderTable(); });
           pag.appendChild(prev);
 
           for (var i = 1; i <= totalPages; i++) {
             if (totalPages > 7 && Math.abs(i - currentPage) > 2 && i !== 1 && i !== totalPages) {
               if (i === currentPage - 3 || i === currentPage + 3) {
-                var dots = document.createElement("span");
-                dots.textContent = "…";
-                dots.className = "pagination-info";
+                var dots = document.createElement('span');
+                dots.textContent = '…';
+                dots.className = 'pagination-info';
                 pag.appendChild(dots);
               }
               continue;
             }
-            var btn = document.createElement("button");
+            var btn = document.createElement('button');
             btn.textContent = i;
-            if (i === currentPage) btn.className = "active";
+            if (i === currentPage) btn.className = 'active';
             (function (page) {
-              btn.addEventListener("click", function () { currentPage = page; renderTable(); });
+              btn.addEventListener('click', function () { currentPage = page; renderTable(); });
             })(i);
             pag.appendChild(btn);
           }
 
-          var info = document.createElement("span");
-          info.className = "pagination-info";
-          info.textContent = " " + totalFiltered + " records ";
+          var info = document.createElement('span');
+          info.className = 'pagination-info';
+          info.textContent = ' ' + totalFiltered + ' visitors ';
           pag.appendChild(info);
 
-          var next = document.createElement("button");
-          next.textContent = "Next →";
+          var next = document.createElement('button');
+          next.textContent = 'Next →';
           next.disabled = currentPage === totalPages;
-          next.addEventListener("click", function () { currentPage++; renderTable(); });
+          next.addEventListener('click', function () { currentPage++; renderTable(); });
           pag.appendChild(next);
         }
 
         function truncate(str, len) {
-          if (!str) return "";
-          return str.length > len ? str.slice(0, len) + "…" : str;
+          if (!str) return '';
+          return str.length > len ? str.slice(0, len) + '…' : str;
         }
 
         function escHtml(str) {
-          var div = document.createElement("div");
+          var div = document.createElement('div');
           div.textContent = str;
           return div.innerHTML;
         }
