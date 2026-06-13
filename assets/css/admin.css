@@ -91,13 +91,19 @@ body {
 /* ===== CONTROLS ===== */
 .admin-controls {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
+.admin-controls-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
 .admin-search {
-  width: 100%;
+  flex: 1;
   padding: 0.75rem 1rem;
   border-radius: 12px;
   border: 1px solid var(--border);
@@ -108,6 +114,7 @@ body {
   outline: none;
   transition: border-color 0.3s;
   box-sizing: border-box;
+  min-width: 0;
 }
 
 .admin-search:focus {
@@ -130,17 +137,6 @@ body {
 .admin-btn:hover {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
-}
-
-.admin-btn.danger {
-  border-color: rgba(239, 68, 68, 0.3);
-  color: #f87171;
-}
-
-.admin-btn.danger:hover {
-  background: #ef4444;
-  border-color: #ef4444;
   color: #fff;
 }
 
@@ -543,10 +539,7 @@ body {
     align-items: stretch;
   }
 
-  .admin-controls > div {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+  .admin-controls-actions {
     justify-content: center;
   }
 

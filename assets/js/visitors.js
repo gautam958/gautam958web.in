@@ -192,35 +192,6 @@
     });
   });
 
-  // Export CSV
-  document.getElementById('exportCsvBtn').addEventListener('click', function () {
-    if (!visitors.length) return;
-    var csv = 'Visitor ID,First Seen,Last Seen,Visits,Country,City,Device,Browser,OS,Referrer,Last Page,Language\n';
-    visitors.forEach(function (v) {
-      csv += [
-        '"' + (v.sello_vid || '') + '"',
-        '"' + (v.firstSeen || '') + '"',
-        '"' + (v.lastSeen || '') + '"',
-        '"' + (v.visits || 0) + '"',
-        '"' + (v.country || '') + '"',
-        '"' + (v.city || '') + '"',
-        '"' + (v.deviceType || '') + '"',
-        '"' + (v.browser || '') + '"',
-        '"' + (v.os || '') + '"',
-        '"' + (v.referrer || '') + '"',
-        '"' + (v.lastPage || '') + '"',
-        '"' + (v.language || '') + '"',
-      ].join(',') + '\n';
-    });
-    var blob = new Blob([csv], { type: 'text/csv' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = 'visitors-' + new Date().toISOString().slice(0, 10) + '.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-
   var API_URL = 'https://communication-fn.azurewebsites.net/api/visitors?code=SFX8VCrbCZSKzGtBLYsM4KIPWEeyqyDkqF0xItiWF63-AzFumJqcJw==';
 
   // Export JSON
@@ -234,25 +205,7 @@
     URL.revokeObjectURL(url);
   });
 
-  // Clear data
-  document.getElementById('clearBtn').addEventListener('click', function () {
-    if (!confirm('Are you sure you want to clear all visitor data? This cannot be undone.')) return;
-    fetch(API_URL, { method: 'DELETE' })
-      .then(function () {
-        allRecords = [];
-        visitors = [];
-        renderTable();
-        updateStats();
-        emptyState.style.display = 'block';
-      })
-      .catch(function () {
-        allRecords = [];
-        visitors = [];
-        renderTable();
-        updateStats();
-        emptyState.style.display = 'block';
-      });
-  });
+
 
   // ===== Load raw records from Azure Function API and deduplicate by sello_vid =====
   function loadData() {
