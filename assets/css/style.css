@@ -1540,8 +1540,8 @@ section {
 }
 
 .location-cards {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 0.8rem;
   width: 100%;
   margin-bottom: 1.5rem;
@@ -1875,6 +1875,10 @@ footer {
   }
 
   .locations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .location-cards {
     grid-template-columns: 1fr;
   }
 
