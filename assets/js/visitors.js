@@ -175,7 +175,7 @@
   searchInput.addEventListener('input', function () { currentPage = 1; renderTable(); });
 
   // Filter dropdowns
-  ['filterCountry','filterCity','filterPage','filterBrowser','filterOS','filterDevice'].forEach(function (id) {
+  ['filterCountry','filterCity','filterBrowser','filterDevice'].forEach(function (id) {
     document.getElementById(id).addEventListener('change', function () { currentPage = 1; renderTable(); });
   });
 
@@ -338,13 +338,11 @@
   }
 
   function populateFilters() {
-    var countries = {}, cities = {}, pages = {}, browsers = {}, oss = {}, devices = {};
+    var countries = {}, cities = {}, browsers = {}, devices = {};
     visitors.forEach(function (v) {
       if (v.country) countries[v.country] = true;
       if (v.city) cities[v.city] = true;
-      if (v.lastPage) pages[v.lastPage] = true;
       if (v.browser) browsers[v.browser] = true;
-      if (v.os) oss[v.os] = true;
       if (v.deviceType) devices[v.deviceType] = true;
     });
     function fillSelect(id, obj) {
@@ -360,9 +358,7 @@
     }
     fillSelect('filterCountry', countries);
     fillSelect('filterCity', cities);
-    fillSelect('filterPage', pages);
     fillSelect('filterBrowser', browsers);
-    fillSelect('filterOS', oss);
     fillSelect('filterDevice', devices);
   }
 
@@ -394,9 +390,7 @@
     var query = (searchInput.value || '').toLowerCase();
     var fCountry = document.getElementById('filterCountry').value;
     var fCity = document.getElementById('filterCity').value;
-    var fPage = document.getElementById('filterPage').value;
     var fBrowser = document.getElementById('filterBrowser').value;
-    var fOS = document.getElementById('filterOS').value;
     var fDevice = document.getElementById('filterDevice').value;
 
     return visitors.filter(function (v) {
@@ -406,9 +400,7 @@
       }
       if (fCountry && v.country !== fCountry) return false;
       if (fCity && v.city !== fCity) return false;
-      if (fPage && v.lastPage !== fPage) return false;
       if (fBrowser && v.browser !== fBrowser) return false;
-      if (fOS && v.os !== fOS) return false;
       if (fDevice && v.deviceType !== fDevice) return false;
       return true;
     });

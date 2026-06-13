@@ -47,7 +47,6 @@ body {
 
 /* ===== DASHBOARD ===== */
 .dashboard {
-  max-width: 1200px;
   margin: 2rem auto;
   padding: 0 2rem;
   display: none;
@@ -92,24 +91,23 @@ body {
 /* ===== CONTROLS ===== */
 .admin-controls {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
 .admin-search {
-  padding: 0.6rem 1rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
   border-radius: 12px;
   border: 1px solid var(--border);
   background: var(--glass);
   color: var(--text);
   font-family: "Manrope", sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   outline: none;
-  min-width: 280px;
   transition: border-color 0.3s;
+  box-sizing: border-box;
 }
 
 .admin-search:focus {
